@@ -1,11 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
-<meta name="x-poe-datastore-behavior" content="local_only">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 <meta charset="UTF-8">
-<title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Portfolio of Rachel Chan, Creative Producer, Filmmaker &amp; Multimedia Artist">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;1,200&amp;family=Roboto:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
+<meta name="description" content="Portfolio of Rachel Chan — Creative Producer, Filmmaker &amp; Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co https://raw.githubusercontent.com; media-src https://rachelchan.co https://raw.githubusercontent.com; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+<meta name="keywords" content="Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rachel Chan">
+<meta property="og:title" content="RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist">
+<meta property="og:description" content="Portfolio of Rachel Chan — video projects, short films, photography, visuals and social content.">
+<meta property="og:image" content="https://rachelchan.co/photos/the-only-constant-cover.jpg?v2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23fff' text-anchor='middle'%3ERC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://rachelchan.co">
+<link id="webfontLink" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
 <style>
 :root {
 --nav-width: 280px;
@@ -23,6 +37,16 @@
 --nav-link-pad-x: 1.6em;
 --nav-link-gap: 0.20em;
 --content-max-width: 1200px;
+/* Typography */
+--font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+--extra-ls: 0em; /* global letter-spacing add-on, set by Edit Mode */
+--fs-xs: 0.75rem;    /* 12px */
+--fs-sm: 0.875rem;   /* 14px */
+--fs-base: 1rem;     /* 16px */
+--fs-md: 1.125rem;   /* 18px */
+--fs-lg: 1.5rem;     /* 24px */
+--fs-xl: 2rem;       /* 32px */
+--fs-hero: 2.25rem;  /* 36px */
 }
 
 	html,
@@ -30,7 +54,8 @@
 		margin: 0;
 		padding: 0;
 		min-height: 100vh;
-		font-family: "Roboto", sans-serif;
+		font-family: var(--font-body);
+		letter-spacing: var(--extra-ls, 0em);
 		background: #000;
 		color: var(--primary); 
 		width: 100%;
@@ -84,11 +109,12 @@
 		flex-direction: column;
 		align-items: stretch;
 		padding: var(--main-ypad) 0;
-		transition: transform var(--transition), opacity var(--transition);
+		transition: transform var(--transition), opacity var(--transition), visibility var(--transition);
 		overflow: hidden;
 		transform: translateX(0);
 		pointer-events: auto;
 		opacity: 1;
+		visibility: visible;
 		box-shadow: none !important;
 		color: var(--primary);
 		border-right: 1px solid rgba(0, 0, 0, 0.08);
@@ -98,6 +124,7 @@
 		transform: translateX(-100%);
 		opacity: 0;
 		pointer-events: none;
+		visibility: hidden;
 	}
 
 	.sidebar-content {
@@ -114,8 +141,8 @@
 
 	.site-title {
 		font-weight: 900;
-		font-size: 1.17rem;
-		letter-spacing: 0.18em;
+		font-size: var(--fs-md);
+		letter-spacing: calc(0.18em + var(--extra-ls));
 		color: var(--primary);
 		text-transform: uppercase;
 		text-align: center;
@@ -142,7 +169,7 @@
 	}
 
 	.nav-intro h2 {
-		font-size: 1.01rem;
+		font-size: var(--fs-md);
 		font-weight: 600;
 		margin: 0 0 0.5em 0;
 		letter-spacing: 0.00em;
@@ -150,7 +177,7 @@
 	}
 
 	.nav-intro p {
-		font-size: 0.95rem;
+		font-size: var(--fs-sm);
 		color: #4d4d4d;
 		margin: 0;
 		font-weight: 250;
@@ -179,7 +206,7 @@
 		align-items: center;
 		text-decoration: none;
 		color: var(--primary);
-		font-size: 1rem;
+		font-size: var(--fs-base);
 		padding: var(--nav-link-pad-y) var(--nav-link-pad-x);
 		border-radius: 5px;
 		transition: all var(--transition);
@@ -189,13 +216,13 @@
 		background: transparent;
 		width: 100%;
 		box-sizing: border-box;
-		letter-spacing: 0.03em;
+		letter-spacing: calc(0.03em + var(--extra-ls));
 	}
 
 	/* Showreel Link Specifics */
 	nav.nav-menu a.showreel-link {
-		font-size: 0.75rem;
-		letter-spacing: 0.1em;
+		font-size: var(--fs-xs);
+		letter-spacing: calc(0.1em + var(--extra-ls));
 		padding: var(--nav-link-pad-y) var(--nav-link-pad-x);
 		text-align: center;
 		justify-content: center;
@@ -225,7 +252,7 @@
 		width: 100%;
 		text-align: center;
 		padding: 1.2em 0 0.7em 0;
-		font-size: 0.98rem;
+		font-size: var(--fs-sm);
 		color: #4d4d4d;
 		border-top: 1px solid rgba(0, 0, 0, 0.09);
 		margin-top: 2em;
@@ -303,8 +330,8 @@
 		text-decoration: none;
 		font-weight: 200;
 		padding: 0.7em 1.6em;
-		font-size: 1.01em;
-		letter-spacing: 0.07em;
+		font-size: var(--fs-sm);
+		letter-spacing: calc(0.07em + var(--extra-ls));
 		border-radius: 4px;
 		transition: all 0.3s ease;
 		text-transform: uppercase;
@@ -429,7 +456,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		color: white;
-		font-size: 1.2rem;
+		font-size: var(--fs-md);
 		font-weight: 100;
 		text-align: center;
 		width: 90%;
@@ -449,13 +476,13 @@
 
 	.photo-caption h3 {
 		margin: 0 0 8px 0;
-		font-size: 1.1rem;
+		font-size: var(--fs-base);
 		font-weight: 100;
 	}
 
 	.photo-caption p {
 		margin: 3px 0;
-		font-size: 0.85rem;
+		font-size: var(--fs-sm);
 		opacity: 0.9;
 		color: white;
 	}
@@ -485,13 +512,15 @@
 		align-items: center;
 		justify-content: center;
 		opacity: 0;
+		visibility: hidden;
 		pointer-events: none;
-		transition: opacity 0.3s ease;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
 		font-weight: 200;
 	}
 
 	.project-dialog.active {
 		opacity: 1;
+		visibility: visible;
 		pointer-events: auto;
 	}
 
@@ -516,7 +545,7 @@
 	}
 
 	.project-dialog-title {
-		font-size: 1.5rem;
+		font-size: var(--fs-lg);
 		font-weight: 200;
 		margin: 0;
 	}
@@ -534,7 +563,7 @@
 		display: flex;
 		flex: 1;
 		overflow: auto;
-		font-size: 0.7rem
+		font-size: var(--fs-base);
 	}
 
 	.youtube-video {
@@ -586,7 +615,7 @@
 		background: #f5f5f5;
 		padding: 5px 10px;
 		border-radius: 4px;
-		font-size: 0.9rem;
+		font-size: var(--fs-sm);
 	}
 
 	.project-description {
@@ -623,25 +652,27 @@
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 		z-index: 3000;
 		opacity: 0;
+		visibility: hidden;
 		pointer-events: none;
-		transition: opacity 0.3s ease;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
 		overflow-y: auto;
 	}
 
 	.about-dialog.active {
 		opacity: 1;
+		visibility: visible;
 		pointer-events: auto;
 	}
 
 	.about-dialog h1 {
-		font-size: 2rem;
+		font-size: var(--fs-xl);
 		margin-bottom: 1.5rem;
 		color: var(--primary);
 		font-weight: 200;
 	}
 
 	.about-dialog p {
-		font-size: 0.8rem;
+		font-size: var(--fs-base);
 		margin-bottom: 1.5rem;
 		color: #555;
 		line-height: 1.7;
@@ -669,12 +700,14 @@
 		background: rgba(0, 0, 0, 0.7);
 		z-index: 2999;
 		opacity: 0;
+		visibility: hidden;
 		pointer-events: none;
-		transition: opacity 0.3s ease;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
 	}
 
 	.dialog-overlay.active {
 		opacity: 1;
+		visibility: visible;
 		pointer-events: auto;
 	}
 
@@ -715,8 +748,8 @@
 	.m-snap-logo {
 		color: #fff;
 		font-weight: 900;
-		font-size: 1rem;
-		letter-spacing: 0.1em;
+		font-size: var(--fs-base);
+		letter-spacing: calc(0.1em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
 		pointer-events: auto;
@@ -727,8 +760,8 @@
 	.m-snap-about {
 		color: #fff;
 		font-weight: 300;
-		font-size: 0.9rem;
-		letter-spacing: 0.05em;
+		font-size: var(--fs-sm);
+		letter-spacing: calc(0.05em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
 		pointer-events: auto;
@@ -776,13 +809,13 @@
 	}
 	.m-home-overlay h1 {
 		font-weight: 900;
-		font-size: 2rem;
+		font-size: var(--fs-hero);
 		margin: 0;
 		text-transform: uppercase;
 	}
 	.m-home-overlay p {
 		font-weight: 300;
-		font-size: 1rem;
+		font-size: var(--fs-md);
 		margin: 5px 0 0 0;
 		opacity: 0.8;
 	}
@@ -835,12 +868,12 @@
 	.m-project-info h2 {
 		margin: 0 0 10px 0;
 		font-weight: 300;
-		font-size: 1.5rem;
+		font-size: var(--fs-lg);
 		text-transform: uppercase;
 	}
 	
 	.m-project-info p {
-		font-size: 0.8rem;
+		font-size: var(--fs-sm);
 		opacity: 0.8;
 		margin-bottom: 15px;
 	}
@@ -853,8 +886,8 @@
 		color: white;
 		text-decoration: none;
 		text-transform: uppercase;
-		font-size: 0.8rem;
-		letter-spacing: 1px;
+		font-size: var(--fs-sm);
+		letter-spacing: calc(1px + var(--extra-ls));
 		cursor: pointer;
 		transition: background 0.3s ease;
 	}
@@ -885,13 +918,13 @@
 	
 	.m-horiz-hint span.arrow {
 		font-weight: 100; /* Thin arrow */
-		font-size: 1.2rem;
+		font-size: var(--fs-md);
 	}
 
 	.m-horiz-hint span.text {
-		font-size: 0.65rem; /* Smaller text */
+		font-size: var(--fs-xs); /* Smaller text */
 		text-transform: uppercase;
-		letter-spacing: 2px;
+		letter-spacing: calc(2px + var(--extra-ls));
 		font-weight: 100; 
 	}
 
@@ -983,7 +1016,7 @@
 		}
 
 		.project-dialog-title {
-			font-size: 1.1rem;
+			font-size: var(--fs-md);
 			font-weight: 500;
 			text-transform: uppercase;
 		}
@@ -1033,7 +1066,7 @@
 		}
 
 		.project-description {
-			font-size: 0.95rem;
+			font-size: var(--fs-base);
 			line-height: 1.6;
 		}
 
@@ -1070,19 +1103,231 @@
 
 		.about-dialog h1 {
 			margin-top: 20px;
-			font-size: 1.8rem;
+			font-size: var(--fs-lg);
 		}
 		
 		.about-dialog p {
-			font-size: 0.95rem;
+			font-size: var(--fs-base);
 			line-height: 1.6;
 		}
+	}
+
+	/* ============ EDIT MODE PANEL (#edit) ============ */
+	#edit-panel {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 400px;
+		max-width: 100vw;
+		height: 100vh;
+		background: #fff;
+		color: #111;
+		z-index: 5000;
+		box-shadow: -8px 0 30px rgba(0, 0, 0, 0.35);
+		overflow-y: auto;
+		font-size: 14px;
+		letter-spacing: normal;
+		transition: transform 0.3s ease;
+	}
+
+	#edit-panel.ed-hidden { transform: translateX(105%); }
+
+	#ed-top { position: sticky; top: 0; z-index: 3; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+
+	#edit-panel header {
+		background: #111;
+		color: #fff;
+		padding: 12px 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+	}
+
+	#edit-panel header h2 {
+		margin: 0;
+		font-size: 15px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+
+	#edit-panel header button {
+		background: none;
+		border: 1px solid rgba(255, 255, 255, 0.6);
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+		border-radius: 4px;
+		padding: 4px 10px;
+	}
+
+	#ed-tabs { display: flex; background: #fff; border-bottom: 2px solid #eee; }
+	#ed-tabs button {
+		flex: 1;
+		border: none;
+		background: none;
+		cursor: pointer;
+		padding: 10px 2px 8px;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #999;
+		border-bottom: 3px solid transparent;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2px;
+	}
+	#ed-tabs button .ed-tab-icon { font-size: 17px; }
+	#ed-tabs button.active { color: #b00000; border-bottom-color: #b00000; }
+
+	#edit-panel section { display: none; padding: 16px; }
+	#edit-panel section.ed-active { display: block; }
+
+	#edit-panel details { margin-top: 16px; border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; background: #fafafa; }
+	#edit-panel details summary { cursor: pointer; font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
+	#edit-panel details[open] summary { margin-bottom: 4px; }
+
+	#edit-panel .ed-btn.big { display: block; width: 100%; padding: 15px; font-size: 14px; margin: 10px 0; background: #0a7d32; border-color: #0a7d32; }
+	.ed-steps { font-size: 12.5px; line-height: 1.8; color: #333; margin: 6px 0 14px; padding-left: 20px; }
+
+	#edit-panel h3 {
+		margin: 0 0 10px;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: #b00000;
+		font-weight: 700;
+	}
+
+	#edit-panel label {
+		display: block;
+		margin: 10px 0 3px;
+		font-weight: 600;
+		font-size: 11px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #555;
+	}
+
+	#edit-panel input[type="text"],
+	#edit-panel input[type="url"],
+	#edit-panel input[type="number"],
+	#edit-panel textarea,
+	#edit-panel select {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 7px 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		font-family: inherit;
+		font-size: 13px;
+		background: #fff;
+		color: #111;
+	}
+
+	#edit-panel textarea { min-height: 70px; resize: vertical; }
+	#edit-panel input[type="range"] { width: 100%; accent-color: #b00000; }
+
+	#edit-panel .ed-btn {
+		display: inline-block;
+		margin: 8px 8px 0 0;
+		padding: 8px 14px;
+		border: 1px solid #111;
+		background: #111;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 12px;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	#edit-panel .ed-btn.secondary { background: #fff; color: #111; }
+	#edit-panel .ed-btn.danger { background: #b00000; border-color: #b00000; }
+	#edit-panel .ed-btn.small { padding: 4px 9px; font-size: 11px; margin: 4px 4px 0 0; }
+
+	#ed-status {
+		padding: 10px 16px;
+		background: #fff8e1;
+		font-size: 12px;
+		border-bottom: 1px solid #eee;
+		line-height: 1.5;
+	}
+
+	.ed-proj { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; background: #fff; }
+
+	.ed-proj-head {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		padding: 6px 8px;
+		background: #fafafa;
+		border-radius: 6px;
+	}
+
+	.ed-proj-head .ed-proj-title {
+		flex: 1;
+		font-weight: 600;
+		font-size: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.ed-proj-head button {
+		background: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 2px 7px;
+		font-size: 12px;
+		color: #333;
+		line-height: 1.2;
+	}
+
+	.ed-proj-body { padding: 8px; border-top: 1px solid #eee; }
+
+	.ed-media-row { display: flex; gap: 6px; margin-top: 6px; }
+	.ed-media-row select { width: 105px; flex: none; }
+	.ed-media-row input { flex: 1; }
+	.ed-media-row button { flex: none; background: none; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; padding: 0 9px; }
+
+	.ed-hint { font-size: 11px; color: #777; margin-top: 10px; line-height: 1.6; }
+
+	#ed-peek {
+		position: fixed;
+		right: 14px;
+		bottom: 14px;
+		z-index: 5001;
+		background: #111;
+		color: #fff;
+		border: none;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		font-size: 20px;
+		cursor: pointer;
+		display: none;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	}
+
+	@media (max-width: 900px) {
+		#edit-panel { width: 100vw; }
 	}
 </style>
 
 </head>
 
 <body>
+
+<noscript>
+	<div style="position:fixed;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:#fff;color:#000;z-index:9999;font-family:Raleway,'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center;padding:24px;">
+		<p>This portfolio requires JavaScript to display the project galleries. Please enable JavaScript, or contact Rachel at <a href="mailto:rachelc1213@gmail.com">rachelc1213@gmail.com</a>.</p>
+	</div>
+</noscript>
 
 <!-- DESKTOP WRAPPER (Includes original Sidebar, Main Content, Toggles) -->
 <div class="desktop-wrapper">
@@ -1091,7 +1336,7 @@
 	<aside class="sidebar hide" id="sidebar" aria-label="Main menu">
 		<div class="sidebar-content">
 			<div style="width:100%">
-				<div class="site-title" tabindex="0">RACHEL CHAN</div>
+				<div class="site-title" id="siteTitle" role="button" tabindex="0" title="Back to home">RACHEL CHAN</div>
 				<div class="nav-intro">
 					<h2>Hello I am Rachel!</h2>
 					<p>Creative Producer, Filmmaker &amp; <br>Multimedia Artist</p>
@@ -1114,7 +1359,7 @@
 		</div>
 	</aside>
 
-	<button class="edge-toggle" id="edgeToggle" aria-label="Expand or collapse menu" title="Expand or collapse menu" tabindex="0">
+	<button class="edge-toggle" id="edgeToggle" aria-label="Expand or collapse menu" aria-expanded="false" title="Expand or collapse menu">
 		<span class="toggle-icons" id="toggleIcon"><span>→</span></span>
 	</button>
 	<nav class="top-right-links" id="topRightLinks" aria-label="Secondary site links">
@@ -1128,11 +1373,8 @@
 <!-- NEW MOBILE SNAP VIEW WRAPPER -->
 <div id="mobile-snap-view">
 	<header class="m-snap-header">
-		<!-- ID added for JS manipulation -->
-		<a href="#" class="m-snap-logo" id="mobileHeaderTitle" onclick="document.querySelector('.m-vertical-container').scrollTo(0,0); return false;">RACHEL CHAN</a>
-		
-		<!-- ID added for JS manipulation -->
-		<a href="#" class="m-snap-about" id="mobileHeaderRightBtn" onclick="openAboutDialog(); return false;">ABOUT</a>
+		<a href="#" class="m-snap-logo" id="mobileHeaderTitle">RACHEL CHAN</a>
+		<a href="#" class="m-snap-about" id="mobileHeaderRightBtn">ABOUT</a>
 	</header>
 
 	<div class="mobile-scroll-indicator" id="mobileIndicator">
@@ -1145,11 +1387,11 @@
 </div>
 
 <!-- PROJECT DIALOG (Shared) -->
-<div class="project-dialog" id="projectDialog">
+<div class="project-dialog" id="projectDialog" role="dialog" aria-modal="true" aria-labelledby="projectDialogTitle">
 	<div class="project-dialog-content">
 		<div class="project-dialog-header">
 			<h2 class="project-dialog-title" id="projectDialogTitle"></h2>
-			<button class="close-project" id="closeProject">×</button>
+			<button class="close-project" id="closeProject" aria-label="Close project dialog">×</button>
 		</div>
 		<div class="project-dialog-body">
 			<div class="project-media-container" id="projectMediaContainer"></div>
@@ -1160,16 +1402,19 @@
 
 <!-- ABOUT DIALOG (Shared) -->
 <div class="dialog-overlay" id="dialogOverlay"></div>
-<div class="about-dialog" id="aboutDialog">
-	<button class="close-about" id="closeAbout">×</button>
-	<h1>About Rachel Chan</h1>
+<div class="about-dialog" id="aboutDialog" role="dialog" aria-modal="true" aria-labelledby="aboutDialogTitle">
+	<button class="close-about" id="closeAbout" aria-label="Close about dialog">×</button>
+	<h1 id="aboutDialogTitle">About Rachel Chan</h1>
 	<p>RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master's in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.</p>
-	<p>Contact: <a href="mailto:rachelc1213@gmail.com">rachelc1213@gmail.com</a></p>
+	<p>Contact: <a href="mailto:rachelc1213@gmail.com">rachelc1213@gmail.com</a><br>
+	LinkedIn: <a href="https://www.linkedin.com/in/rachelchan1213/" target="_blank" rel="noopener noreferrer">linkedin.com/in/rachelchan1213</a></p>
 </div>
 
+<!-- Owner-editable content lives here. Generated by Edit Mode (#edit). Safe to be missing. -->
+<script src="site-config.js"></script>
 <script>
 	// --- DATA ---
-	const projectsData = {
+	const defaultProjectsData = {
 		"video-projects": [
 		    			{
 				id: "vp1",
@@ -1323,7 +1568,7 @@
 				client: "Interview",
 				role: "Producer",
 				description: "",
-				link: "https://www.mplus.org.hk/en/magazine/park-chan-wook-expanding-cinematic-reach/"
+				link: ""
 			},
 			{
 				id: "vp9",
@@ -1632,7 +1877,7 @@
 				],
 				year: "Oct 2023",
 				client: "Asia One Photographic Awards",
-				role: "Awarding-Winning Photographer",
+				role: "Award-Winning Photographer",
 				description: "Asia One Photographic Awards 2022/23 - In Honour of Mr Julian Lee - presents: Transcendence &quot;The Only Constant&quot; <br><br>The slowest shutter speed of a digital camera is generally 30 seconds. I'm back to the essence of photography—time and space—with pinhole photography to explore exposure times of more than 30 seconds.",
 				link: "https://hrf.org/faces-of-change"
 			},
@@ -1839,7 +2084,7 @@
 					{ type: "image", url: "https://rachelchan.co/photos/mplus-facade-2.jpg" },
 				],
 				year: "2023",
-				client: "Instagrem",
+				client: "Instagram",
 				role: "Producer",
 				description: "As the sun sets each night, the M+ Facade transforms into a canvas of light, exhibiting a dynamic display of moving image works.<br><br>The M+ building, designed by Herzog & de Meuron (@herzogdemeuron), features terracotta mullions that serve as sun-shading louvres and LED light fixtures. To create an outdoor exhibition space on the building’s harbour-facing facade, the architects collaborated with media architecture specialist Valentin Spiess of iart (@iart_basel) and creative technologists Andrew Crowe and Ashley Lee Wong from MetaObjects (@metaobjects).<br><br>Awarded the best Animated Media Architecture project at the 2023 Media Architecture Awards, the M+ Facade is a tool for exploring the boundaries of art and technology and a platform for contemporary visual culture.<br><br>Link: https://www.instagram.com/reel/Cug3Uzwx5NR/",
 				link: "https://youtube.com/techforward/shorts"
@@ -1966,11 +2211,190 @@
 		]
 	};
 
+	// --- SITE CONFIG LAYER ---------------------------------------------
+	// All owner-editable content can be overridden by site-config.js
+	// (generated by the built-in Edit Mode at  yoursite.com/#edit ).
+	// If site-config.js is missing, the defaults below are used.
+	let projectsData = defaultProjectsData;
+	let currentTab = 'home';
+
+	const FONT_QUERIES = {
+		'Raleway': 'family=Raleway:ital,wght@0,100..900;1,100..900',
+		'Roboto': 'family=Roboto:ital,wght@0,100..900;1,100..900',
+		'Montserrat': 'family=Montserrat:ital,wght@0,100..900;1,100..900',
+		'Inter': 'family=Inter:ital,wght@0,100..900;1,100..900',
+		'Lato': 'family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400',
+		'Open Sans': 'family=Open+Sans:ital,wght@0,300..800;1,300..800',
+		'Playfair Display': 'family=Playfair+Display:ital,wght@0,400..900;1,400..900',
+		'Cormorant Garamond': 'family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700',
+		'Helvetica / System': null
+	};
+
+	const CONFIG_DEFAULTS = {
+		meta: {
+			title: 'RACHEL CHAN | Creative Producer, Filmmaker & Multimedia Artist',
+			description: 'Portfolio of Rachel Chan — Creative Producer, Filmmaker & Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.',
+			keywords: 'Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography',
+			ogImage: 'https://rachelchan.co/photos/the-only-constant-cover.jpg?v2'
+		},
+		identity: {
+			name: 'RACHEL CHAN',
+			introHeading: 'Hello I am Rachel!',
+			introText: 'Creative Producer, Filmmaker & Multimedia Artist',
+			email: 'rachelc1213@gmail.com',
+			linkedin: 'https://www.linkedin.com/in/rachelchan1213/',
+			aboutHeading: 'About Rachel Chan',
+			aboutParagraphs: ['RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master’s in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.']
+		},
+		typography: {
+			fontFamily: 'Raleway',
+			fontScale: 100,
+			letterSpacing: 0
+		},
+		navLabels: {
+			'home': 'HOME',
+			'video-projects': 'VIDEO PROJECTS',
+			'short-films': 'SHORT FILMS',
+			'photography': 'PHOTOGRAPHY',
+			'visuals': 'VISUALS',
+			'social-media': 'SOCIAL/ SHORT'
+		},
+		homeVideo: 'https://rachelchan.co/videos/home-video.mp4'
+	};
+
+	function getCfg() {
+		const c = window.SITE_CONFIG || {};
+		return {
+			meta: Object.assign({}, CONFIG_DEFAULTS.meta, c.meta),
+			identity: Object.assign({}, CONFIG_DEFAULTS.identity, c.identity),
+			typography: Object.assign({}, CONFIG_DEFAULTS.typography, c.typography),
+			navLabels: Object.assign({}, CONFIG_DEFAULTS.navLabels, c.navLabels),
+			homeVideo: c.homeVideo || CONFIG_DEFAULTS.homeVideo,
+			projects: c.projects || defaultProjectsData
+		};
+	}
+
+	function setMetaAttr(selector, value) {
+		const el = document.querySelector(selector);
+		if (el && value != null) el.setAttribute('content', value);
+	}
+
+	function applyTypography(t) {
+		const root = document.documentElement;
+		root.style.setProperty('--extra-ls', (t.letterSpacing || 0) + 'em');
+		const s = (t.fontScale || 100) / 100;
+		const bases = { xs: 0.75, sm: 0.875, base: 1, md: 1.125, lg: 1.5, xl: 2, hero: 2.25 };
+		for (const k in bases) root.style.setProperty('--fs-' + k, (bases[k] * s).toFixed(4) + 'rem');
+		const family = t.fontFamily || 'Raleway';
+		if (family === 'Helvetica / System') {
+			root.style.setProperty('--font-body', '"Helvetica Neue", Helvetica, Arial, sans-serif');
+		} else {
+			root.style.setProperty('--font-body', '"' + family + '", "Helvetica Neue", Helvetica, Arial, sans-serif');
+		}
+		const query = FONT_QUERIES[family];
+		let link = document.getElementById('webfontLink');
+		if (query) {
+			if (!link) {
+				link = document.createElement('link');
+				link.id = 'webfontLink';
+				link.rel = 'stylesheet';
+				document.head.appendChild(link);
+			}
+			const href = 'https://fonts.googleapis.com/css2?' + query + '&display=swap';
+			if (link.getAttribute('href') !== href) link.setAttribute('href', href);
+		} else if (link) {
+			link.remove();
+		}
+	}
+
+	function rebuildAboutDialog(cfg) {
+		const dlg = document.getElementById('aboutDialog');
+		dlg.querySelectorAll('p').forEach(p => p.remove());
+		cfg.identity.aboutParagraphs.forEach(text => {
+			if (!text) return;
+			const p = document.createElement('p');
+			p.textContent = text;
+			dlg.appendChild(p);
+		});
+		const contact = document.createElement('p');
+		contact.appendChild(document.createTextNode('Contact: '));
+		const mail = document.createElement('a');
+		mail.href = 'mailto:' + cfg.identity.email;
+		mail.textContent = cfg.identity.email;
+		contact.appendChild(mail);
+		if (cfg.identity.linkedin) {
+			contact.appendChild(document.createElement('br'));
+			contact.appendChild(document.createTextNode('LinkedIn: '));
+			const li = document.createElement('a');
+			li.href = cfg.identity.linkedin;
+			li.target = '_blank';
+			li.rel = 'noopener noreferrer';
+			li.textContent = cfg.identity.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+			contact.appendChild(li);
+		}
+		dlg.appendChild(contact);
+	}
+
+	function applyConfig(rerender) {
+		const cfg = getCfg();
+		projectsData = cfg.projects;
+
+		// Meta / SEO
+		document.title = cfg.meta.title;
+		setMetaAttr('meta[name="description"]', cfg.meta.description);
+		setMetaAttr('meta[name="keywords"]', cfg.meta.keywords);
+		setMetaAttr('meta[property="og:title"]', cfg.meta.title);
+		setMetaAttr('meta[property="og:description"]', cfg.meta.description);
+		setMetaAttr('meta[property="og:image"]', cfg.meta.ogImage);
+
+		// Identity texts
+		document.getElementById('siteTitle').textContent = cfg.identity.name;
+		document.querySelector('.nav-intro h2').textContent = cfg.identity.introHeading;
+		document.querySelector('.nav-intro p').textContent = cfg.identity.introText;
+		const navEmail = document.querySelector('.nav-email a');
+		navEmail.href = 'mailto:' + cfg.identity.email;
+		navEmail.textContent = cfg.identity.email;
+		document.getElementById('aboutDialogTitle').textContent = cfg.identity.aboutHeading;
+		rebuildAboutDialog(cfg);
+		aboutBtn.textContent = sidebarShown ? 'ABOUT' : cfg.identity.name;
+
+		// Nav labels
+		navLinks.forEach(link => {
+			const label = cfg.navLabels[link.dataset.tab];
+			if (label) link.textContent = label;
+		});
+
+		applyTypography(cfg.typography);
+
+		if (rerender) {
+			if (desktopInited) setMainContent(currentTab);
+			if (mobileInited) initMobileView();
+		}
+	}
+
+	// Autoplay hardening: if the browser refuses the first play() attempt
+	// (iOS low-power mode, data savers...), retry on the first interaction.
+	function ensureAutoplay(videoEl) {
+		if (!videoEl) return;
+		const tryPlay = () => {
+			const p = videoEl.play();
+			if (p && p.catch) p.catch(() => {
+				document.addEventListener('click', tryPlay, { once: true });
+				document.addEventListener('touchstart', tryPlay, { once: true });
+			});
+		};
+		tryPlay();
+	}
+
+	function titleFromLabel(label) {
+		return String(label || '').toLowerCase().replace(/(^|[\s/-])(\w)/g, (m, pre, ch) => pre + ch.toUpperCase());
+	}
+
 	const tabContent = {
-		"home": `
+		"home": () => `
 			<div class="home-video-container">
 				<video class="home-video" autoplay loop muted playsinline>
-					<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+					<source src="${getCfg().homeVideo}" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 			</div>
@@ -2002,6 +2426,17 @@
 		`
 	};
 
+	// --- HELPERS ---
+	function escapeHtml(str) {
+		return String(str).replace(/[&<>"']/g, c => ({
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#39;'
+		}[c]));
+	}
+
 	// --- DESKTOP LOGIC ---
 	const sidebar = document.getElementById("sidebar");
 	const edgeToggle = document.getElementById("edgeToggle");
@@ -2015,6 +2450,7 @@
 		sidebar.classList.remove("hide");
 		sidebarShown = true;
 		aboutBtn.textContent = "ABOUT";
+		edgeToggle.setAttribute('aria-expanded', 'true');
 		edgeToggle.style.left = "calc(var(--nav-width))";
 		toggleIcon.innerHTML = '<span>&#8592;</span>';
 	}
@@ -2022,7 +2458,8 @@
 	function hideSidebar() {
 		sidebar.classList.add("hide");
 		sidebarShown = false;
-		aboutBtn.textContent = "RACHEL CHAN";
+		aboutBtn.textContent = getCfg().identity.name;
+		edgeToggle.setAttribute('aria-expanded', 'false');
 		edgeToggle.style.left = "0";
 		toggleIcon.innerHTML = '<span>&#8594;</span>';
 	}
@@ -2034,11 +2471,23 @@
 
 	edgeToggle.addEventListener("click", toggleSidebar);
 
+	// Site title returns to the home view (click + keyboard)
+	const siteTitle = document.getElementById('siteTitle');
+	siteTitle.addEventListener('click', () => setMainContent('home'));
+	siteTitle.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			setMainContent('home');
+		}
+	});
+
 	// Desktop Navigation
 	function setMainContent(tabName) {
+		currentTab = tabName;
 		if (tabName === "home") {
 			mainContent.classList.remove("white-bg");
-			mainContent.innerHTML = tabContent["home"];
+			mainContent.innerHTML = tabContent["home"]();
+			ensureAutoplay(mainContent.querySelector('.home-video'));
 		} else {
 			mainContent.classList.add("white-bg");
 			mainContent.innerHTML = tabContent[tabName] || "<section class='tab-content-container'><h1>Content Not Found</h1></section>";
@@ -2090,18 +2539,27 @@
 		projects.forEach(project => {
 			const item = document.createElement('div');
 			item.className = 'photo-item';
+			const safeTitle = escapeHtml(project.title);
+			item.setAttribute('role', 'button');
+			item.setAttribute('tabindex', '0');
+			item.setAttribute('aria-label', `View project: ${project.title}`);
 			item.innerHTML = `
-				<img src="${project.image}" alt="${project.title}">
-				<div class="photo-title">${project.title}</div>
+				<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
+				<div class="photo-title">${safeTitle}</div>
 				<div class="photo-caption">
-					<h3>${project.title}</h3>
-					${project.year ? `<p class="project-year">${project.year}</p>` : ''}
-					${project.client ? `<p class="project-client">${project.client}</p>` : ''}
-					${project.role ? `<p class="project-role">${project.role}</p>` : ''}
+					<h3>${safeTitle}</h3>
+					${project.year ? `<p class="project-year">${escapeHtml(project.year)}</p>` : ''}
+					${project.client ? `<p class="project-client">${escapeHtml(project.client)}</p>` : ''}
+					${project.role ? `<p class="project-role">${escapeHtml(project.role)}</p>` : ''}
 				</div>
 			`;
-			item.addEventListener('click', () => {
-				openProjectDialog(project.id, tabId);
+			const openDialog = () => openProjectDialog(project.id, tabId);
+			item.addEventListener('click', openDialog);
+			item.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					openDialog();
+				}
 			});
 			grid.appendChild(item);
 		});
@@ -2117,6 +2575,28 @@
 	const aboutDialog = document.getElementById('aboutDialog');
 	const dialogOverlay = document.getElementById('dialogOverlay');
 	const closeAbout = document.getElementById('closeAbout');
+	let lastFocused = null;
+
+	// Keep Tab focus inside an open dialog
+	function trapFocus(dialogEl) {
+		dialogEl.addEventListener('keydown', (e) => {
+			if (e.key !== 'Tab') return;
+			const focusables = dialogEl.querySelectorAll('a[href], button, iframe, video, input, [tabindex]:not([tabindex="-1"])');
+			const list = Array.prototype.filter.call(focusables, el => !el.disabled && el.offsetParent !== null);
+			if (!list.length) return;
+			const first = list[0];
+			const last = list[list.length - 1];
+			if (e.shiftKey && document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			} else if (!e.shiftKey && document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		});
+	}
+	trapFocus(projectDialog);
+	trapFocus(aboutDialog);
 
 	function openProjectDialog(projectId, category) {
 		const project = projectsData[category].find(p => p.id === projectId);
@@ -2132,6 +2612,8 @@
 				img.src = mediaItem.url;
 				img.alt = project.title;
 				img.className = 'project-media';
+				img.loading = 'lazy';
+				img.decoding = 'async';
 				projectMediaContainer.appendChild(img);
 			} else if (mediaItem.type === 'video') {
 				const video = document.createElement('video');
@@ -2149,9 +2631,10 @@
 				if (params.toString()) youtubeUrl += (youtubeUrl.includes('?') ? '&' : '?') + params.toString();
 
 				iframe.src = youtubeUrl;
+				iframe.title = project.title;
+				iframe.loading = 'lazy';
 				iframe.width = '100%';
 				iframe.height = '400';
-				iframe.frameBorder = '0';
 				iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 				iframe.allowFullscreen = true;
 				iframe.className = 'project-video youtube-video';
@@ -2160,19 +2643,26 @@
 		});
 
 		const metaHtml = [];
-		if (project.year) metaHtml.push(`<span class="project-meta-item">${project.year}</span>`);
-		if (project.client) metaHtml.push(`<span class="project-meta-item">${project.client}</span>`);
-		if (project.role) metaHtml.push(`<span class="project-meta-item">${project.role}</span>`);
+		if (project.year) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.year)}</span>`);
+		if (project.client) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.client)}</span>`);
+		if (project.role) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.role)}</span>`);
 
 		projectDetails.innerHTML = `<div class="project-meta">${metaHtml.join('')}</div><div class="project-description">${project.description}</div>`;
 
 		projectDialog.classList.add('active');
 		document.body.style.overflow = 'hidden';
+		lastFocused = document.activeElement;
+		closeProjectBtn.focus();
 	}
 
 	function closeProjectDialog() {
 		projectDialog.classList.remove('active');
 		document.body.style.overflow = '';
+		// Unload media once the fade-out finishes so YouTube audio never keeps playing
+		setTimeout(() => {
+			if (!projectDialog.classList.contains('active')) projectMediaContainer.innerHTML = '';
+		}, 350);
+		if (lastFocused && lastFocused.isConnected) lastFocused.focus();
 	}
 
 	closeProjectBtn.addEventListener('click', closeProjectDialog);
@@ -2184,6 +2674,7 @@
 		aboutDialog.classList.add('active');
 		dialogOverlay.classList.add('active');
 		document.body.style.overflow = 'hidden';
+		lastFocused = document.activeElement;
 		closeAbout.focus();
 	}
 
@@ -2191,6 +2682,7 @@
 		aboutDialog.classList.remove('active');
 		dialogOverlay.classList.remove('active');
 		document.body.style.overflow = '';
+		if (lastFocused && lastFocused.isConnected) lastFocused.focus();
 	}
 
 	dialogOverlay.addEventListener('click', closeAboutDialog);
@@ -2218,14 +2710,19 @@
 		mobileContainer.innerHTML = '';
 		mobileIndicator.innerHTML = '';
 
-		// 2. Define Section Order
+		// Header handlers (title scrolls home, right button opens About)
+		mobileHeaderTitle.onclick = function() { mobileContainer.scrollTo(0, 0); return false; };
+		mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
+
+		// 2. Define Section Order (titles derived from the editable nav labels)
+		const cfgNav = getCfg().navLabels;
 		const sectionOrder = [
 			{ id: 'home', title: 'Home' },
-			{ id: 'video-projects', title: 'Video Projects' },
-			{ id: 'short-films', title: 'Short Films' },
-			{ id: 'photography', title: 'Photography' },
-			{ id: 'visuals', title: 'Visuals' },
-			{ id: 'social-media', title: 'Social/Short' },
+			{ id: 'video-projects', title: titleFromLabel(cfgNav['video-projects']) },
+			{ id: 'short-films', title: titleFromLabel(cfgNav['short-films']) },
+			{ id: 'photography', title: titleFromLabel(cfgNav['photography']) },
+			{ id: 'visuals', title: titleFromLabel(cfgNav['visuals']) },
+			{ id: 'social-media', title: titleFromLabel(cfgNav['social-media']) },
 		    //{ id: 'showreel', title: 'Showreel' }
 		];
 
@@ -2244,16 +2741,18 @@
 			sectionEl.dataset.title = section.title; // Store title for observer
 
 			if (section.id === 'home') {
+				const cfg = getCfg();
 				sectionEl.classList.add('m-home-section');
 				sectionEl.innerHTML = `
 					<video class="m-home-video" autoplay loop muted playsinline>
-						<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+						<source src="${cfg.homeVideo}" type="video/mp4">
 					</video>
 					<div class="m-home-overlay">
-						<h1>Rachel Chan</h1>
-						<p>Creative Producer & Filmmaker</p>
+						<h1>${escapeHtml(cfg.identity.name)}</h1>
+						<p>${escapeHtml(cfg.identity.introText)}</p>
 					</div>
 				`;
+				ensureAutoplay(sectionEl.querySelector('.m-home-video'));
 			} else if (section.id === 'showreel') {
 				sectionEl.innerHTML = `
 					<div class="m-showreel-container">
@@ -2283,11 +2782,11 @@
 						}
 
 						card.innerHTML = `
-							<img src="${p.image}" class="m-project-bg" alt="${p.title}">
+							<img src="${p.image}" class="m-project-bg" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
 							<div class="m-project-info">
-								<h2>${p.title}</h2>
-								<p>${p.year || ''} ${p.role ? ' | ' + p.role : ''}</p>
-								<button class="m-view-btn">View Project</button>
+								<h2>${escapeHtml(p.title)}</h2>
+								<p>${escapeHtml(p.year || '')} ${p.role ? ' | ' + escapeHtml(p.role) : ''}</p>
+								<button class="m-view-btn" aria-label="View project: ${escapeHtml(p.title)}">View Project</button>
 							</div>
 							${hintHtml}
 						`;
@@ -2323,24 +2822,14 @@
 					const dot = document.getElementById(`dot-${sectionId}`);
 					if (dot) dot.classList.add('active');
 
-					// --- HEADER LOGIC CHANGE ---
+					// --- HEADER TEXT ---
+					// (click handlers are assigned once in initMobileView)
 					if (sectionId === 'home') {
-						mobileHeaderTitle.textContent = "RACHEL CHAN";
+						mobileHeaderTitle.textContent = getCfg().identity.name;
 						mobileHeaderRightBtn.textContent = "ABOUT";
-						
-						// On Home: Left = Scroll Top (already default), Right = Open About
-						mobileHeaderTitle.onclick = function() { document.querySelector('.m-vertical-container').scrollTo(0,0); return false; };
-						mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
 					} else {
 						mobileHeaderTitle.textContent = sectionTitle.toUpperCase();
-						mobileHeaderRightBtn.textContent = "RACHEL CHAN";
-
-						// On Other Sections: 
-						// Left (Title) -> Scroll Top (Home)
-						mobileHeaderTitle.onclick = function() { document.querySelector('.m-vertical-container').scrollTo(0,0); return false; };
-						
-						// Right (Name) -> Open About (NEW REQUEST)
-						mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
+						mobileHeaderRightBtn.textContent = getCfg().identity.name;
 					}
 				}
 			});
@@ -2351,11 +2840,606 @@
 		});
 	}
 
-	// Initialize
-	setMainContent('home'); // Desktop Default
-	initMobileView(); // Mobile Init
+	// Initialize only the layout that matches the current viewport.
+	// The hidden layout used to build its own autoplaying <video> too,
+	// downloading the background video twice on every page load.
+	const mobileQuery = window.matchMedia('(max-width: 900px)');
+	let desktopInited = false;
+	let mobileInited = false;
+
+	function initVisibleView() {
+		if (mobileQuery.matches && !mobileInited) {
+			mobileInited = true;
+			initMobileView();
+		} else if (!mobileQuery.matches && !desktopInited) {
+			desktopInited = true;
+			setMainContent('home');
+		}
+	}
+
+	applyConfig(false); // apply site-config.js (or built-in defaults) before first render
+	initVisibleView();
+	mobileQuery.addEventListener('change', initVisibleView);
 </script>
 
 
+
+<script>
+// ===================== EDIT MODE — no-code content editor =====================
+// Open: add #edit to the site URL (https://rachelchan.co/#edit) or press Ctrl/Cmd+Shift+E.
+// Everything previews live. To publish: "Download site-config.js", then upload that
+// file to the web host into the same folder as index.html. No coding required.
+(function () {
+	const DRAFT_KEY = 'rc_site_draft';
+	const TOKEN_KEY = 'rc_gh_token';
+	const REPO = 'cyunmin12/rachelchan';
+	const CATEGORIES = ['video-projects', 'short-films', 'photography', 'visuals', 'social-media'];
+
+	let panel = null;
+	let peekBtn = null;
+	let draft = null;
+	const publishedCfg = window.SITE_CONFIG || null;
+	let debounceTimer = null;
+	let expandedProject = null;
+
+	function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+	function getByPath(obj, path) {
+		return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+	}
+	function setByPath(obj, path, value) {
+		const parts = path.split('.');
+		let o = obj;
+		for (let i = 0; i < parts.length - 1; i++) o = o[parts[i]];
+		o[parts[parts.length - 1]] = value;
+	}
+
+	function liveUpdate(fullRerender) {
+		window.SITE_CONFIG = draft;
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => applyConfig(fullRerender !== false), 180);
+	}
+
+	function setStatus(msg) {
+		const el = document.getElementById('ed-status');
+		if (el) el.innerHTML = msg;
+	}
+
+	function saveDraft(quiet) {
+		try {
+			localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+			if (!quiet) setStatus('✅ Draft saved in this browser. Use <b>Download site-config.js</b> to publish it to your website.');
+		} catch (e) { setStatus('Could not save draft: ' + e.message); }
+	}
+
+	function loadDraft() {
+		try { const d = localStorage.getItem(DRAFT_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; }
+	}
+
+	function discardDraft() {
+		if (!confirm('Discard your unpublished changes and reload the published content?')) return;
+		try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ }
+		window.SITE_CONFIG = publishedCfg;
+		draft = clone(getCfg());
+		window.SITE_CONFIG = draft;
+		renderPanelBody();
+		applyConfig(true);
+		setStatus('Draft discarded — showing published content.');
+	}
+
+	function configFileBody() {
+		return 'window.SITE_CONFIG = ' + JSON.stringify(draft, null, 2) + ';\n';
+	}
+
+	function downloadConfig() {
+		saveDraft(true);
+		const blob = new Blob([configFileBody()], { type: 'text/javascript;charset=utf-8' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = 'site-config.js';
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		setStatus('⬇️ <b>site-config.js downloaded.</b> Now log in to your web host, open the file manager, and upload <b>site-config.js</b> into the same folder as <b>index.html</b> (replace the old one). Your changes go live immediately.');
+	}
+
+	async function pushToGitHub() {
+		const tokenEl = document.getElementById('ed-gh-token');
+		const branchEl = document.getElementById('ed-gh-branch');
+		const token = (tokenEl.value || '').trim();
+		if (!token) { setStatus('Paste a GitHub token first (fine-grained token with Contents: Read and write for ' + REPO + ').'); return; }
+		try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ }
+		const branch = branchEl.value || 'main';
+		const url = 'https://api.github.com/repos/' + REPO + '/contents/site-config.js';
+		const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' };
+		setStatus('Pushing to GitHub…');
+		try {
+			let sha = null;
+			const head = await fetch(url + '?ref=' + encodeURIComponent(branch), { headers });
+			if (head.ok) sha = (await head.json()).sha;
+			const payload = {
+				message: 'Update site content via built-in editor\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+				content: btoa(unescape(encodeURIComponent(configFileBody()))),
+				branch: branch
+			};
+			if (sha) payload.sha = sha;
+			const res = await fetch(url, {
+				method: 'PUT',
+				headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+				body: JSON.stringify(payload)
+			});
+			if (!res.ok) throw new Error((await res.text()).slice(0, 220));
+			setStatus('✅ Saved to GitHub (branch: ' + branch + '). Remember: your live site is served by your web host — also click <b>Download</b> and upload site-config.js there.');
+		} catch (err) {
+			setStatus('❌ GitHub push failed: ' + err.message);
+		}
+	}
+
+	// ---------- Media upload (GitHub) ----------
+	// Media always lands on the default branch so its public URL survives
+	// feature-branch merges/deletions. Uses the Git data API (blobs/trees/commits)
+	// instead of the contents API so videos larger than 1 MB work too.
+	const MEDIA_BRANCH = 'main';
+	const MAX_UPLOAD_MB = 95;
+
+	async function ghApi(method, path, payload, token) {
+		const res = await fetch('https://api.github.com/repos/' + REPO + path, {
+			method: method,
+			headers: {
+				Authorization: 'Bearer ' + token,
+				Accept: 'application/vnd.github+json',
+				'Content-Type': 'application/json'
+			},
+			body: payload ? JSON.stringify(payload) : undefined
+		});
+		if (!res.ok) throw new Error(method + ' ' + path + ' → HTTP ' + res.status + ': ' + (await res.text()).slice(0, 180));
+		return res.status === 204 ? {} : res.json();
+	}
+
+	function fileToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const fr = new FileReader();
+			fr.onload = () => resolve(String(fr.result).split(',')[1]);
+			fr.onerror = () => reject(new Error('Could not read the file.'));
+			fr.readAsDataURL(file);
+		});
+	}
+
+	async function uploadMedia(file) {
+		const tokenEl = document.getElementById('ed-gh-token');
+		const token = (tokenEl.value || '').trim();
+		if (!token) { setStatus('⬆ Uploads need your GitHub token — I\'ve opened the <b>Publish</b> tab for you. Paste the token under <b>GitHub (advanced)</b>, then click the upload button again.'); showTokenHelp(); return null; }
+		try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ }
+		const mb = file.size / 1048576;
+		if (mb > MAX_UPLOAD_MB) { setStatus('❌ "' + file.name + '" is ' + mb.toFixed(0) + ' MB — GitHub accepts up to ' + MAX_UPLOAD_MB + ' MB. Compress the file and try again.'); return null; }
+		const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+/, '').toLowerCase().slice(-60) || 'file';
+		const path = 'media/' + Date.now().toString(36) + '-' + safeName;
+		setStatus('⬆ Uploading <b>' + escapeHtml(file.name) + '</b> (' + mb.toFixed(1) + ' MB) to GitHub… this can take a minute for videos.');
+		try {
+			const b64 = await fileToBase64(file);
+			const blob = await ghApi('POST', '/git/blobs', { content: b64, encoding: 'base64' }, token);
+			const ref = await ghApi('GET', '/git/refs/heads/' + MEDIA_BRANCH, null, token);
+			const headCommit = await ghApi('GET', '/git/commits/' + ref.object.sha, null, token);
+			const tree = await ghApi('POST', '/git/trees', {
+				base_tree: headCommit.tree.sha,
+				tree: [{ path: path, mode: '100644', type: 'blob', sha: blob.sha }]
+			}, token);
+			const newCommit = await ghApi('POST', '/git/commits', {
+				message: 'Add media: ' + safeName + '\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+				tree: tree.sha,
+				parents: [headCommit.sha]
+			}, token);
+			await ghApi('PATCH', '/git/refs/heads/' + MEDIA_BRANCH, { sha: newCommit.sha }, token);
+			const url = 'https://raw.githubusercontent.com/' + REPO + '/' + MEDIA_BRANCH + '/' + path;
+			setStatus('✅ Uploaded! The file URL was filled in automatically. Remember to <b>Download site-config.js</b> and upload it to your host to publish.');
+			return url;
+		} catch (err) {
+			setStatus('❌ Upload failed: ' + err.message + (err.message.indexOf('404') > -1 ? ' — make sure the token has Contents: Read and write permission, and that the repo name is correct.' : ''));
+			return null;
+		}
+	}
+
+	function uploadBtn(forAttr, accept, label) {
+		return '<button class="ed-btn small secondary ed-up" data-up-for="' + forAttr + '" data-up-accept="' + accept + '">' + (label || '⬆ Upload file') + '</button>';
+	}
+
+	function attachUpload(buttons, onUrl, defaultAccept) {
+		buttons.forEach(btn => {
+			const input = document.createElement('input');
+			input.type = 'file';
+			input.accept = btn.dataset.upAccept || defaultAccept || '*/*';
+			input.style.display = 'none';
+			btn.parentNode.appendChild(input);
+			btn.addEventListener('click', () => input.click());
+			input.addEventListener('change', async () => {
+				const f = input.files[0];
+				input.value = '';
+				if (!f) return;
+				const url = await uploadMedia(f);
+				if (url) { onUrl(url, btn); liveUpdate(); }
+			});
+		});
+	}
+
+	// ---------- Panel ----------
+	function textF(label, path, type) {
+		const val = getByPath(draft, path);
+		return '<label>' + label + '</label><input type="' + (type || 'text') + '" data-path="' + path + '" value="' + escapeHtml(val == null ? '' : val) + '">';
+	}
+	function areaF(label, path) {
+		const val = getByPath(draft, path);
+		return '<label>' + label + '</label><textarea data-path="' + path + '">' + escapeHtml(val == null ? '' : val) + '</textarea>';
+	}
+
+	function panelSectionsHtml() {
+		const fontOpts = Object.keys(FONT_QUERIES).map(f =>
+			'<option' + (f === draft.typography.fontFamily ? ' selected' : '') + '>' + f + '</option>').join('');
+		const catOpts = CATEGORIES.map(c =>
+			'<option value="' + c + '">' + escapeHtml(draft.navLabels[c] || c) + '</option>').join('');
+		const navFields = ['home'].concat(CATEGORIES).map(c =>
+			textF('Menu name: ' + c, 'navLabels.' + c)).join('');
+		return `
+		<section data-tab="text">
+			<h3>Your words</h3>
+			${textF('Your name (top of the site)', 'identity.name')}
+			${textF('Welcome heading', 'identity.introHeading')}
+			${textF('Welcome tagline', 'identity.introText')}
+			${textF('"About me" heading', 'identity.aboutHeading')}
+			<label>"About me" paragraphs</label>
+			<div id="ed-about-paras"></div>
+			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
+			<h3 style="margin-top:22px">Contact</h3>
+			${textF('Email', 'identity.email')}
+			${textF('LinkedIn profile URL', 'identity.linkedin', 'url')}
+			<details>
+				<summary>Menu names</summary>
+				${navFields}
+			</details>
+			<details>
+				<summary>Google &amp; sharing (advanced)</summary>
+				${textF('Browser tab title', 'meta.title')}
+				${areaF('Text shown in Google results', 'meta.description')}
+				${textF('Google search tags (comma-separated)', 'meta.keywords')}
+				${textF('Image shown when shared on social media', 'meta.ogImage', 'url')}
+				${uploadBtn('meta.ogImage', 'image/*', '⬆ Upload image')}
+			</details>
+		</section>
+		<section data-tab="design">
+			<h3>Fonts</h3>
+			<label>Font style</label>
+			<select id="ed-font">${fontOpts}</select>
+			<label>Font size — <span id="ed-scale-val">${draft.typography.fontScale}</span>%</label>
+			<input type="range" id="ed-scale" min="80" max="140" step="1" value="${draft.typography.fontScale}">
+			<label>Letter spacing — <span id="ed-ls-val">${draft.typography.letterSpacing}</span>em</label>
+			<input type="range" id="ed-ls" min="-0.01" max="0.08" step="0.0025" value="${draft.typography.letterSpacing}">
+			<p class="ed-hint">Watch your page while dragging — it updates live.</p>
+			<h3 style="margin-top:22px">Home background video</h3>
+			${textF('Video URL', 'homeVideo', 'url')}
+			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
+			<p class="ed-hint">Tip: keep it small (a few MB) so your home page loads fast.</p>
+		</section>
+		<section data-tab="projects">
+			<h3>Your work</h3>
+			<label>Which section?</label>
+			<select id="ed-cat">${catOpts}</select>
+			<div id="ed-proj-list" style="margin-top:10px"></div>
+			<button class="ed-btn small secondary" id="ed-add-proj">+ Add new project</button>
+			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video from your computer.</p>
+		</section>
+		<section data-tab="publish">
+			<h3>Make your changes live</h3>
+			<button class="ed-btn big" id="ed-download">⬇ Step 1 — Download my changes</button>
+			<ol class="ed-steps">
+				<li>Click the green button — you get a file called <b>site-config.js</b>.</li>
+				<li>Log in to your web host and open its <b>file manager</b>.</li>
+				<li>Upload <b>site-config.js</b> into the same folder as <b>index.html</b>, replacing the old one. Done — your changes are live!</li>
+			</ol>
+			<button class="ed-btn small secondary" id="ed-save-draft">Save draft</button>
+			<button class="ed-btn small danger" id="ed-discard">Discard changes</button>
+			<p class="ed-hint">Your draft is kept in this browser automatically, so you can stop and finish later.</p>
+			<details id="ed-gh-details">
+				<summary>GitHub (advanced)</summary>
+				<label>GitHub token — needed for ⬆ uploads &amp; GitHub sync</label>
+				<input type="text" id="ed-gh-token" placeholder="github_pat_… (stored only in this browser)" autocomplete="off">
+				<select id="ed-gh-branch" style="margin-top:6px"><option value="main">branch: main</option><option value="improve-index-html">branch: improve-index-html</option></select>
+				<button class="ed-btn secondary" id="ed-gh-push" style="margin-top:8px">Save a copy to GitHub</button>
+				<p class="ed-hint">Create a fine-grained token at github.com → Settings → Developer settings, with <b>Contents: Read and write</b> for <b>${REPO}</b>. Uploaded pictures/videos are stored in the repo's <b>media/</b> folder and get a permanent URL. For visitors to see uploaded media, the repo must be <b>public</b>.</p>
+			</details>
+		</section>`;
+	}
+
+	function renderAboutParas() {
+		const box = document.getElementById('ed-about-paras');
+		if (!box) return;
+		box.innerHTML = '';
+		draft.identity.aboutParagraphs.forEach((para, i) => {
+			const ta = document.createElement('textarea');
+			ta.value = para;
+			ta.style.marginTop = '6px';
+			ta.addEventListener('input', () => { draft.identity.aboutParagraphs[i] = ta.value; liveUpdate(); });
+			const rm = document.createElement('button');
+			rm.className = 'ed-btn small danger';
+			rm.textContent = 'Remove paragraph';
+			rm.addEventListener('click', () => { draft.identity.aboutParagraphs.splice(i, 1); renderAboutParas(); liveUpdate(); });
+			box.appendChild(ta);
+			box.appendChild(rm);
+		});
+	}
+
+	function currentCat() {
+		const sel = document.getElementById('ed-cat');
+		return sel ? sel.value : CATEGORIES[0];
+	}
+
+	function projectBodyHtml(p) {
+		const mediaRows = (p.media || []).map((m, mi) => `
+			<div class="ed-media-row">
+				<select data-mi="${mi}" data-mk="type">
+					<option value="youtube"${m.type === 'youtube' ? ' selected' : ''}>youtube</option>
+					<option value="image"${m.type === 'image' ? ' selected' : ''}>image</option>
+					<option value="video"${m.type === 'video' ? ' selected' : ''}>video</option>
+				</select>
+				<input type="text" data-mi="${mi}" data-mk="url" value="${escapeHtml(m.url || '')}" placeholder="https://…">
+				<button data-up-media="${mi}" title="Upload image or video file">⬆</button>
+				<button data-mdel="${mi}" title="Remove media">✕</button>
+			</div>`).join('');
+		return `
+			<div class="ed-proj-body">
+				<label>Title</label><input type="text" data-f="title" value="${escapeHtml(p.title || '')}">
+				<label>Year</label><input type="text" data-f="year" value="${escapeHtml(p.year || '')}">
+				<label>Client / Type</label><input type="text" data-f="client" value="${escapeHtml(p.client || '')}">
+				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
+				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
+				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
+				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
+				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
+				<label>Media (top item shows first; youtube = embed URL)</label>
+				${mediaRows}
+				<button class="ed-btn small secondary" data-madd>+ Add media</button>
+			</div>`;
+	}
+
+	function bindProjectBody(row, cat, idx) {
+		const p = draft.projects[cat][idx];
+		row.querySelectorAll('[data-f]').forEach(inp => {
+			inp.addEventListener('input', () => {
+				p[inp.dataset.f] = inp.value;
+				if (inp.dataset.f === 'title') {
+					const t = row.querySelector('.ed-proj-title');
+					if (t) t.textContent = inp.value || '(untitled)';
+				}
+				liveUpdate();
+			});
+		});
+		row.querySelectorAll('[data-mk]').forEach(inp => {
+			inp.addEventListener(inp.tagName === 'SELECT' ? 'change' : 'input', () => {
+				p.media[+inp.dataset.mi][inp.dataset.mk] = inp.value;
+				liveUpdate();
+			});
+		});
+		row.querySelectorAll('[data-mdel]').forEach(btn => {
+			btn.addEventListener('click', () => { p.media.splice(+btn.dataset.mdel, 1); renderProjects(); liveUpdate(); });
+		});
+		attachUpload(row.querySelectorAll('[data-up-field]'), async (url, btn) => {
+			p[btn.dataset.upField] = url;
+			const inp = row.querySelector('[data-f="' + btn.dataset.upField + '"]');
+			if (inp) inp.value = url;
+		}, 'image/*');
+		attachUpload(row.querySelectorAll('[data-up-media]'), async (url, btn) => {
+			const mi = +btn.dataset.upMedia;
+			p.media[mi].url = url;
+			const inp = row.querySelector('[data-mi="' + mi + '"][data-mk="url"]');
+			if (inp) inp.value = url;
+			// auto-pick the right media type from the uploaded file
+			const sel = row.querySelector('[data-mi="' + mi + '"][data-mk="type"]');
+			if (sel) {
+				const ext = url.split('.').pop().toLowerCase();
+				const guess = ['mp4', 'webm', 'mov', 'm4v'].indexOf(ext) > -1 ? 'video' : 'image';
+				if (sel.value === 'youtube' || !sel.value) { sel.value = guess; p.media[mi].type = guess; }
+			}
+		}, 'image/*,video/*');
+		const addBtn = row.querySelector('[data-madd]');
+		if (addBtn) addBtn.addEventListener('click', () => {
+			p.media = p.media || [];
+			p.media.push({ type: 'image', url: '' });
+			renderProjects();
+			liveUpdate();
+		});
+	}
+
+	function renderProjects() {
+		const box = document.getElementById('ed-proj-list');
+		if (!box) return;
+		const cat = currentCat();
+		const list = draft.projects[cat] || (draft.projects[cat] = []);
+		box.innerHTML = '';
+		list.forEach((p, idx) => {
+			const row = document.createElement('div');
+			row.className = 'ed-proj';
+			const isOpen = expandedProject === cat + ':' + p.id;
+			row.innerHTML = `
+				<div class="ed-proj-head">
+					<span class="ed-proj-title">${escapeHtml(p.title || '(untitled)')}</span>
+					<button data-act="up" title="Move up">↑</button>
+					<button data-act="down" title="Move down">↓</button>
+					<button data-act="dup" title="Duplicate">⧉</button>
+					<button data-act="del" title="Delete">✕</button>
+					<button data-act="toggle" title="Edit details">${isOpen ? '▾' : '▸'}</button>
+				</div>
+				${isOpen ? projectBodyHtml(p) : ''}`;
+			row.querySelectorAll('.ed-proj-head button').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const act = btn.dataset.act;
+					if (act === 'toggle') { expandedProject = isOpen ? null : cat + ':' + p.id; renderProjects(); }
+					else if (act === 'up' && idx > 0) { const tmp = list[idx - 1]; list[idx - 1] = list[idx]; list[idx] = tmp; renderProjects(); liveUpdate(); }
+					else if (act === 'down' && idx < list.length - 1) { const tmp = list[idx + 1]; list[idx + 1] = list[idx]; list[idx] = tmp; renderProjects(); liveUpdate(); }
+					else if (act === 'dup') { const c = clone(p); c.id = p.id + '-copy-' + Date.now().toString(36); list.splice(idx + 1, 0, c); renderProjects(); liveUpdate(); }
+					else if (act === 'del') { if (confirm('Delete "' + (p.title || 'this project') + '"?')) { list.splice(idx, 1); expandedProject = null; renderProjects(); liveUpdate(); } }
+				});
+			});
+			if (isOpen) bindProjectBody(row, cat, idx);
+			box.appendChild(row);
+		});
+	}
+
+	let currentEdTab = 'text';
+
+	function activateTab(name) {
+		currentEdTab = name;
+		if (!panel) return;
+		panel.querySelectorAll('#ed-tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+		panel.querySelectorAll('#ed-sections section').forEach(s => s.classList.toggle('ed-active', s.dataset.tab === name));
+		panel.scrollTop = 0;
+	}
+
+	function showTokenHelp() {
+		activateTab('publish');
+		const d = document.getElementById('ed-gh-details');
+		if (d) d.open = true;
+		const t = document.getElementById('ed-gh-token');
+		if (t) t.focus();
+	}
+
+	function renderPanelBody() {
+		document.getElementById('ed-sections').innerHTML = panelSectionsHtml();
+		bindPanel();
+		renderAboutParas();
+		renderProjects();
+		activateTab(currentEdTab);
+	}
+
+	function bindPanel() {
+		panel.querySelectorAll('[data-path]').forEach(inp => {
+			inp.addEventListener('input', () => { setByPath(draft, inp.dataset.path, inp.value); liveUpdate(); });
+		});
+		attachUpload(panel.querySelectorAll('[data-up-for]'), (url, btn) => {
+			setByPath(draft, btn.dataset.upFor, url);
+			const inp = panel.querySelector('[data-path="' + btn.dataset.upFor + '"]');
+			if (inp) inp.value = url;
+		});
+		document.getElementById('ed-font').addEventListener('change', (e) => {
+			draft.typography.fontFamily = e.target.value;
+			applyTypography(draft.typography);
+		});
+		const scale = document.getElementById('ed-scale');
+		scale.addEventListener('input', () => {
+			draft.typography.fontScale = +scale.value;
+			document.getElementById('ed-scale-val').textContent = scale.value;
+			applyTypography(draft.typography);
+		});
+		const ls = document.getElementById('ed-ls');
+		ls.addEventListener('input', () => {
+			draft.typography.letterSpacing = +ls.value;
+			document.getElementById('ed-ls-val').textContent = ls.value;
+			applyTypography(draft.typography);
+		});
+		document.getElementById('ed-cat').addEventListener('change', () => { expandedProject = null; renderProjects(); });
+		document.getElementById('ed-add-proj').addEventListener('click', () => {
+			const cat = currentCat();
+			const p = {
+				id: 'new-' + Date.now().toString(36),
+				title: 'New project',
+				image: '',
+				media: [],
+				year: String(new Date().getFullYear()),
+				client: '',
+				role: '',
+				description: '',
+				link: ''
+			};
+			draft.projects[cat] = draft.projects[cat] || [];
+			draft.projects[cat].unshift(p);
+			expandedProject = cat + ':' + p.id;
+			renderProjects();
+			liveUpdate();
+		});
+		document.getElementById('ed-add-para').addEventListener('click', () => {
+			draft.identity.aboutParagraphs.push('');
+			renderAboutParas();
+			liveUpdate();
+		});
+		document.getElementById('ed-download').addEventListener('click', downloadConfig);
+		document.getElementById('ed-save-draft').addEventListener('click', () => saveDraft(false));
+		document.getElementById('ed-discard').addEventListener('click', discardDraft);
+		document.getElementById('ed-gh-push').addEventListener('click', pushToGitHub);
+	}
+
+	function buildPanel() {
+		panel = document.createElement('div');
+		panel.id = 'edit-panel';
+		panel.innerHTML = `
+			<div id="ed-top">
+				<header>
+					<h2>Edit Website</h2>
+					<div>
+						<button id="ed-preview" title="Hide panel to preview the site">👁 Preview</button>
+						<button id="ed-close" title="Close editor">✕ Close</button>
+					</div>
+				</header>
+				<div id="ed-tabs">
+					<button data-tab="text" class="active"><span class="ed-tab-icon">✏️</span>Text</button>
+					<button data-tab="design"><span class="ed-tab-icon">🎨</span>Design</button>
+					<button data-tab="projects"><span class="ed-tab-icon">🖼️</span>Projects</button>
+					<button data-tab="publish"><span class="ed-tab-icon">📤</span>Publish</button>
+				</div>
+				<div id="ed-status">Changes preview live on the page. When you're happy, go to the <b>Publish</b> tab — it's 3 easy steps.</div>
+			</div>
+			<div id="ed-sections"></div>`;
+		document.body.appendChild(panel);
+		panel.querySelectorAll('#ed-tabs button').forEach(b => {
+			b.addEventListener('click', () => activateTab(b.dataset.tab));
+		});
+
+		peekBtn = document.createElement('button');
+		peekBtn.id = 'ed-peek';
+		peekBtn.textContent = '✎';
+		peekBtn.title = 'Show editor';
+		peekBtn.addEventListener('click', () => { panel.classList.remove('ed-hidden'); peekBtn.style.display = 'none'; });
+		document.body.appendChild(peekBtn);
+
+		panel.querySelector('#ed-close').addEventListener('click', () => closeEditor(true));
+		panel.querySelector('#ed-preview').addEventListener('click', () => { panel.classList.add('ed-hidden'); peekBtn.style.display = 'block'; });
+
+		renderPanelBody();
+		try { const t = localStorage.getItem(TOKEN_KEY); if (t) document.getElementById('ed-gh-token').value = t; } catch (e) { /* ignore */ }
+		if (loadDraft()) setStatus('📝 You have an unpublished draft loaded. Click <b>Download site-config.js</b> to publish it, or <b>Discard</b> to revert to the live content.');
+	}
+
+	function openEditor() {
+		if (panel) return;
+		draft = loadDraft() || clone(getCfg());
+		window.SITE_CONFIG = draft;
+		buildPanel();
+		applyConfig(true);
+	}
+
+	function closeEditor(saveIt) {
+		if (!panel) return;
+		if (saveIt) saveDraft(true);
+		panel.remove();
+		panel = null;
+		if (peekBtn) { peekBtn.remove(); peekBtn = null; }
+		window.SITE_CONFIG = publishedCfg;
+		applyConfig(true);
+		if (location.hash === '#edit') history.replaceState(null, '', location.pathname + location.search);
+	}
+
+	function syncHash() {
+		if (location.hash === '#edit') openEditor();
+		else closeEditor(true);
+	}
+
+	window.addEventListener('hashchange', syncHash);
+	document.addEventListener('keydown', (e) => {
+		if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
+			e.preventDefault();
+			if (location.hash === '#edit') closeEditor(true);
+			else location.hash = 'edit';
+		}
+	});
+
+	if (location.hash === '#edit') openEditor();
+})();
+</script>
 
 </body></html>
