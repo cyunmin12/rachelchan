@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
 <meta name="description" content="Portfolio of Rachel Chan — Creative Producer, Filmmaker &amp; Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co; media-src https://rachelchan.co; frame-src https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co; media-src https://rachelchan.co; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+<meta name="keywords" content="Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rachel Chan">
 <meta property="og:title" content="RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist">
@@ -18,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://rachelchan.co">
-<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link id="webfontLink" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
 <style>
 :root {
 --nav-width: 280px;
@@ -38,6 +39,7 @@
 --content-max-width: 1200px;
 /* Typography */
 --font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+--extra-ls: 0em; /* global letter-spacing add-on, set by Edit Mode */
 --fs-xs: 0.75rem;    /* 12px */
 --fs-sm: 0.875rem;   /* 14px */
 --fs-base: 1rem;     /* 16px */
@@ -53,6 +55,7 @@
 		padding: 0;
 		min-height: 100vh;
 		font-family: var(--font-body);
+		letter-spacing: var(--extra-ls, 0em);
 		background: #000;
 		color: var(--primary); 
 		width: 100%;
@@ -139,7 +142,7 @@
 	.site-title {
 		font-weight: 900;
 		font-size: var(--fs-md);
-		letter-spacing: 0.18em;
+		letter-spacing: calc(0.18em + var(--extra-ls));
 		color: var(--primary);
 		text-transform: uppercase;
 		text-align: center;
@@ -213,13 +216,13 @@
 		background: transparent;
 		width: 100%;
 		box-sizing: border-box;
-		letter-spacing: 0.03em;
+		letter-spacing: calc(0.03em + var(--extra-ls));
 	}
 
 	/* Showreel Link Specifics */
 	nav.nav-menu a.showreel-link {
 		font-size: var(--fs-xs);
-		letter-spacing: 0.1em;
+		letter-spacing: calc(0.1em + var(--extra-ls));
 		padding: var(--nav-link-pad-y) var(--nav-link-pad-x);
 		text-align: center;
 		justify-content: center;
@@ -328,7 +331,7 @@
 		font-weight: 200;
 		padding: 0.7em 1.6em;
 		font-size: var(--fs-sm);
-		letter-spacing: 0.07em;
+		letter-spacing: calc(0.07em + var(--extra-ls));
 		border-radius: 4px;
 		transition: all 0.3s ease;
 		text-transform: uppercase;
@@ -746,7 +749,7 @@
 		color: #fff;
 		font-weight: 900;
 		font-size: var(--fs-base);
-		letter-spacing: 0.1em;
+		letter-spacing: calc(0.1em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
 		pointer-events: auto;
@@ -758,7 +761,7 @@
 		color: #fff;
 		font-weight: 300;
 		font-size: var(--fs-sm);
-		letter-spacing: 0.05em;
+		letter-spacing: calc(0.05em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
 		pointer-events: auto;
@@ -884,7 +887,7 @@
 		text-decoration: none;
 		text-transform: uppercase;
 		font-size: var(--fs-sm);
-		letter-spacing: 1px;
+		letter-spacing: calc(1px + var(--extra-ls));
 		cursor: pointer;
 		transition: background 0.3s ease;
 	}
@@ -921,7 +924,7 @@
 	.m-horiz-hint span.text {
 		font-size: var(--fs-xs); /* Smaller text */
 		text-transform: uppercase;
-		letter-spacing: 2px;
+		letter-spacing: calc(2px + var(--extra-ls));
 		font-weight: 100; 
 	}
 
@@ -1108,6 +1111,184 @@
 			line-height: 1.6;
 		}
 	}
+
+	/* ============ EDIT MODE PANEL (#edit) ============ */
+	#edit-panel {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 400px;
+		max-width: 100vw;
+		height: 100vh;
+		background: #fff;
+		color: #111;
+		z-index: 5000;
+		box-shadow: -8px 0 30px rgba(0, 0, 0, 0.35);
+		overflow-y: auto;
+		font-size: 14px;
+		letter-spacing: normal;
+		transition: transform 0.3s ease;
+	}
+
+	#edit-panel.ed-hidden { transform: translateX(105%); }
+
+	#edit-panel header {
+		position: sticky;
+		top: 0;
+		background: #111;
+		color: #fff;
+		padding: 12px 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+		z-index: 2;
+	}
+
+	#edit-panel header h2 {
+		margin: 0;
+		font-size: 15px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+
+	#edit-panel header button {
+		background: none;
+		border: 1px solid rgba(255, 255, 255, 0.6);
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+		border-radius: 4px;
+		padding: 4px 10px;
+	}
+
+	#edit-panel section { padding: 14px 16px; border-bottom: 1px solid #eee; }
+
+	#edit-panel h3 {
+		margin: 0 0 10px;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: #b00000;
+		font-weight: 700;
+	}
+
+	#edit-panel label {
+		display: block;
+		margin: 10px 0 3px;
+		font-weight: 600;
+		font-size: 11px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #555;
+	}
+
+	#edit-panel input[type="text"],
+	#edit-panel input[type="url"],
+	#edit-panel input[type="number"],
+	#edit-panel textarea,
+	#edit-panel select {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 7px 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		font-family: inherit;
+		font-size: 13px;
+		background: #fff;
+		color: #111;
+	}
+
+	#edit-panel textarea { min-height: 70px; resize: vertical; }
+	#edit-panel input[type="range"] { width: 100%; accent-color: #b00000; }
+
+	#edit-panel .ed-btn {
+		display: inline-block;
+		margin: 8px 8px 0 0;
+		padding: 8px 14px;
+		border: 1px solid #111;
+		background: #111;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 12px;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	#edit-panel .ed-btn.secondary { background: #fff; color: #111; }
+	#edit-panel .ed-btn.danger { background: #b00000; border-color: #b00000; }
+	#edit-panel .ed-btn.small { padding: 4px 9px; font-size: 11px; margin: 4px 4px 0 0; }
+
+	#ed-status {
+		padding: 10px 16px;
+		background: #fff8e1;
+		font-size: 12px;
+		border-bottom: 1px solid #eee;
+		line-height: 1.5;
+	}
+
+	.ed-proj { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; background: #fff; }
+
+	.ed-proj-head {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		padding: 6px 8px;
+		background: #fafafa;
+		border-radius: 6px;
+	}
+
+	.ed-proj-head .ed-proj-title {
+		flex: 1;
+		font-weight: 600;
+		font-size: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.ed-proj-head button {
+		background: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 2px 7px;
+		font-size: 12px;
+		color: #333;
+		line-height: 1.2;
+	}
+
+	.ed-proj-body { padding: 8px; border-top: 1px solid #eee; }
+
+	.ed-media-row { display: flex; gap: 6px; margin-top: 6px; }
+	.ed-media-row select { width: 105px; flex: none; }
+	.ed-media-row input { flex: 1; }
+	.ed-media-row button { flex: none; background: none; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; padding: 0 9px; }
+
+	.ed-hint { font-size: 11px; color: #777; margin-top: 10px; line-height: 1.6; }
+
+	#ed-peek {
+		position: fixed;
+		right: 14px;
+		bottom: 14px;
+		z-index: 5001;
+		background: #111;
+		color: #fff;
+		border: none;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		font-size: 20px;
+		cursor: pointer;
+		display: none;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	}
+
+	@media (max-width: 900px) {
+		#edit-panel { width: 100vw; }
+	}
 </style>
 
 </head>
@@ -1201,9 +1382,11 @@
 	LinkedIn: <a href="https://www.linkedin.com/in/rachelchan1213/" target="_blank" rel="noopener noreferrer">linkedin.com/in/rachelchan1213</a></p>
 </div>
 
+<!-- Owner-editable content lives here. Generated by Edit Mode (#edit). Safe to be missing. -->
+<script src="site-config.js"></script>
 <script>
 	// --- DATA ---
-	const projectsData = {
+	const defaultProjectsData = {
 		"video-projects": [
 		    			{
 				id: "vp1",
@@ -2000,11 +2183,190 @@
 		]
 	};
 
+	// --- SITE CONFIG LAYER ---------------------------------------------
+	// All owner-editable content can be overridden by site-config.js
+	// (generated by the built-in Edit Mode at  yoursite.com/#edit ).
+	// If site-config.js is missing, the defaults below are used.
+	let projectsData = defaultProjectsData;
+	let currentTab = 'home';
+
+	const FONT_QUERIES = {
+		'Raleway': 'family=Raleway:ital,wght@0,100..900;1,100..900',
+		'Roboto': 'family=Roboto:ital,wght@0,100..900;1,100..900',
+		'Montserrat': 'family=Montserrat:ital,wght@0,100..900;1,100..900',
+		'Inter': 'family=Inter:ital,wght@0,100..900;1,100..900',
+		'Lato': 'family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400',
+		'Open Sans': 'family=Open+Sans:ital,wght@0,300..800;1,300..800',
+		'Playfair Display': 'family=Playfair+Display:ital,wght@0,400..900;1,400..900',
+		'Cormorant Garamond': 'family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700',
+		'Helvetica / System': null
+	};
+
+	const CONFIG_DEFAULTS = {
+		meta: {
+			title: 'RACHEL CHAN | Creative Producer, Filmmaker & Multimedia Artist',
+			description: 'Portfolio of Rachel Chan — Creative Producer, Filmmaker & Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.',
+			keywords: 'Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography',
+			ogImage: 'https://rachelchan.co/photos/the-only-constant-cover.jpg?v2'
+		},
+		identity: {
+			name: 'RACHEL CHAN',
+			introHeading: 'Hello I am Rachel!',
+			introText: 'Creative Producer, Filmmaker & Multimedia Artist',
+			email: 'rachelc1213@gmail.com',
+			linkedin: 'https://www.linkedin.com/in/rachelchan1213/',
+			aboutHeading: 'About Rachel Chan',
+			aboutParagraphs: ['RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master’s in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.']
+		},
+		typography: {
+			fontFamily: 'Raleway',
+			fontScale: 100,
+			letterSpacing: 0
+		},
+		navLabels: {
+			'home': 'HOME',
+			'video-projects': 'VIDEO PROJECTS',
+			'short-films': 'SHORT FILMS',
+			'photography': 'PHOTOGRAPHY',
+			'visuals': 'VISUALS',
+			'social-media': 'SOCIAL/ SHORT'
+		},
+		homeVideo: 'https://rachelchan.co/videos/home-video.mp4'
+	};
+
+	function getCfg() {
+		const c = window.SITE_CONFIG || {};
+		return {
+			meta: Object.assign({}, CONFIG_DEFAULTS.meta, c.meta),
+			identity: Object.assign({}, CONFIG_DEFAULTS.identity, c.identity),
+			typography: Object.assign({}, CONFIG_DEFAULTS.typography, c.typography),
+			navLabels: Object.assign({}, CONFIG_DEFAULTS.navLabels, c.navLabels),
+			homeVideo: c.homeVideo || CONFIG_DEFAULTS.homeVideo,
+			projects: c.projects || defaultProjectsData
+		};
+	}
+
+	function setMetaAttr(selector, value) {
+		const el = document.querySelector(selector);
+		if (el && value != null) el.setAttribute('content', value);
+	}
+
+	function applyTypography(t) {
+		const root = document.documentElement;
+		root.style.setProperty('--extra-ls', (t.letterSpacing || 0) + 'em');
+		const s = (t.fontScale || 100) / 100;
+		const bases = { xs: 0.75, sm: 0.875, base: 1, md: 1.125, lg: 1.5, xl: 2, hero: 2.25 };
+		for (const k in bases) root.style.setProperty('--fs-' + k, (bases[k] * s).toFixed(4) + 'rem');
+		const family = t.fontFamily || 'Raleway';
+		if (family === 'Helvetica / System') {
+			root.style.setProperty('--font-body', '"Helvetica Neue", Helvetica, Arial, sans-serif');
+		} else {
+			root.style.setProperty('--font-body', '"' + family + '", "Helvetica Neue", Helvetica, Arial, sans-serif');
+		}
+		const query = FONT_QUERIES[family];
+		let link = document.getElementById('webfontLink');
+		if (query) {
+			if (!link) {
+				link = document.createElement('link');
+				link.id = 'webfontLink';
+				link.rel = 'stylesheet';
+				document.head.appendChild(link);
+			}
+			const href = 'https://fonts.googleapis.com/css2?' + query + '&display=swap';
+			if (link.getAttribute('href') !== href) link.setAttribute('href', href);
+		} else if (link) {
+			link.remove();
+		}
+	}
+
+	function rebuildAboutDialog(cfg) {
+		const dlg = document.getElementById('aboutDialog');
+		dlg.querySelectorAll('p').forEach(p => p.remove());
+		cfg.identity.aboutParagraphs.forEach(text => {
+			if (!text) return;
+			const p = document.createElement('p');
+			p.textContent = text;
+			dlg.appendChild(p);
+		});
+		const contact = document.createElement('p');
+		contact.appendChild(document.createTextNode('Contact: '));
+		const mail = document.createElement('a');
+		mail.href = 'mailto:' + cfg.identity.email;
+		mail.textContent = cfg.identity.email;
+		contact.appendChild(mail);
+		if (cfg.identity.linkedin) {
+			contact.appendChild(document.createElement('br'));
+			contact.appendChild(document.createTextNode('LinkedIn: '));
+			const li = document.createElement('a');
+			li.href = cfg.identity.linkedin;
+			li.target = '_blank';
+			li.rel = 'noopener noreferrer';
+			li.textContent = cfg.identity.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+			contact.appendChild(li);
+		}
+		dlg.appendChild(contact);
+	}
+
+	function applyConfig(rerender) {
+		const cfg = getCfg();
+		projectsData = cfg.projects;
+
+		// Meta / SEO
+		document.title = cfg.meta.title;
+		setMetaAttr('meta[name="description"]', cfg.meta.description);
+		setMetaAttr('meta[name="keywords"]', cfg.meta.keywords);
+		setMetaAttr('meta[property="og:title"]', cfg.meta.title);
+		setMetaAttr('meta[property="og:description"]', cfg.meta.description);
+		setMetaAttr('meta[property="og:image"]', cfg.meta.ogImage);
+
+		// Identity texts
+		document.getElementById('siteTitle').textContent = cfg.identity.name;
+		document.querySelector('.nav-intro h2').textContent = cfg.identity.introHeading;
+		document.querySelector('.nav-intro p').textContent = cfg.identity.introText;
+		const navEmail = document.querySelector('.nav-email a');
+		navEmail.href = 'mailto:' + cfg.identity.email;
+		navEmail.textContent = cfg.identity.email;
+		document.getElementById('aboutDialogTitle').textContent = cfg.identity.aboutHeading;
+		rebuildAboutDialog(cfg);
+		aboutBtn.textContent = sidebarShown ? 'ABOUT' : cfg.identity.name;
+
+		// Nav labels
+		navLinks.forEach(link => {
+			const label = cfg.navLabels[link.dataset.tab];
+			if (label) link.textContent = label;
+		});
+
+		applyTypography(cfg.typography);
+
+		if (rerender) {
+			if (desktopInited) setMainContent(currentTab);
+			if (mobileInited) initMobileView();
+		}
+	}
+
+	// Autoplay hardening: if the browser refuses the first play() attempt
+	// (iOS low-power mode, data savers...), retry on the first interaction.
+	function ensureAutoplay(videoEl) {
+		if (!videoEl) return;
+		const tryPlay = () => {
+			const p = videoEl.play();
+			if (p && p.catch) p.catch(() => {
+				document.addEventListener('click', tryPlay, { once: true });
+				document.addEventListener('touchstart', tryPlay, { once: true });
+			});
+		};
+		tryPlay();
+	}
+
+	function titleFromLabel(label) {
+		return String(label || '').toLowerCase().replace(/(^|[\s/-])(\w)/g, (m, pre, ch) => pre + ch.toUpperCase());
+	}
+
 	const tabContent = {
-		"home": `
+		"home": () => `
 			<div class="home-video-container">
 				<video class="home-video" autoplay loop muted playsinline>
-					<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+					<source src="${getCfg().homeVideo}" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 			</div>
@@ -2068,7 +2430,7 @@
 	function hideSidebar() {
 		sidebar.classList.add("hide");
 		sidebarShown = false;
-		aboutBtn.textContent = "RACHEL CHAN";
+		aboutBtn.textContent = getCfg().identity.name;
 		edgeToggle.setAttribute('aria-expanded', 'false');
 		edgeToggle.style.left = "0";
 		toggleIcon.innerHTML = '<span>&#8594;</span>';
@@ -2093,9 +2455,11 @@
 
 	// Desktop Navigation
 	function setMainContent(tabName) {
+		currentTab = tabName;
 		if (tabName === "home") {
 			mainContent.classList.remove("white-bg");
-			mainContent.innerHTML = tabContent["home"];
+			mainContent.innerHTML = tabContent["home"]();
+			ensureAutoplay(mainContent.querySelector('.home-video'));
 		} else {
 			mainContent.classList.add("white-bg");
 			mainContent.innerHTML = tabContent[tabName] || "<section class='tab-content-container'><h1>Content Not Found</h1></section>";
@@ -2322,14 +2686,15 @@
 		mobileHeaderTitle.onclick = function() { mobileContainer.scrollTo(0, 0); return false; };
 		mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
 
-		// 2. Define Section Order
+		// 2. Define Section Order (titles derived from the editable nav labels)
+		const cfgNav = getCfg().navLabels;
 		const sectionOrder = [
 			{ id: 'home', title: 'Home' },
-			{ id: 'video-projects', title: 'Video Projects' },
-			{ id: 'short-films', title: 'Short Films' },
-			{ id: 'photography', title: 'Photography' },
-			{ id: 'visuals', title: 'Visuals' },
-			{ id: 'social-media', title: 'Social/Short' },
+			{ id: 'video-projects', title: titleFromLabel(cfgNav['video-projects']) },
+			{ id: 'short-films', title: titleFromLabel(cfgNav['short-films']) },
+			{ id: 'photography', title: titleFromLabel(cfgNav['photography']) },
+			{ id: 'visuals', title: titleFromLabel(cfgNav['visuals']) },
+			{ id: 'social-media', title: titleFromLabel(cfgNav['social-media']) },
 		    //{ id: 'showreel', title: 'Showreel' }
 		];
 
@@ -2348,16 +2713,18 @@
 			sectionEl.dataset.title = section.title; // Store title for observer
 
 			if (section.id === 'home') {
+				const cfg = getCfg();
 				sectionEl.classList.add('m-home-section');
 				sectionEl.innerHTML = `
 					<video class="m-home-video" autoplay loop muted playsinline>
-						<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+						<source src="${cfg.homeVideo}" type="video/mp4">
 					</video>
 					<div class="m-home-overlay">
-						<h1>Rachel Chan</h1>
-						<p>Creative Producer & Filmmaker</p>
+						<h1>${escapeHtml(cfg.identity.name)}</h1>
+						<p>${escapeHtml(cfg.identity.introText)}</p>
 					</div>
 				`;
+				ensureAutoplay(sectionEl.querySelector('.m-home-video'));
 			} else if (section.id === 'showreel') {
 				sectionEl.innerHTML = `
 					<div class="m-showreel-container">
@@ -2430,11 +2797,11 @@
 					// --- HEADER TEXT ---
 					// (click handlers are assigned once in initMobileView)
 					if (sectionId === 'home') {
-						mobileHeaderTitle.textContent = "RACHEL CHAN";
+						mobileHeaderTitle.textContent = getCfg().identity.name;
 						mobileHeaderRightBtn.textContent = "ABOUT";
 					} else {
 						mobileHeaderTitle.textContent = sectionTitle.toUpperCase();
-						mobileHeaderRightBtn.textContent = "RACHEL CHAN";
+						mobileHeaderRightBtn.textContent = getCfg().identity.name;
 					}
 				}
 			});
@@ -2462,10 +2829,435 @@
 		}
 	}
 
+	applyConfig(false); // apply site-config.js (or built-in defaults) before first render
 	initVisibleView();
 	mobileQuery.addEventListener('change', initVisibleView);
 </script>
 
 
+
+<script>
+// ===================== EDIT MODE — no-code content editor =====================
+// Open: add #edit to the site URL (https://rachelchan.co/#edit) or press Ctrl/Cmd+Shift+E.
+// Everything previews live. To publish: "Download site-config.js", then upload that
+// file to the web host into the same folder as index.html. No coding required.
+(function () {
+	const DRAFT_KEY = 'rc_site_draft';
+	const TOKEN_KEY = 'rc_gh_token';
+	const REPO = 'cyunmin12/rachelchan';
+	const CATEGORIES = ['video-projects', 'short-films', 'photography', 'visuals', 'social-media'];
+
+	let panel = null;
+	let peekBtn = null;
+	let draft = null;
+	const publishedCfg = window.SITE_CONFIG || null;
+	let debounceTimer = null;
+	let expandedProject = null;
+
+	function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+	function getByPath(obj, path) {
+		return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+	}
+	function setByPath(obj, path, value) {
+		const parts = path.split('.');
+		let o = obj;
+		for (let i = 0; i < parts.length - 1; i++) o = o[parts[i]];
+		o[parts[parts.length - 1]] = value;
+	}
+
+	function liveUpdate(fullRerender) {
+		window.SITE_CONFIG = draft;
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => applyConfig(fullRerender !== false), 180);
+	}
+
+	function setStatus(msg) {
+		const el = document.getElementById('ed-status');
+		if (el) el.innerHTML = msg;
+	}
+
+	function saveDraft(quiet) {
+		try {
+			localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+			if (!quiet) setStatus('✅ Draft saved in this browser. Use <b>Download site-config.js</b> to publish it to your website.');
+		} catch (e) { setStatus('Could not save draft: ' + e.message); }
+	}
+
+	function loadDraft() {
+		try { const d = localStorage.getItem(DRAFT_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; }
+	}
+
+	function discardDraft() {
+		if (!confirm('Discard your unpublished changes and reload the published content?')) return;
+		try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ }
+		window.SITE_CONFIG = publishedCfg;
+		draft = clone(getCfg());
+		window.SITE_CONFIG = draft;
+		renderPanelBody();
+		applyConfig(true);
+		setStatus('Draft discarded — showing published content.');
+	}
+
+	function configFileBody() {
+		return 'window.SITE_CONFIG = ' + JSON.stringify(draft, null, 2) + ';\n';
+	}
+
+	function downloadConfig() {
+		saveDraft(true);
+		const blob = new Blob([configFileBody()], { type: 'text/javascript;charset=utf-8' });
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = 'site-config.js';
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		setStatus('⬇️ <b>site-config.js downloaded.</b> Now log in to your web host, open the file manager, and upload <b>site-config.js</b> into the same folder as <b>index.html</b> (replace the old one). Your changes go live immediately.');
+	}
+
+	async function pushToGitHub() {
+		const tokenEl = document.getElementById('ed-gh-token');
+		const branchEl = document.getElementById('ed-gh-branch');
+		const token = (tokenEl.value || '').trim();
+		if (!token) { setStatus('Paste a GitHub token first (fine-grained token with Contents: Read and write for ' + REPO + ').'); return; }
+		try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ }
+		const branch = branchEl.value || 'main';
+		const url = 'https://api.github.com/repos/' + REPO + '/contents/site-config.js';
+		const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' };
+		setStatus('Pushing to GitHub…');
+		try {
+			let sha = null;
+			const head = await fetch(url + '?ref=' + encodeURIComponent(branch), { headers });
+			if (head.ok) sha = (await head.json()).sha;
+			const payload = {
+				message: 'Update site content via built-in editor\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+				content: btoa(unescape(encodeURIComponent(configFileBody()))),
+				branch: branch
+			};
+			if (sha) payload.sha = sha;
+			const res = await fetch(url, {
+				method: 'PUT',
+				headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+				body: JSON.stringify(payload)
+			});
+			if (!res.ok) throw new Error((await res.text()).slice(0, 220));
+			setStatus('✅ Saved to GitHub (branch: ' + branch + '). Remember: your live site is served by your web host — also click <b>Download</b> and upload site-config.js there.');
+		} catch (err) {
+			setStatus('❌ GitHub push failed: ' + err.message);
+		}
+	}
+
+	// ---------- Panel ----------
+	function textF(label, path, type) {
+		const val = getByPath(draft, path);
+		return '<label>' + label + '</label><input type="' + (type || 'text') + '" data-path="' + path + '" value="' + escapeHtml(val == null ? '' : val) + '">';
+	}
+	function areaF(label, path) {
+		const val = getByPath(draft, path);
+		return '<label>' + label + '</label><textarea data-path="' + path + '">' + escapeHtml(val == null ? '' : val) + '</textarea>';
+	}
+
+	function panelSectionsHtml() {
+		const fontOpts = Object.keys(FONT_QUERIES).map(f =>
+			'<option' + (f === draft.typography.fontFamily ? ' selected' : '') + '>' + f + '</option>').join('');
+		const catOpts = CATEGORIES.map(c =>
+			'<option value="' + c + '">' + escapeHtml(draft.navLabels[c] || c) + '</option>').join('');
+		const navFields = ['home'].concat(CATEGORIES).map(c =>
+			textF('Menu label: ' + c, 'navLabels.' + c)).join('');
+		return `
+		<section>
+			<h3>Website &amp; SEO</h3>
+			${textF('Site name (sidebar & mobile header)', 'identity.name')}
+			${textF('Browser tab title', 'meta.title')}
+			${areaF('Search description', 'meta.description')}
+			${textF('Search tags (keywords, comma-separated)', 'meta.keywords')}
+			${textF('Share image URL (social preview)', 'meta.ogImage', 'url')}
+		</section>
+		<section>
+			<h3>Typography</h3>
+			<label>Font style</label>
+			<select id="ed-font">${fontOpts}</select>
+			<label>Font size — <span id="ed-scale-val">${draft.typography.fontScale}</span>%</label>
+			<input type="range" id="ed-scale" min="80" max="140" step="1" value="${draft.typography.fontScale}">
+			<label>Font spacing — <span id="ed-ls-val">${draft.typography.letterSpacing}</span>em</label>
+			<input type="range" id="ed-ls" min="-0.01" max="0.08" step="0.0025" value="${draft.typography.letterSpacing}">
+		</section>
+		<section>
+			<h3>Intro &amp; About</h3>
+			${textF('Sidebar intro heading', 'identity.introHeading')}
+			${textF('Sidebar intro tagline', 'identity.introText')}
+			${textF('About heading', 'identity.aboutHeading')}
+			<label>About paragraphs</label>
+			<div id="ed-about-paras"></div>
+			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
+			${textF('Email', 'identity.email')}
+			${textF('LinkedIn profile URL', 'identity.linkedin', 'url')}
+		</section>
+		<section>
+			<h3>Home Video</h3>
+			${textF('Background video URL (MP4)', 'homeVideo', 'url')}
+		</section>
+		<section>
+			<h3>Menu Labels</h3>
+			${navFields}
+		</section>
+		<section>
+			<h3>Projects</h3>
+			<label>Category</label>
+			<select id="ed-cat">${catOpts}</select>
+			<div id="ed-proj-list" style="margin-top:8px"></div>
+			<button class="ed-btn small secondary" id="ed-add-proj">+ Add project</button>
+		</section>
+		<section>
+			<h3>Publish</h3>
+			<button class="ed-btn" id="ed-download">⬇ Download site-config.js</button>
+			<button class="ed-btn secondary" id="ed-save-draft">Save draft</button>
+			<button class="ed-btn danger" id="ed-discard">Discard</button>
+			<p class="ed-hint"><b>How to publish:</b> 1) Click <b>Download site-config.js</b>. 2) Log in to your web host's file manager. 3) Upload the file into the same folder as index.html, replacing the old site-config.js. Done — your changes are live.</p>
+			<label style="margin-top:14px">Optional: keep GitHub in sync</label>
+			<input type="text" id="ed-gh-token" placeholder="github_pat_… (stored only in this browser)" autocomplete="off">
+			<select id="ed-gh-branch" style="margin-top:6px"><option value="main">branch: main</option><option value="improve-index-html">branch: improve-index-html</option></select>
+			<button class="ed-btn secondary" id="ed-gh-push" style="margin-top:8px">Push to GitHub</button>
+		</section>`;
+	}
+
+	function renderAboutParas() {
+		const box = document.getElementById('ed-about-paras');
+		if (!box) return;
+		box.innerHTML = '';
+		draft.identity.aboutParagraphs.forEach((para, i) => {
+			const ta = document.createElement('textarea');
+			ta.value = para;
+			ta.style.marginTop = '6px';
+			ta.addEventListener('input', () => { draft.identity.aboutParagraphs[i] = ta.value; liveUpdate(); });
+			const rm = document.createElement('button');
+			rm.className = 'ed-btn small danger';
+			rm.textContent = 'Remove paragraph';
+			rm.addEventListener('click', () => { draft.identity.aboutParagraphs.splice(i, 1); renderAboutParas(); liveUpdate(); });
+			box.appendChild(ta);
+			box.appendChild(rm);
+		});
+	}
+
+	function currentCat() {
+		const sel = document.getElementById('ed-cat');
+		return sel ? sel.value : CATEGORIES[0];
+	}
+
+	function projectBodyHtml(p) {
+		const mediaRows = (p.media || []).map((m, mi) => `
+			<div class="ed-media-row">
+				<select data-mi="${mi}" data-mk="type">
+					<option value="youtube"${m.type === 'youtube' ? ' selected' : ''}>youtube</option>
+					<option value="image"${m.type === 'image' ? ' selected' : ''}>image</option>
+					<option value="video"${m.type === 'video' ? ' selected' : ''}>video</option>
+				</select>
+				<input type="text" data-mi="${mi}" data-mk="url" value="${escapeHtml(m.url || '')}" placeholder="https://…">
+				<button data-mdel="${mi}" title="Remove media">✕</button>
+			</div>`).join('');
+		return `
+			<div class="ed-proj-body">
+				<label>Title</label><input type="text" data-f="title" value="${escapeHtml(p.title || '')}">
+				<label>Year</label><input type="text" data-f="year" value="${escapeHtml(p.year || '')}">
+				<label>Client / Type</label><input type="text" data-f="client" value="${escapeHtml(p.client || '')}">
+				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
+				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
+				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
+				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
+				<label>Media (top item shows first; youtube = embed URL)</label>
+				${mediaRows}
+				<button class="ed-btn small secondary" data-madd>+ Add media</button>
+			</div>`;
+	}
+
+	function bindProjectBody(row, cat, idx) {
+		const p = draft.projects[cat][idx];
+		row.querySelectorAll('[data-f]').forEach(inp => {
+			inp.addEventListener('input', () => {
+				p[inp.dataset.f] = inp.value;
+				if (inp.dataset.f === 'title') {
+					const t = row.querySelector('.ed-proj-title');
+					if (t) t.textContent = inp.value || '(untitled)';
+				}
+				liveUpdate();
+			});
+		});
+		row.querySelectorAll('[data-mk]').forEach(inp => {
+			inp.addEventListener(inp.tagName === 'SELECT' ? 'change' : 'input', () => {
+				p.media[+inp.dataset.mi][inp.dataset.mk] = inp.value;
+				liveUpdate();
+			});
+		});
+		row.querySelectorAll('[data-mdel]').forEach(btn => {
+			btn.addEventListener('click', () => { p.media.splice(+btn.dataset.mdel, 1); renderProjects(); liveUpdate(); });
+		});
+		const addBtn = row.querySelector('[data-madd]');
+		if (addBtn) addBtn.addEventListener('click', () => {
+			p.media = p.media || [];
+			p.media.push({ type: 'image', url: '' });
+			renderProjects();
+			liveUpdate();
+		});
+	}
+
+	function renderProjects() {
+		const box = document.getElementById('ed-proj-list');
+		if (!box) return;
+		const cat = currentCat();
+		const list = draft.projects[cat] || (draft.projects[cat] = []);
+		box.innerHTML = '';
+		list.forEach((p, idx) => {
+			const row = document.createElement('div');
+			row.className = 'ed-proj';
+			const isOpen = expandedProject === cat + ':' + p.id;
+			row.innerHTML = `
+				<div class="ed-proj-head">
+					<span class="ed-proj-title">${escapeHtml(p.title || '(untitled)')}</span>
+					<button data-act="up" title="Move up">↑</button>
+					<button data-act="down" title="Move down">↓</button>
+					<button data-act="dup" title="Duplicate">⧉</button>
+					<button data-act="del" title="Delete">✕</button>
+					<button data-act="toggle" title="Edit details">${isOpen ? '▾' : '▸'}</button>
+				</div>
+				${isOpen ? projectBodyHtml(p) : ''}`;
+			row.querySelectorAll('.ed-proj-head button').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const act = btn.dataset.act;
+					if (act === 'toggle') { expandedProject = isOpen ? null : cat + ':' + p.id; renderProjects(); }
+					else if (act === 'up' && idx > 0) { const tmp = list[idx - 1]; list[idx - 1] = list[idx]; list[idx] = tmp; renderProjects(); liveUpdate(); }
+					else if (act === 'down' && idx < list.length - 1) { const tmp = list[idx + 1]; list[idx + 1] = list[idx]; list[idx] = tmp; renderProjects(); liveUpdate(); }
+					else if (act === 'dup') { const c = clone(p); c.id = p.id + '-copy-' + Date.now().toString(36); list.splice(idx + 1, 0, c); renderProjects(); liveUpdate(); }
+					else if (act === 'del') { if (confirm('Delete "' + (p.title || 'this project') + '"?')) { list.splice(idx, 1); expandedProject = null; renderProjects(); liveUpdate(); } }
+				});
+			});
+			if (isOpen) bindProjectBody(row, cat, idx);
+			box.appendChild(row);
+		});
+	}
+
+	function renderPanelBody() {
+		document.getElementById('ed-sections').innerHTML = panelSectionsHtml();
+		bindPanel();
+		renderAboutParas();
+		renderProjects();
+	}
+
+	function bindPanel() {
+		panel.querySelectorAll('[data-path]').forEach(inp => {
+			inp.addEventListener('input', () => { setByPath(draft, inp.dataset.path, inp.value); liveUpdate(); });
+		});
+		document.getElementById('ed-font').addEventListener('change', (e) => {
+			draft.typography.fontFamily = e.target.value;
+			applyTypography(draft.typography);
+		});
+		const scale = document.getElementById('ed-scale');
+		scale.addEventListener('input', () => {
+			draft.typography.fontScale = +scale.value;
+			document.getElementById('ed-scale-val').textContent = scale.value;
+			applyTypography(draft.typography);
+		});
+		const ls = document.getElementById('ed-ls');
+		ls.addEventListener('input', () => {
+			draft.typography.letterSpacing = +ls.value;
+			document.getElementById('ed-ls-val').textContent = ls.value;
+			applyTypography(draft.typography);
+		});
+		document.getElementById('ed-cat').addEventListener('change', () => { expandedProject = null; renderProjects(); });
+		document.getElementById('ed-add-proj').addEventListener('click', () => {
+			const cat = currentCat();
+			const p = {
+				id: 'new-' + Date.now().toString(36),
+				title: 'New project',
+				image: '',
+				media: [],
+				year: String(new Date().getFullYear()),
+				client: '',
+				role: '',
+				description: '',
+				link: ''
+			};
+			draft.projects[cat] = draft.projects[cat] || [];
+			draft.projects[cat].unshift(p);
+			expandedProject = cat + ':' + p.id;
+			renderProjects();
+			liveUpdate();
+		});
+		document.getElementById('ed-add-para').addEventListener('click', () => {
+			draft.identity.aboutParagraphs.push('');
+			renderAboutParas();
+			liveUpdate();
+		});
+		document.getElementById('ed-download').addEventListener('click', downloadConfig);
+		document.getElementById('ed-save-draft').addEventListener('click', () => saveDraft(false));
+		document.getElementById('ed-discard').addEventListener('click', discardDraft);
+		document.getElementById('ed-gh-push').addEventListener('click', pushToGitHub);
+	}
+
+	function buildPanel() {
+		panel = document.createElement('div');
+		panel.id = 'edit-panel';
+		panel.innerHTML = `
+			<header>
+				<h2>Edit Website</h2>
+				<div>
+					<button id="ed-preview" title="Hide panel to preview the site">👁 Preview</button>
+					<button id="ed-close" title="Close editor">✕ Close</button>
+				</div>
+			</header>
+			<div id="ed-status">Changes preview live on the page. To publish: <b>Download site-config.js</b>, then upload it to your web host next to index.html.</div>
+			<div id="ed-sections"></div>`;
+		document.body.appendChild(panel);
+
+		peekBtn = document.createElement('button');
+		peekBtn.id = 'ed-peek';
+		peekBtn.textContent = '✎';
+		peekBtn.title = 'Show editor';
+		peekBtn.addEventListener('click', () => { panel.classList.remove('ed-hidden'); peekBtn.style.display = 'none'; });
+		document.body.appendChild(peekBtn);
+
+		panel.querySelector('#ed-close').addEventListener('click', () => closeEditor(true));
+		panel.querySelector('#ed-preview').addEventListener('click', () => { panel.classList.add('ed-hidden'); peekBtn.style.display = 'block'; });
+
+		renderPanelBody();
+		try { const t = localStorage.getItem(TOKEN_KEY); if (t) document.getElementById('ed-gh-token').value = t; } catch (e) { /* ignore */ }
+		if (loadDraft()) setStatus('📝 You have an unpublished draft loaded. Click <b>Download site-config.js</b> to publish it, or <b>Discard</b> to revert to the live content.');
+	}
+
+	function openEditor() {
+		if (panel) return;
+		draft = loadDraft() || clone(getCfg());
+		window.SITE_CONFIG = draft;
+		buildPanel();
+		applyConfig(true);
+	}
+
+	function closeEditor(saveIt) {
+		if (!panel) return;
+		if (saveIt) saveDraft(true);
+		panel.remove();
+		panel = null;
+		if (peekBtn) { peekBtn.remove(); peekBtn = null; }
+		window.SITE_CONFIG = publishedCfg;
+		applyConfig(true);
+		if (location.hash === '#edit') history.replaceState(null, '', location.pathname + location.search);
+	}
+
+	function syncHash() {
+		if (location.hash === '#edit') openEditor();
+		else closeEditor(true);
+	}
+
+	window.addEventListener('hashchange', syncHash);
+	document.addEventListener('keydown', (e) => {
+		if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
+			e.preventDefault();
+			if (location.hash === '#edit') closeEditor(true);
+			else location.hash = 'edit';
+		}
+	});
+
+	if (location.hash === '#edit') openEditor();
+})();
+</script>
 
 </body></html>
