@@ -11,9 +11,10 @@ window.SITE_CONFIG = {
     "introText": "Creative Producer, Filmmaker & Multimedia Artist",
     "email": "rachelc1213@gmail.com",
     "linkedin": "https://www.linkedin.com/in/rachelchan1213/",
-    "aboutHeading": "About Rachel Chan",
+    "aboutHeading": "About Me",
     "aboutParagraphs": [
-      "RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master’s in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content."
+      "A video producer, filmmaker, and passionate storyteller dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a advertising agency in the heart of Central London. She believe that every piece of content—from a brand message to an individual's narrative—is a story brought to life through moving images.",
+      "She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. After producing digital content at the M+ Museum, she completed her Master’s in Producing at Goldsmiths, University of London in 2024."
     ]
   },
   "typography": {
@@ -925,8 +926,8 @@ window.SITE_CONFIG = {
           }
         ],
         "year": "2026",
-        "client": "Commercial",
-        "role": "Producer, Editor",
+        "client": "",
+        "role": "Editor",
         "description": "Created an intro that integrates different text animations and movements to align with the branding of the event",
         "link": "https://www.youtube.com/embed/4ETZ6-dNO5M?si=AXdt9uR-2NniwX4u"
       },
@@ -1009,9 +1010,9 @@ window.SITE_CONFIG = {
           }
         ],
         "year": "2024",
-        "client": "Magazine",
-        "role": "Designer",
-        "description": "",
+        "client": "",
+        "role": "Designer, Photo Editor",
+        "description": "Art-directed and designed four print magazine issues, delivering high standards in typography, colour management, and visual asset handling.",
         "link": "https://rachelchanphotography.com/street-life"
       },
       {
