@@ -1132,9 +1132,9 @@
 
 	#edit-panel.ed-hidden { transform: translateX(105%); }
 
+	#ed-top { position: sticky; top: 0; z-index: 3; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+
 	#edit-panel header {
-		position: sticky;
-		top: 0;
 		background: #111;
 		color: #fff;
 		padding: 12px 16px;
@@ -1142,7 +1142,6 @@
 		justify-content: space-between;
 		align-items: center;
 		gap: 8px;
-		z-index: 2;
 	}
 
 	#edit-panel header h2 {
@@ -1163,7 +1162,36 @@
 		padding: 4px 10px;
 	}
 
-	#edit-panel section { padding: 14px 16px; border-bottom: 1px solid #eee; }
+	#ed-tabs { display: flex; background: #fff; border-bottom: 2px solid #eee; }
+	#ed-tabs button {
+		flex: 1;
+		border: none;
+		background: none;
+		cursor: pointer;
+		padding: 10px 2px 8px;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #999;
+		border-bottom: 3px solid transparent;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2px;
+	}
+	#ed-tabs button .ed-tab-icon { font-size: 17px; }
+	#ed-tabs button.active { color: #b00000; border-bottom-color: #b00000; }
+
+	#edit-panel section { display: none; padding: 16px; }
+	#edit-panel section.ed-active { display: block; }
+
+	#edit-panel details { margin-top: 16px; border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; background: #fafafa; }
+	#edit-panel details summary { cursor: pointer; font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
+	#edit-panel details[open] summary { margin-bottom: 4px; }
+
+	#edit-panel .ed-btn.big { display: block; width: 100%; padding: 15px; font-size: 14px; margin: 10px 0; background: #0a7d32; border-color: #0a7d32; }
+	.ed-steps { font-size: 12.5px; line-height: 1.8; color: #333; margin: 6px 0 14px; padding-left: 20px; }
 
 	#edit-panel h3 {
 		margin: 0 0 10px;
@@ -2980,7 +3008,7 @@
 	async function uploadMedia(file) {
 		const tokenEl = document.getElementById('ed-gh-token');
 		const token = (tokenEl.value || '').trim();
-		if (!token) { setStatus('⬆ To upload files, paste your GitHub token in the <b>Publish</b> section first (fine-grained token with Contents: Read and write for ' + REPO + ').'); return null; }
+		if (!token) { setStatus('⬆ Uploads need your GitHub token — I\'ve opened the <b>Publish</b> tab for you. Paste the token under <b>GitHub (advanced)</b>, then click the upload button again.'); showTokenHelp(); return null; }
 		try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ }
 		const mb = file.size / 1048576;
 		if (mb > MAX_UPLOAD_MB) { setStatus('❌ "' + file.name + '" is ' + mb.toFixed(0) + ' MB — GitHub accepts up to ' + MAX_UPLOAD_MB + ' MB. Compress the file and try again.'); return null; }
@@ -3049,65 +3077,74 @@
 		const catOpts = CATEGORIES.map(c =>
 			'<option value="' + c + '">' + escapeHtml(draft.navLabels[c] || c) + '</option>').join('');
 		const navFields = ['home'].concat(CATEGORIES).map(c =>
-			textF('Menu label: ' + c, 'navLabels.' + c)).join('');
+			textF('Menu name: ' + c, 'navLabels.' + c)).join('');
 		return `
-		<section>
-			<h3>Website &amp; SEO</h3>
-			${textF('Site name (sidebar & mobile header)', 'identity.name')}
-			${textF('Browser tab title', 'meta.title')}
-			${areaF('Search description', 'meta.description')}
-			${textF('Search tags (keywords, comma-separated)', 'meta.keywords')}
-			${textF('Share image URL (social preview)', 'meta.ogImage', 'url')}
-			${uploadBtn('meta.ogImage', 'image/*', '⬆ Upload share image')}
+		<section data-tab="text">
+			<h3>Your words</h3>
+			${textF('Your name (top of the site)', 'identity.name')}
+			${textF('Welcome heading', 'identity.introHeading')}
+			${textF('Welcome tagline', 'identity.introText')}
+			${textF('"About me" heading', 'identity.aboutHeading')}
+			<label>"About me" paragraphs</label>
+			<div id="ed-about-paras"></div>
+			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
+			<h3 style="margin-top:22px">Contact</h3>
+			${textF('Email', 'identity.email')}
+			${textF('LinkedIn profile URL', 'identity.linkedin', 'url')}
+			<details>
+				<summary>Menu names</summary>
+				${navFields}
+			</details>
+			<details>
+				<summary>Google &amp; sharing (advanced)</summary>
+				${textF('Browser tab title', 'meta.title')}
+				${areaF('Text shown in Google results', 'meta.description')}
+				${textF('Google search tags (comma-separated)', 'meta.keywords')}
+				${textF('Image shown when shared on social media', 'meta.ogImage', 'url')}
+				${uploadBtn('meta.ogImage', 'image/*', '⬆ Upload image')}
+			</details>
 		</section>
-		<section>
-			<h3>Typography</h3>
+		<section data-tab="design">
+			<h3>Fonts</h3>
 			<label>Font style</label>
 			<select id="ed-font">${fontOpts}</select>
 			<label>Font size — <span id="ed-scale-val">${draft.typography.fontScale}</span>%</label>
 			<input type="range" id="ed-scale" min="80" max="140" step="1" value="${draft.typography.fontScale}">
-			<label>Font spacing — <span id="ed-ls-val">${draft.typography.letterSpacing}</span>em</label>
+			<label>Letter spacing — <span id="ed-ls-val">${draft.typography.letterSpacing}</span>em</label>
 			<input type="range" id="ed-ls" min="-0.01" max="0.08" step="0.0025" value="${draft.typography.letterSpacing}">
-		</section>
-		<section>
-			<h3>Intro &amp; About</h3>
-			${textF('Sidebar intro heading', 'identity.introHeading')}
-			${textF('Sidebar intro tagline', 'identity.introText')}
-			${textF('About heading', 'identity.aboutHeading')}
-			<label>About paragraphs</label>
-			<div id="ed-about-paras"></div>
-			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
-			${textF('Email', 'identity.email')}
-			${textF('LinkedIn profile URL', 'identity.linkedin', 'url')}
-		</section>
-		<section>
-			<h3>Home Video</h3>
-			${textF('Background video URL (MP4)', 'homeVideo', 'url')}
+			<p class="ed-hint">Watch your page while dragging — it updates live.</p>
+			<h3 style="margin-top:22px">Home background video</h3>
+			${textF('Video URL', 'homeVideo', 'url')}
 			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
-			<p class="ed-hint">Tip: keep the background video small (a few MB) so the home page loads fast. Uploads go to your GitHub repo's media folder and get a permanent public URL.</p>
+			<p class="ed-hint">Tip: keep it small (a few MB) so your home page loads fast.</p>
 		</section>
-		<section>
-			<h3>Menu Labels</h3>
-			${navFields}
-		</section>
-		<section>
-			<h3>Projects</h3>
-			<label>Category</label>
+		<section data-tab="projects">
+			<h3>Your work</h3>
+			<label>Which section?</label>
 			<select id="ed-cat">${catOpts}</select>
-			<div id="ed-proj-list" style="margin-top:8px"></div>
-			<button class="ed-btn small secondary" id="ed-add-proj">+ Add project</button>
+			<div id="ed-proj-list" style="margin-top:10px"></div>
+			<button class="ed-btn small secondary" id="ed-add-proj">+ Add new project</button>
+			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video from your computer.</p>
 		</section>
-		<section>
-			<h3>Publish</h3>
-			<button class="ed-btn" id="ed-download">⬇ Download site-config.js</button>
-			<button class="ed-btn secondary" id="ed-save-draft">Save draft</button>
-			<button class="ed-btn danger" id="ed-discard">Discard</button>
-			<p class="ed-hint"><b>How to publish:</b> 1) Click <b>Download site-config.js</b>. 2) Log in to your web host's file manager. 3) Upload the file into the same folder as index.html, replacing the old site-config.js. Done — your changes are live.</p>
-			<label style="margin-top:14px">GitHub token — needed for ⬆ file uploads and GitHub sync</label>
-			<input type="text" id="ed-gh-token" placeholder="github_pat_… (stored only in this browser)" autocomplete="off">
-			<p class="ed-hint">Create a fine-grained token at github.com → Settings → Developer settings, with <b>Contents: Read and write</b> for <b>${REPO}</b>. Uploaded images/videos are committed to the repo's <b>media/</b> folder on the <b>main</b> branch and get a permanent public URL that is filled into the field for you.</p>
-			<select id="ed-gh-branch" style="margin-top:6px"><option value="main">branch: main</option><option value="improve-index-html">branch: improve-index-html</option></select>
-			<button class="ed-btn secondary" id="ed-gh-push" style="margin-top:8px">Push to GitHub</button>
+		<section data-tab="publish">
+			<h3>Make your changes live</h3>
+			<button class="ed-btn big" id="ed-download">⬇ Step 1 — Download my changes</button>
+			<ol class="ed-steps">
+				<li>Click the green button — you get a file called <b>site-config.js</b>.</li>
+				<li>Log in to your web host and open its <b>file manager</b>.</li>
+				<li>Upload <b>site-config.js</b> into the same folder as <b>index.html</b>, replacing the old one. Done — your changes are live!</li>
+			</ol>
+			<button class="ed-btn small secondary" id="ed-save-draft">Save draft</button>
+			<button class="ed-btn small danger" id="ed-discard">Discard changes</button>
+			<p class="ed-hint">Your draft is kept in this browser automatically, so you can stop and finish later.</p>
+			<details id="ed-gh-details">
+				<summary>GitHub (advanced)</summary>
+				<label>GitHub token — needed for ⬆ uploads &amp; GitHub sync</label>
+				<input type="text" id="ed-gh-token" placeholder="github_pat_… (stored only in this browser)" autocomplete="off">
+				<select id="ed-gh-branch" style="margin-top:6px"><option value="main">branch: main</option><option value="improve-index-html">branch: improve-index-html</option></select>
+				<button class="ed-btn secondary" id="ed-gh-push" style="margin-top:8px">Save a copy to GitHub</button>
+				<p class="ed-hint">Create a fine-grained token at github.com → Settings → Developer settings, with <b>Contents: Read and write</b> for <b>${REPO}</b>. Uploaded pictures/videos are stored in the repo's <b>media/</b> folder and get a permanent URL. For visitors to see uploaded media, the repo must be <b>public</b>.</p>
+			</details>
 		</section>`;
 	}
 
@@ -3245,11 +3282,30 @@
 		});
 	}
 
+	let currentEdTab = 'text';
+
+	function activateTab(name) {
+		currentEdTab = name;
+		if (!panel) return;
+		panel.querySelectorAll('#ed-tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+		panel.querySelectorAll('#ed-sections section').forEach(s => s.classList.toggle('ed-active', s.dataset.tab === name));
+		panel.scrollTop = 0;
+	}
+
+	function showTokenHelp() {
+		activateTab('publish');
+		const d = document.getElementById('ed-gh-details');
+		if (d) d.open = true;
+		const t = document.getElementById('ed-gh-token');
+		if (t) t.focus();
+	}
+
 	function renderPanelBody() {
 		document.getElementById('ed-sections').innerHTML = panelSectionsHtml();
 		bindPanel();
 		renderAboutParas();
 		renderProjects();
+		activateTab(currentEdTab);
 	}
 
 	function bindPanel() {
@@ -3312,16 +3368,27 @@
 		panel = document.createElement('div');
 		panel.id = 'edit-panel';
 		panel.innerHTML = `
-			<header>
-				<h2>Edit Website</h2>
-				<div>
-					<button id="ed-preview" title="Hide panel to preview the site">👁 Preview</button>
-					<button id="ed-close" title="Close editor">✕ Close</button>
+			<div id="ed-top">
+				<header>
+					<h2>Edit Website</h2>
+					<div>
+						<button id="ed-preview" title="Hide panel to preview the site">👁 Preview</button>
+						<button id="ed-close" title="Close editor">✕ Close</button>
+					</div>
+				</header>
+				<div id="ed-tabs">
+					<button data-tab="text" class="active"><span class="ed-tab-icon">✏️</span>Text</button>
+					<button data-tab="design"><span class="ed-tab-icon">🎨</span>Design</button>
+					<button data-tab="projects"><span class="ed-tab-icon">🖼️</span>Projects</button>
+					<button data-tab="publish"><span class="ed-tab-icon">📤</span>Publish</button>
 				</div>
-			</header>
-			<div id="ed-status">Changes preview live on the page. To publish: <b>Download site-config.js</b>, then upload it to your web host next to index.html.</div>
+				<div id="ed-status">Changes preview live on the page. When you're happy, go to the <b>Publish</b> tab — it's 3 easy steps.</div>
+			</div>
 			<div id="ed-sections"></div>`;
 		document.body.appendChild(panel);
+		panel.querySelectorAll('#ed-tabs button').forEach(b => {
+			b.addEventListener('click', () => activateTab(b.dataset.tab));
+		});
 
 		peekBtn = document.createElement('button');
 		peekBtn.id = 'ed-peek';
