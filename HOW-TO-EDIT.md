@@ -17,24 +17,23 @@ A panel opens on the right. Everything you change is **previewed live** on the p
 - **👁 Preview** hides the panel so you can see the full site; click the floating **✎** button to come back.
 - **✕ Close** exits the editor (your changes stay saved as a draft in that browser).
 
-## 2. What you can edit
+## 2. The four tabs
 
-| Section | What it changes |
+Everything is grouped into four tabs at the top of the panel:
+
+| Tab | What you do there |
 |---|---|
-| **Website & SEO** | Site name, browser tab title, Google search description, search tags (keywords), social-share preview image |
-| **Typography** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font **size** (80–140 %), font **spacing** (letter-spacing) |
-| **Intro & About** | Sidebar intro heading & tagline, About dialog heading and paragraphs (add/remove), email, LinkedIn URL |
-| **Home Video** | The background video URL on the home screen |
-| **Menu Labels** | The six menu items (HOME, VIDEO PROJECTS, …) |
-| **Projects** | Every project in every category: title, year, client, role, description, cover image, external link, and its media (image / YouTube embed / video). Add, delete, duplicate, and re-order with the ↑ ↓ buttons |
-| **Publish** | Download the file, save/discard your draft, or push a copy to GitHub |
+| **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs), email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
+| **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, and the home background video |
+| **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete / re-order with one tap |
+| **📤 Publish** | One big green button + 3 simple steps to put your changes live. *Collapsible extra:* GitHub token & sync |
 
 ## 3. Uploading images & videos
 
 You can upload media files straight from the editor — no separate uploading tool needed:
 
 - **⬆ Upload** buttons appear next to the *home video*, the *share image*, each project's *cover image*, and every *media row* inside a project.
-- The first time, paste your **GitHub token** into the *Publish* section (fine-grained token with **Contents: Read and write** for `cyunmin12/rachelchan`). It is stored only in your browser.
+- The first time, paste your **GitHub token** into the *Publish* tab under **GitHub (advanced)** (fine-grained token with **Contents: Read and write** for `cyunmin12/rachelchan`). It is stored only in your browser. If you forget, the editor opens that spot for you automatically.
 - Pick a file → it is uploaded to the repo's `media/` folder → the permanent public URL is **filled into the field automatically** and previews live.
 - For project media, the type (image / video) is detected automatically.
 - Limits: **95 MB per file**. Keep the home background video small (a few MB) so your site loads fast.
