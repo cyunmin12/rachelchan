@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
 <meta name="description" content="Portfolio of Rachel Chan — Creative Producer, Filmmaker &amp; Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co; media-src https://rachelchan.co; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co https://raw.githubusercontent.com; media-src https://rachelchan.co https://raw.githubusercontent.com; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
 <meta name="keywords" content="Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rachel Chan">
@@ -2947,6 +2947,92 @@
 		}
 	}
 
+	// ---------- Media upload (GitHub) ----------
+	// Media always lands on the default branch so its public URL survives
+	// feature-branch merges/deletions. Uses the Git data API (blobs/trees/commits)
+	// instead of the contents API so videos larger than 1 MB work too.
+	const MEDIA_BRANCH = 'main';
+	const MAX_UPLOAD_MB = 95;
+
+	async function ghApi(method, path, payload, token) {
+		const res = await fetch('https://api.github.com/repos/' + REPO + path, {
+			method: method,
+			headers: {
+				Authorization: 'Bearer ' + token,
+				Accept: 'application/vnd.github+json',
+				'Content-Type': 'application/json'
+			},
+			body: payload ? JSON.stringify(payload) : undefined
+		});
+		if (!res.ok) throw new Error(method + ' ' + path + ' → HTTP ' + res.status + ': ' + (await res.text()).slice(0, 180));
+		return res.status === 204 ? {} : res.json();
+	}
+
+	function fileToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const fr = new FileReader();
+			fr.onload = () => resolve(String(fr.result).split(',')[1]);
+			fr.onerror = () => reject(new Error('Could not read the file.'));
+			fr.readAsDataURL(file);
+		});
+	}
+
+	async function uploadMedia(file) {
+		const tokenEl = document.getElementById('ed-gh-token');
+		const token = (tokenEl.value || '').trim();
+		if (!token) { setStatus('⬆ To upload files, paste your GitHub token in the <b>Publish</b> section first (fine-grained token with Contents: Read and write for ' + REPO + ').'); return null; }
+		try { localStorage.setItem(TOKEN_KEY, token); } catch (e) { /* ignore */ }
+		const mb = file.size / 1048576;
+		if (mb > MAX_UPLOAD_MB) { setStatus('❌ "' + file.name + '" is ' + mb.toFixed(0) + ' MB — GitHub accepts up to ' + MAX_UPLOAD_MB + ' MB. Compress the file and try again.'); return null; }
+		const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+/, '').toLowerCase().slice(-60) || 'file';
+		const path = 'media/' + Date.now().toString(36) + '-' + safeName;
+		setStatus('⬆ Uploading <b>' + escapeHtml(file.name) + '</b> (' + mb.toFixed(1) + ' MB) to GitHub… this can take a minute for videos.');
+		try {
+			const b64 = await fileToBase64(file);
+			const blob = await ghApi('POST', '/git/blobs', { content: b64, encoding: 'base64' }, token);
+			const ref = await ghApi('GET', '/git/refs/heads/' + MEDIA_BRANCH, null, token);
+			const headCommit = await ghApi('GET', '/git/commits/' + ref.object.sha, null, token);
+			const tree = await ghApi('POST', '/git/trees', {
+				base_tree: headCommit.tree.sha,
+				tree: [{ path: path, mode: '100644', type: 'blob', sha: blob.sha }]
+			}, token);
+			const newCommit = await ghApi('POST', '/git/commits', {
+				message: 'Add media: ' + safeName + '\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+				tree: tree.sha,
+				parents: [headCommit.sha]
+			}, token);
+			await ghApi('PATCH', '/git/refs/heads/' + MEDIA_BRANCH, { sha: newCommit.sha }, token);
+			const url = 'https://raw.githubusercontent.com/' + REPO + '/' + MEDIA_BRANCH + '/' + path;
+			setStatus('✅ Uploaded! The file URL was filled in automatically. Remember to <b>Download site-config.js</b> and upload it to your host to publish.');
+			return url;
+		} catch (err) {
+			setStatus('❌ Upload failed: ' + err.message + (err.message.indexOf('404') > -1 ? ' — make sure the token has Contents: Read and write permission, and that the repo name is correct.' : ''));
+			return null;
+		}
+	}
+
+	function uploadBtn(forAttr, accept, label) {
+		return '<button class="ed-btn small secondary ed-up" data-up-for="' + forAttr + '" data-up-accept="' + accept + '">' + (label || '⬆ Upload file') + '</button>';
+	}
+
+	function attachUpload(buttons, onUrl, defaultAccept) {
+		buttons.forEach(btn => {
+			const input = document.createElement('input');
+			input.type = 'file';
+			input.accept = btn.dataset.upAccept || defaultAccept || '*/*';
+			input.style.display = 'none';
+			btn.parentNode.appendChild(input);
+			btn.addEventListener('click', () => input.click());
+			input.addEventListener('change', async () => {
+				const f = input.files[0];
+				input.value = '';
+				if (!f) return;
+				const url = await uploadMedia(f);
+				if (url) { onUrl(url, btn); liveUpdate(); }
+			});
+		});
+	}
+
 	// ---------- Panel ----------
 	function textF(label, path, type) {
 		const val = getByPath(draft, path);
@@ -2972,6 +3058,7 @@
 			${areaF('Search description', 'meta.description')}
 			${textF('Search tags (keywords, comma-separated)', 'meta.keywords')}
 			${textF('Share image URL (social preview)', 'meta.ogImage', 'url')}
+			${uploadBtn('meta.ogImage', 'image/*', '⬆ Upload share image')}
 		</section>
 		<section>
 			<h3>Typography</h3>
@@ -2996,6 +3083,8 @@
 		<section>
 			<h3>Home Video</h3>
 			${textF('Background video URL (MP4)', 'homeVideo', 'url')}
+			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
+			<p class="ed-hint">Tip: keep the background video small (a few MB) so the home page loads fast. Uploads go to your GitHub repo's media folder and get a permanent public URL.</p>
 		</section>
 		<section>
 			<h3>Menu Labels</h3>
@@ -3014,8 +3103,9 @@
 			<button class="ed-btn secondary" id="ed-save-draft">Save draft</button>
 			<button class="ed-btn danger" id="ed-discard">Discard</button>
 			<p class="ed-hint"><b>How to publish:</b> 1) Click <b>Download site-config.js</b>. 2) Log in to your web host's file manager. 3) Upload the file into the same folder as index.html, replacing the old site-config.js. Done — your changes are live.</p>
-			<label style="margin-top:14px">Optional: keep GitHub in sync</label>
+			<label style="margin-top:14px">GitHub token — needed for ⬆ file uploads and GitHub sync</label>
 			<input type="text" id="ed-gh-token" placeholder="github_pat_… (stored only in this browser)" autocomplete="off">
+			<p class="ed-hint">Create a fine-grained token at github.com → Settings → Developer settings, with <b>Contents: Read and write</b> for <b>${REPO}</b>. Uploaded images/videos are committed to the repo's <b>media/</b> folder on the <b>main</b> branch and get a permanent public URL that is filled into the field for you.</p>
 			<select id="ed-gh-branch" style="margin-top:6px"><option value="main">branch: main</option><option value="improve-index-html">branch: improve-index-html</option></select>
 			<button class="ed-btn secondary" id="ed-gh-push" style="margin-top:8px">Push to GitHub</button>
 		</section>`;
@@ -3053,6 +3143,7 @@
 					<option value="video"${m.type === 'video' ? ' selected' : ''}>video</option>
 				</select>
 				<input type="text" data-mi="${mi}" data-mk="url" value="${escapeHtml(m.url || '')}" placeholder="https://…">
+				<button data-up-media="${mi}" title="Upload image or video file">⬆</button>
 				<button data-mdel="${mi}" title="Remove media">✕</button>
 			</div>`).join('');
 		return `
@@ -3062,6 +3153,7 @@
 				<label>Client / Type</label><input type="text" data-f="client" value="${escapeHtml(p.client || '')}">
 				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
 				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
+				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
 				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
 				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
 				<label>Media (top item shows first; youtube = embed URL)</label>
@@ -3091,6 +3183,24 @@
 		row.querySelectorAll('[data-mdel]').forEach(btn => {
 			btn.addEventListener('click', () => { p.media.splice(+btn.dataset.mdel, 1); renderProjects(); liveUpdate(); });
 		});
+		attachUpload(row.querySelectorAll('[data-up-field]'), async (url, btn) => {
+			p[btn.dataset.upField] = url;
+			const inp = row.querySelector('[data-f="' + btn.dataset.upField + '"]');
+			if (inp) inp.value = url;
+		}, 'image/*');
+		attachUpload(row.querySelectorAll('[data-up-media]'), async (url, btn) => {
+			const mi = +btn.dataset.upMedia;
+			p.media[mi].url = url;
+			const inp = row.querySelector('[data-mi="' + mi + '"][data-mk="url"]');
+			if (inp) inp.value = url;
+			// auto-pick the right media type from the uploaded file
+			const sel = row.querySelector('[data-mi="' + mi + '"][data-mk="type"]');
+			if (sel) {
+				const ext = url.split('.').pop().toLowerCase();
+				const guess = ['mp4', 'webm', 'mov', 'm4v'].indexOf(ext) > -1 ? 'video' : 'image';
+				if (sel.value === 'youtube' || !sel.value) { sel.value = guess; p.media[mi].type = guess; }
+			}
+		}, 'image/*,video/*');
 		const addBtn = row.querySelector('[data-madd]');
 		if (addBtn) addBtn.addEventListener('click', () => {
 			p.media = p.media || [];
@@ -3145,6 +3255,11 @@
 	function bindPanel() {
 		panel.querySelectorAll('[data-path]').forEach(inp => {
 			inp.addEventListener('input', () => { setByPath(draft, inp.dataset.path, inp.value); liveUpdate(); });
+		});
+		attachUpload(panel.querySelectorAll('[data-up-for]'), (url, btn) => {
+			setByPath(draft, btn.dataset.upFor, url);
+			const inp = panel.querySelector('[data-path="' + btn.dataset.upFor + '"]');
+			if (inp) inp.value = url;
 		});
 		document.getElementById('ed-font').addEventListener('change', (e) => {
 			draft.typography.fontFamily = e.target.value;
