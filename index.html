@@ -1,0 +1,2361 @@
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta name="x-poe-datastore-behavior" content="local_only">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta charset="UTF-8">
+<title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio of Rachel Chan, Creative Producer, Filmmaker &amp; Multimedia Artist">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;1,200&amp;family=Roboto:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+--nav-width: 280px;
+--nav-bg: rgba(255, 255, 255, 0.98);
+--accent: #000000;
+--highlight: #ff0000;
+--white: #fff;
+--primary: #000000;
+--transition: 0.33s cubic-bezier(.61, .16, .36, 1);
+--toggle-width: 52px;
+--thin-border: 1.5px;
+--main-xpad: 28px;
+--main-ypad: 22px;
+--nav-link-pad-y: 0.85em;
+--nav-link-pad-x: 1.6em;
+--nav-link-gap: 0.20em;
+--content-max-width: 1200px;
+}
+
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		min-height: 100vh;
+		font-family: "Roboto", sans-serif;
+		background: #000;
+		color: var(--primary); 
+		width: 100%;
+		height: 100vh;
+		position: relative;
+		overflow: hidden; /* Controlled by specific views */
+	}
+
+	/* =========================================
+	   DESKTOP LAYOUT (Original)
+	   ========================================= */
+	
+	.desktop-wrapper {
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+
+	.video-bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		object-fit: cover;
+		z-index: 1;
+		pointer-events: none;
+		transition: opacity 0.4s cubic-bezier(.61, .16, .36, 1);
+	}
+
+	.overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	/* Sidebar Styles */
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: var(--nav-width);
+		background: var(--nav-bg);
+		z-index: 12;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		padding: var(--main-ypad) 0;
+		transition: transform var(--transition), opacity var(--transition);
+		overflow: hidden;
+		transform: translateX(0);
+		pointer-events: auto;
+		opacity: 1;
+		box-shadow: none !important;
+		color: var(--primary);
+		border-right: 1px solid rgba(0, 0, 0, 0.08);
+	}
+
+	.sidebar.hide {
+		transform: translateX(-100%);
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.sidebar-content {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		align-items: stretch;
+		height: 100%;
+		position: relative;
+		padding: 0 var(--main-xpad);
+		box-sizing: border-box;
+		text-align: center;
+	}
+
+	.site-title {
+		font-weight: 900;
+		font-size: 1.17rem;
+		letter-spacing: 0.18em;
+		color: var(--primary);
+		text-transform: uppercase;
+		text-align: center;
+		margin: 0 0 1.6em 0;
+		padding: 0.39em 1.05em;
+		border: var(--thin-border) solid var(--primary);
+		border-radius: 6px;
+		background: transparent;
+		display: inline-block;
+		width: auto;
+		margin-left: auto;
+		margin-right: auto;
+		cursor: pointer;
+	}
+
+	.site-title:hover {
+		background: rgba(0, 0, 0, 0.05);
+		transform: translateY(-2px) scale(1.025);
+	}
+
+	.nav-intro {
+		padding: 0 0 1.6em 0;
+		text-align: center;
+	}
+
+	.nav-intro h2 {
+		font-size: 1.01rem;
+		font-weight: 600;
+		margin: 0 0 0.5em 0;
+		letter-spacing: 0.00em;
+		color: var(--primary);
+	}
+
+	.nav-intro p {
+		font-size: 0.95rem;
+		color: #4d4d4d;
+		margin: 0;
+		font-weight: 250;
+		line-height: 1.5;
+	}
+
+	nav.nav-menu {
+		display: flex;
+		flex-direction: column;
+		gap: var(--nav-link-gap);
+		align-items: stretch;
+		margin: 0 auto;
+	}
+
+	nav.nav-menu ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--nav-link-gap);
+	}
+
+	nav.nav-menu a {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: var(--primary);
+		font-size: 1rem;
+		padding: var(--nav-link-pad-y) var(--nav-link-pad-x);
+		border-radius: 5px;
+		transition: all var(--transition);
+		font-weight: 200;
+		position: relative;
+		border-left: 3.5px solid transparent;
+		background: transparent;
+		width: 100%;
+		box-sizing: border-box;
+		letter-spacing: 0.03em;
+	}
+
+	/* Showreel Link Specifics */
+	nav.nav-menu a.showreel-link {
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		padding: var(--nav-link-pad-y) var(--nav-link-pad-x);
+		text-align: center;
+		justify-content: center;
+		opacity: 0.7;
+		margin-top: 10px;
+		transition: none !important;
+		background: transparent !important;
+		border-left: 3.5px solid transparent !important;
+	}
+
+	nav.nav-menu a.showreel-link:hover {
+		text-decoration: underline;
+		color: inherit !important;
+		transform: none !important;
+	}
+
+	nav.nav-menu a.active,
+	nav.nav-menu a:hover:not(.showreel-link) {
+		background: rgba(255, 0, 0, 0.08);
+		color: var(--highlight);
+		border-left: 3.5px solid var(--highlight);
+		transform: translateX(6px) scale(1.03);
+		z-index: 2;
+	}
+
+	.nav-email {
+		width: 100%;
+		text-align: center;
+		padding: 1.2em 0 0.7em 0;
+		font-size: 0.98rem;
+		color: #4d4d4d;
+		border-top: 1px solid rgba(0, 0, 0, 0.09);
+		margin-top: 2em;
+	}
+
+	.nav-email a {
+		color: #9c6e6e;
+		text-decoration: none;
+		word-break: break-all;
+		font-weight: 200;
+		transition: all 0.3s ease;
+	}
+
+	.nav-email a:hover {
+		text-decoration: underline;
+		color: inherit;
+	}
+
+	/* Toggle Button */
+	.edge-toggle {
+		position: fixed;
+		top: 50%;
+		left: calc(var(--nav-width));
+		transform: translateY(-50%);
+		width: var(--toggle-width);
+		height: 100vh;
+		z-index: 40;
+		background: rgba(255, 255, 255, 0.08);
+		border: none;
+		outline: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all var(--transition);
+		color: var(--primary);
+		border-right: 1px solid rgba(0, 0, 0, 0.08);
+		border-top: 1px solid rgba(0, 0, 0, 0.08);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	}
+
+	.sidebar.hide+.edge-toggle {
+		left: 0;
+	}
+
+	.edge-toggle:hover {
+		background: rgba(255, 255, 255, 0.24);
+	}
+
+	.toggle-icons span {
+		display: block;
+		line-height: 1;
+		font-size: 1.8rem;
+		font-weight: 100;
+	}
+
+	/* Top Right Links */
+	.top-right-links {
+		position: fixed;
+		top: 32px;
+		right: 38px;
+		z-index: 50;
+		display: flex;
+		gap: 22px;
+		transition: all 0.3s ease;
+		padding: 1px;
+		border-radius: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.08)
+	}
+
+	.top-right-links a {
+		background: rgba(255, 255, 255, 0.24);
+		backdrop-filter: blur(1px);
+		color: var(--primary);
+		text-decoration: none;
+		font-weight: 200;
+		padding: 0.7em 1.6em;
+		font-size: 1.01em;
+		letter-spacing: 0.07em;
+		border-radius: 4px;
+		transition: all 0.3s ease;
+		text-transform: uppercase;
+		position: relative;
+	}
+
+	.top-right-links a:hover {
+		background: rgba(255, 0, 0, 0.08);
+		color: var(--highlight);
+		transform: translateY(-2px);
+	}
+
+	/* Main Content Area */
+	.main-content {
+		margin-left: 0;
+		padding-left: 60px;
+		transition: padding-left var(--transition);
+		position: absolute;
+		left: var(--nav-width);
+		top: 0;
+		width: calc(100% - var(--nav-width));
+		height: 100vh;
+		z-index: 3;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		overflow-y: auto;
+		padding-top: 80px;
+		transition: left var(--transition), width var(--transition);
+		background: none;
+		box-sizing: border-box;
+	}
+
+	.main-content.white-bg {
+		background: #fff !important;
+	}
+
+	.sidebar.hide~.main-content {
+		left: 0;
+		width: 100%;
+		padding-left: 60px;
+	}
+
+	.content-container {
+		width: 100%;
+		max-width: var(--content-max-width);
+		margin: 0 auto;
+		padding: 60px 40px;
+	}
+
+	.tab-content-container {
+		width: 100%;
+		max-width: var(--content-max-width);
+		padding: 20px 40px;
+		margin-top: 70px;
+	}
+
+	.tab-content-container h1,
+	.tab-content-container p {
+		display: none;
+	}
+
+	/* Grids */
+	.photo-grid {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 30px;
+		margin-top: 0;
+		margin-left: 10px;
+	}
+
+	#social-media-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.photo-item {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16/9;
+		overflow: hidden;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.photo-item:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+	}
+
+	.photo-item img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+
+	.photo-item:hover img {
+		transform: scale(1.03);
+	}
+
+	.photo-item::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.6);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	.photo-item:hover::after {
+		opacity: 1;
+	}
+
+	.photo-title {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+		font-size: 1.2rem;
+		font-weight: 100;
+		text-align: center;
+		width: 90%;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+	.photo-item:hover .photo-title {
+		opacity: 1;
+	}
+
+	.photo-item:hover .photo-caption {
+		transform: translateY(0);
+	}
+
+	.photo-caption h3 {
+		margin: 0 0 8px 0;
+		font-size: 1.1rem;
+		font-weight: 100;
+	}
+
+	.photo-caption p {
+		margin: 3px 0;
+		font-size: 0.85rem;
+		opacity: 0.9;
+		color: white;
+	}
+
+	.project-year {
+		font-weight: 500;
+	}
+
+	.project-client {
+		font-style: italic;
+	}
+
+	.project-role {
+		color: var(--highlight);
+	}
+
+	/* Dialogs (Shared) */
+	.project-dialog {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.95);
+		z-index: 3000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+		font-weight: 200;
+	}
+
+	.project-dialog.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.project-dialog-content {
+		width: 90%;
+		max-width: 1200px;
+		max-height: 85vh;
+		background: white;
+		border-radius: 8px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.project-dialog-header {
+		padding: 20px;
+		background: white;
+		color: black;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.project-dialog-title {
+		font-size: 1.5rem;
+		font-weight: 200;
+		margin: 0;
+	}
+
+	.close-project {
+		background: none;
+		border: none;
+		color: black;
+		font-size: 1.5rem;
+		cursor: pointer;
+		padding: 5px;
+	}
+
+	.project-dialog-body {
+		display: flex;
+		flex: 1;
+		overflow: auto;
+		font-size: 0.7rem
+	}
+
+	.youtube-video {
+		aspect-ratio: 16/9;
+		border: none;
+		margin-bottom: 20px;
+	}
+
+	.project-media-container {
+		display: flex;
+		flex: 1;
+		min-width: 55%;
+		max-height: 65vh;
+		overflow: auto;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.project-media {
+		width: 100%;
+		height: auto;
+		max-height: 400px;
+		object-fit: contain;
+		border-radius: 4px;
+	}
+
+	.project-video {
+		width: 100%;
+		border-radius: 4px;
+	}
+
+	.project-details {
+		flex: 1;
+		padding: 20px;
+		overflow-y: auto;
+		max-height: 70vh;
+	}
+
+	.project-meta {
+		display: flex;
+		gap: 15px;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
+	}
+
+	.project-meta-item {
+		background: #f5f5f5;
+		padding: 5px 10px;
+		border-radius: 4px;
+		font-size: 0.9rem;
+	}
+
+	.project-description {
+		margin-bottom: 20px;
+		line-height: 1.6;
+	}
+
+	.home-video-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+	}
+
+	.home-video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.about-dialog {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 85%;
+		max-width: 800px;
+		max-height: 70vh;
+		background: white;
+		padding: 40px;
+		border-radius: 8px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		z-index: 3000;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+		overflow-y: auto;
+	}
+
+	.about-dialog.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.about-dialog h1 {
+		font-size: 2rem;
+		margin-bottom: 1.5rem;
+		color: var(--primary);
+		font-weight: 200;
+	}
+
+	.about-dialog p {
+		font-size: 0.8rem;
+		margin-bottom: 1.5rem;
+		color: #555;
+		line-height: 1.7;
+		font-weight: 200;
+	}
+
+	.close-about {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 5px;
+		color: var(--primary);
+	}
+
+	.dialog-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.7);
+		z-index: 2999;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+	}
+
+	.dialog-overlay.active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* =========================================
+	   NEW MOBILE LAYOUT (Snap Scroll)
+	   ========================================= */
+	
+	/* Hidden on Desktop */
+	#mobile-snap-view {
+		display: none;
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: #000;
+		z-index: 200;
+		overflow: hidden;
+	}
+
+	/* Mobile Header (New) */
+	.m-snap-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 60px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 20px;
+		box-sizing: border-box;
+		z-index: 250;
+		background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+		pointer-events: none; /* Let clicks pass through to content except buttons */
+	}
+
+	.m-snap-logo {
+		color: #fff;
+		font-weight: 900;
+		font-size: 1rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		text-decoration: none;
+		pointer-events: auto;
+		text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+		transition: opacity 0.3s ease;
+	}
+
+	.m-snap-about {
+		color: #fff;
+		font-weight: 300;
+		font-size: 0.9rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		text-decoration: none;
+		pointer-events: auto;
+		padding: 5px 12px;
+		border-radius: 4px;
+		background: rgba(0,0,0,0.3);
+		backdrop-filter: blur(4px);
+		border: 1px solid rgba(255,255,255,0.5);
+		transition: all 0.3s ease;
+	}
+
+	/* Vertical Scroll Container */
+	.m-vertical-container {
+		width: 100%;
+		height: 100vh;
+		overflow-y: scroll;
+		scroll-snap-type: y mandatory;
+		scroll-behavior: smooth;
+	}
+
+	/* Generic Section Style */
+	.m-section {
+		width: 100%;
+		height: 100vh;
+		scroll-snap-align: start;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Home Section Specifics */
+	.m-home-section {
+		background: #000;
+	}
+	.m-home-video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.m-home-overlay {
+		position: absolute;
+		bottom: 80px;
+		left: 20px;
+		color: white;
+		z-index: 2;
+	}
+	.m-home-overlay h1 {
+		font-weight: 900;
+		font-size: 2rem;
+		margin: 0;
+		text-transform: uppercase;
+	}
+	.m-home-overlay p {
+		font-weight: 300;
+		font-size: 1rem;
+		margin: 5px 0 0 0;
+		opacity: 0.8;
+	}
+
+	/* Category Sections (Horizontal Scroll) */
+	.m-category-section {
+		background: #111;
+		display: flex;
+		flex-direction: row;
+		overflow-x: scroll;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+	}
+
+	/* Individual Project Card in Horizontal Scroll */
+	.m-project-card {
+		min-width: 100vw;
+		height: 100vh;
+		scroll-snap-align: start;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.m-project-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 1;
+		opacity: 0.6;
+	}
+
+	.m-project-info {
+		position: relative;
+		z-index: 2;
+		color: white;
+		text-align: center;
+		padding: 20px;
+		background: rgba(0,0,0,0.4);
+		backdrop-filter: blur(5px);
+		border-radius: 8px;
+		width: 80%;
+		border: 1px solid rgba(255,255,255,0.2);
+	}
+
+	.m-project-info h2 {
+		margin: 0 0 10px 0;
+		font-weight: 300;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+	}
+	
+	.m-project-info p {
+		font-size: 0.8rem;
+		opacity: 0.8;
+		margin-bottom: 15px;
+	}
+
+	.m-view-btn {
+		display: inline-block;
+		padding: 8px 20px;
+		border: 1px solid white;
+		background: transparent; 
+		color: white;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-size: 0.8rem;
+		letter-spacing: 1px;
+		cursor: pointer;
+		transition: background 0.3s ease;
+	}
+	
+	.m-view-btn:hover {
+		background: rgba(255,255,255,0.1);
+	}
+
+	/* Hint */
+	.m-horiz-hint {
+		position: absolute;
+		right: 20px;
+		bottom: 80px; 
+		z-index: 10;
+		color: rgba(255,255,255,0.8);
+		font-size: 1.5rem;
+		animation: swipeHint 2s infinite;
+		pointer-events: none;
+		display: flex;
+		flex-direction: row; 
+		align-items: center;
+		gap: 8px;
+		background: transparent; 
+		backdrop-filter: none;
+		padding: 0;
+		border-radius: 0;
+	}
+	
+	.m-horiz-hint span.arrow {
+		font-weight: 100; /* Thin arrow */
+		font-size: 1.2rem;
+	}
+
+	.m-horiz-hint span.text {
+		font-size: 0.65rem; /* Smaller text */
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		font-weight: 100; 
+	}
+
+	@keyframes swipeHint {
+		0% { transform: translateX(0); opacity: 0; }
+		20% { opacity: 1; }
+		80% { transform: translateX(-15px); opacity: 0; }
+		100% { transform: translateX(0); opacity: 0; }
+	}
+
+	/* Scroll Indicator */
+	.mobile-scroll-indicator {
+		position: fixed;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		z-index: 300;
+	}
+
+	.indicator-dot {
+		width: 3px;
+		height: 20px;
+		background: rgba(255,255,255,0.3);
+		border-radius: 2px;
+		transition: all 0.3s ease;
+	}
+
+	.indicator-dot.active {
+		background: #ff0000;
+		height: 40px;
+	}
+
+	/* Showreel Specific */
+	.m-showreel-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #000;
+	}
+	.m-showreel-iframe {
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+
+
+	/* MEDIA QUERY FOR MOBILE & VERTICAL TABLET */
+	@media (max-width: 900px) {
+
+		/* Hide Desktop Wrapper */
+		.desktop-wrapper {
+			display: none !important;
+		}
+
+		/* Show Mobile Snap View */
+		#mobile-snap-view {
+			display: block;
+		}
+
+		/* --- NEW MOBILE PROJECT DIALOG STYLES --- */
+		.project-dialog {
+			background: white; /* Full white background */
+			align-items: flex-start; /* Start from top */
+		}
+
+		.project-dialog-content {
+			width: 100%;
+			height: 100%;
+			max-height: none;
+			border-radius: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.project-dialog-header {
+			flex-shrink: 0; /* Sticky header doesn't shrink */
+			padding: 15px 20px;
+			background: #fff;
+			border-bottom: 1px solid #eee;
+			position: sticky;
+			top: 0;
+			z-index: 10;
+		}
+
+		.project-dialog-title {
+			font-size: 1.1rem;
+			font-weight: 500;
+			text-transform: uppercase;
+		}
+
+		.close-project {
+			font-size: 2rem;
+			line-height: 1;
+			padding: 0 10px;
+		}
+
+		/* Scrollable Body */
+		.project-dialog-body {
+			flex-direction: column;
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			flex: 1;
+		}
+
+		/* Full Width Media */
+		.project-media-container {
+			max-height: none;
+			min-width: 100%;
+			padding: 0; /* No padding for full bleed */
+			gap: 5px;
+			background: #f9f9f9;
+		}
+
+		.project-media, .project-video {
+			width: 100%;
+			max-height: none;
+			border-radius: 0; /* Sharp edges */
+			object-fit: contain;
+			display: block;
+		}
+		
+		.youtube-video {
+			margin-bottom: 0;
+		}
+
+		/* Details Section */
+		.project-details {
+			max-height: none;
+			padding: 25px 20px;
+			padding-bottom: 100px; /* Space for bottom scroll */
+			background: white;
+		}
+
+		.project-description {
+			font-size: 0.95rem;
+			line-height: 1.6;
+		}
+
+		/* --- NEW MOBILE ABOUT DIALOG STYLES --- */
+		.about-dialog {
+			width: 100%;
+			height: 100%;
+			max-width: none;
+			max-height: none;
+			top: 0;
+			left: 0;
+			transform: none;
+			border-radius: 0;
+			padding: 80px 25px; /* Top padding for close button */
+			display: flex;
+			flex-direction: column;
+			box-sizing: border-box;
+		}
+		
+		.close-about {
+			position: fixed; /* Fix to top right */
+			top: 15px;
+			right: 20px;
+			font-size: 2.5rem;
+			z-index: 3001;
+			background: rgba(255,255,255,0.9);
+			width: 40px;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+		}
+
+		.about-dialog h1 {
+			margin-top: 20px;
+			font-size: 1.8rem;
+		}
+		
+		.about-dialog p {
+			font-size: 0.95rem;
+			line-height: 1.6;
+		}
+	}
+</style>
+
+</head>
+
+<body>
+
+<!-- DESKTOP WRAPPER (Includes original Sidebar, Main Content, Toggles) -->
+<div class="desktop-wrapper">
+	<div class="overlay" aria-hidden="true"></div>
+
+	<aside class="sidebar hide" id="sidebar" aria-label="Main menu">
+		<div class="sidebar-content">
+			<div style="width:100%">
+				<div class="site-title" tabindex="0">RACHEL CHAN</div>
+				<div class="nav-intro">
+					<h2>Hello I am Rachel!</h2>
+					<p>Creative Producer, Filmmaker &amp; <br>Multimedia Artist</p>
+				</div>
+				<nav class="nav-menu" aria-label="Site sections">
+					<ul>
+						<li><a href="#" class="active" aria-current="page" tabindex="0" data-tab="home">HOME</a></li>
+						<li><a href="#" tabindex="0" data-tab="video-projects">VIDEO PROJECTS</a></li>
+						<li><a href="#" tabindex="0" data-tab="short-films">SHORT FILMS</a></li>
+						<li><a href="#" tabindex="0" data-tab="photography">PHOTOGRAPHY</a></li>
+						<li><a href="#" tabindex="0" data-tab="visuals">VISUALS</a></li>
+						<li><a href="#" tabindex="0" data-tab="social-media">SOCIAL/ SHORT</a></li>
+						<!--<li><a href="https://www.youtube.com/embed/UsHlXoQzQ7k?si=ALXTh57OQvDJlush" target="_blank" class="showreel-link">SHOWREEL</a></li> -->
+					</ul>
+				</nav>
+			</div>
+			<div class="nav-email">
+				<a href="mailto:rachelc1213@gmail.com" tabindex="0">rachelc1213@gmail.com</a>
+			</div>
+		</div>
+	</aside>
+
+	<button class="edge-toggle" id="edgeToggle" aria-label="Expand or collapse menu" title="Expand or collapse menu" tabindex="0">
+		<span class="toggle-icons" id="toggleIcon"><span>→</span></span>
+	</button>
+	<nav class="top-right-links" id="topRightLinks" aria-label="Secondary site links">
+		<a href="#" id="aboutBtn" tabindex="0">RACHEL CHAN</a>
+	</nav>
+
+	<!-- DESKTOP MAIN CONTENT -->
+	<main class="main-content" tabindex="-1" aria-label="Main content"></main>
+</div>
+
+<!-- NEW MOBILE SNAP VIEW WRAPPER -->
+<div id="mobile-snap-view">
+	<header class="m-snap-header">
+		<!-- ID added for JS manipulation -->
+		<a href="#" class="m-snap-logo" id="mobileHeaderTitle" onclick="document.querySelector('.m-vertical-container').scrollTo(0,0); return false;">RACHEL CHAN</a>
+		
+		<!-- ID added for JS manipulation -->
+		<a href="#" class="m-snap-about" id="mobileHeaderRightBtn" onclick="openAboutDialog(); return false;">ABOUT</a>
+	</header>
+
+	<div class="mobile-scroll-indicator" id="mobileIndicator">
+		<!-- Populated by JS -->
+	</div>
+
+	<div class="m-vertical-container" id="mobileContainer">
+		<!-- Populated by JS -->
+	</div>
+</div>
+
+<!-- PROJECT DIALOG (Shared) -->
+<div class="project-dialog" id="projectDialog">
+	<div class="project-dialog-content">
+		<div class="project-dialog-header">
+			<h2 class="project-dialog-title" id="projectDialogTitle"></h2>
+			<button class="close-project" id="closeProject">×</button>
+		</div>
+		<div class="project-dialog-body">
+			<div class="project-media-container" id="projectMediaContainer"></div>
+			<div class="project-details" id="projectDetails"></div>
+		</div>
+	</div>
+</div>
+
+<!-- ABOUT DIALOG (Shared) -->
+<div class="dialog-overlay" id="dialogOverlay"></div>
+<div class="about-dialog" id="aboutDialog">
+	<button class="close-about" id="closeAbout">×</button>
+	<h1>About Rachel Chan</h1>
+	<p>RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master's in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.</p>
+	<p>Contact: <a href="mailto:rachelc1213@gmail.com">rachelc1213@gmail.com</a></p>
+</div>
+
+<script>
+	// --- DATA ---
+	const projectsData = {
+		"video-projects": [
+		    			{
+				id: "vp1",
+				title: "A.A.Murakami: The Art of Ephemeral Tech",
+				image: "https://rachelchan.co/photos/the-art-of-ephemeral-tech-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/8WEeb3m0sdQ?si=e_OH8tVRC3cR62RN",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+				{ type: "image", url: "https://rachelchan.co/photos/aam-1.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/aam-2.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/aam-3.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/aam-4.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/aam-5.jpg" }
+				],
+				year: "2024",
+				client: "Video",
+				role: "Editor",
+				description: "A documentary about the Tokyo- and London-based artist duo A.A.Murakami and their exhibition, Floating World, featuring two interlinked, immersive installations that offer an otherworldly experience: one reveals an environment of floating bubble clouds, while the other traces the journey of physical fog rings traveling into the digital realm.",
+				link: "https://www.mplus.org.hk/en/magazine/a-a-murakami-ephemeral-tech-art-nature-technology-interview/"
+			},
+		    
+		    {
+				id: "vp2",
+				title: "PHIL LAM: The Themes We Had",
+				image: "https://rachelchan.co/photos/the-themes-we-had-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/2e8KF4fvzlM?si=4SVmnEA8GnXyCppf",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+				{ type: "image", url: "https://rachelchan.co/photos/ph-1.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ph-2.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ph-3.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ph-4.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ph-5.jpg" }
+				],
+				year: "2025",
+				client: "Music Video",
+				role: "Producer",
+				description: "A Hong Kong pop singer came to London to shoot a music video, and I was invited to be the producer. The video was shot in historic house centered on the concept of portraying the changes in things and people within the same space.",
+				link: "https://www.youtube.com/embed/2_q-zXrnYWE?si=-nLlFTcJp6JVujO1"
+			},
+			{
+				id: "vp3",
+				title: "HUAWEI Freebuds 6",
+				image: "https://rachelchan.co/photos/hauwei-freebuds-6-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/O5iDuMxs7KU?si=2EdA_V643Btsracx",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+				{ type: "image", url: "https://rachelchan.co/photos/ml-1.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ml-2.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ml-3.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/ml-4.jpg" }
+				],
+				year: "2025",
+				client: "Commercial",
+				role: "Assistant Producer",
+				description: "A Huawei Bluetooth earbuds advertisement came to film in London featuring acclaimed Hong Kong music composer Mark Lui. The producer was based in Hong Kong, and I handled the local execution in London.",
+				link: "https://www.youtube.com/embed/4ETZ6-dNO5M?si=AXdt9uR-2NniwX4u"
+			},
+						{
+				id: "vp4",
+				title: "AMEX Workshop",
+				image: "https://rachelchan.co/photos/amex-workshop-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/L0qkX7UrZWY?si=jXWr_9WNpdmwruUI",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2025",
+				client: "Commercial",
+				role: "Videographer, Editor",
+				description: "",
+				link: ""
+			},
+						{
+				id: "vp5",
+				title: "Seicho 2026",
+				image: "https://rachelchan.co/photos/seicho.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/tcq5mLtJyZM?si=vzO_Jfns1plRaZWI",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2026",
+				client: "Commercial",
+				role: "Editor",
+				description: "",
+				link: ""
+			},
+						{
+				id: "vp6",
+				title: "Decisioning Congress 2025",
+				image: "https://rachelchan.co/photos/decisioning-congress-vp-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/m_71Qg_iu-o?si=S2ejAp_2AH7_c8En",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2025",
+				client: "Commercial",
+				role: "Videographer, Editor",
+				description: "",
+				link: ""
+			},
+			{
+				id: "vp7",
+				title: "Park Chan-wook: Expanding Cinematic Reach",
+				image: "https://rachelchan.co/photos/park-chan-wook-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/w16BaXi8mlY?si=-eSPEQkLfug8MEVa",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Short-form Video",
+				role: "Producer, Camera, Editor",
+				description: "",
+				link: "https://www.mplus.org.hk/en/magazine/park-chan-wook-expanding-cinematic-reach/"
+			},
+			{
+				id: "vp8",
+				title: "Luke Ching Chin Wai: Community as Canvas",
+				image: "https://rachelchan.co/photos/luke-ching-chin-wai-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/Hj436Vohblc?si=3fZAqwSBPwmalrYK",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Interview",
+				role: "Producer",
+				description: "",
+				link: "https://www.mplus.org.hk/en/magazine/park-chan-wook-expanding-cinematic-reach/"
+			},
+			{
+				id: "vp9",
+				title: "A Brush with the City: Wilson Shieh Brings Hong Kong’s Central District to Life",
+				image: "https://rachelchan.co/photos/a-brush-with-the-city-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/Co6ERzWA2wk?si=Nq8kXamUWgi26ZeI",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Video",
+				role: "Producer",
+				description: "",
+				link: "https://www.instagram.com/reel/C2RrhvPrL7C/"
+			},
+			{
+				id: "vp10",
+				title: "Unlocking Hidden Patterns: South Ho’s Exploration of Tin Shui Wai",
+				image: "https://rachelchan.co/photos/unlocking-hidden-patterns-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/_aAmbpA-pz8?si=WKhlrGqRTmKhAhOO",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Video",
+				role: "Producer",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "vp11",
+				title: "Hong Kong’s ‘Monster Building’: Artistic Inspiration and Urban Symbolism",
+				image: "https://rachelchan.co/photos/hong-kong-s-monster-building-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/mEpSXu0vztA?si=AIixfU6th4o_rP3L",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Video",
+				role: "Producer",
+				description: "",
+				link: "https://www.instagram.com/reel/C3pXu-Or_Hz/"
+			},
+			{
+				id: "vp12",
+				title: "Tina Liu: The Shape of Style",
+				image: "https://rachelchan.co/photos/tina-liu-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/wVcIYECBmPE?si=lkirZVaYxHs6m2r1",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2023",
+				client: "Video",
+				role: "Producer",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "vp13",
+				title: "A Shimmering Gateway: Henry Steiner and Nobuyoshi Araki’s Hong Kong",
+				image: "https://rachelchan.co/photos/a-shimmering-gateway.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/KTUfGkbu5Ys?si=XGEra34rldqNCNJg",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2023",
+				client: "Video",
+				role: "Producer",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+						{
+				id: "vp14",
+				title: "What’s Next Live",
+				image: "https://rachelchan.co/photos/nl-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/1gMx3VWIZrQ?si=xFjVAJILQJL0FVqV",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+				{ type: "image", url: "https://rachelchan.co/photos/nl-1.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/nl-2.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/nl-3.jpg" }
+				],
+				year: "2026",
+				client: "Video",
+				role: "Producer, Editor",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			}
+		],
+		"short-films": [{
+				id: "sf1",
+				title: "King of the Sandcastle",
+				image: "https://rachelchan.co/photos/king-of-the-sandcastle-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/H_3pHNFdico?si=chEzMspc_nRD_g8w",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+				{ type: "image", url: "https://rachelchan.co/photos/kos-1.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/kos-2.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/kos-3.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/kos-4.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/kos-5.jpg" },
+				{ type: "image", url: "https://rachelchan.co/photos/kos-6.jpg" }
+				],
+				year: "2025",
+				client: "Short Film",
+				role: "Producer",
+				description: "A control-obsessed saxophonist must learn to embrace uncertainty when a career-defining audition hinges entirely on his ability to improvise. To bring this story to life, the project features a dynamic, multi-camera jazz band performance captured with live recording and comprehensive audio post-production.",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf2",
+				title: "Cathedra",
+				image: "https://rachelchan.co/photos/cathedra-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/dcn2BCSJR3Q?si=JGMigHAHN_hMjw0Y",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2025",
+				client: "Short Film",
+				role: "Producer, Assistant Director",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf3",
+				title: "A Hard Day's Night",
+				image: "https://rachelchan.co/photos/a-hard-day-s-night-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/DZStD35DcOY?si=Rhmes_7puT5okVn3",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Short Film",
+				role: "Director, Writer, Editor",
+				description: "EVERYONE IS AN INDIVIDUAL.<br><br>A young woman at a turning point in her life accidentally gets on the wrong minibus and forms a surprising connection with the driver, despite their age and background differences.",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf4",
+				title: "Room 1410",
+				image: "https://rachelchan.co/photos/room-1410-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/X_0U1vWZbdo?si=OWiHF4t7U5dcszDy",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2021",
+				client: "Experimental",
+				role: "Director, Camera, Editor",
+				description: "TIME AND SPACE <br><br>This is about the changes of a family and a space. The scenes and sound narrates two timeline in an experimental way.",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf5",
+				title: "Last Night",
+				image: "https://rachelchan.co/photos/last-night-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/C9l6yt2DqXc?si=1wMUZlR3ftGs0yD_",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2021",
+				client: "Short Film",
+				role: "Director, Writer, Editor",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf6",
+				title: "To Bristol No Flight",
+				image: "https://rachelchan.co/photos/to-bristol-no-flight-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/NcIFBhSUVgw?si=pYL74KSjmokOw5m-",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2022",
+				client: "Short Film",
+				role: "Producer",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			},
+			{
+				id: "sf7",
+				title: "Strangers",
+				image: "https://rachelchan.co/photos/strangers-cover.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/qz2rYZdGh8s?si=LMCQse7BqmVnHK7h",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2020",
+				client: "Short Film",
+				role: "Producer",
+				description: "",
+				link: "https://youtube.com/neondreams"
+			}
+		],
+		"photography": [
+			{
+				id: "ph1",
+				title: "Decisioning Congress",
+				image: "https://rachelchan.co/photos/decisioning-congress-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-2.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-3.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-4.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-5.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-6.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-7.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-8.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-9.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-10.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-11.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-12.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-13.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-14.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-15.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-16.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-17.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-18.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-19.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-20.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-21.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-22.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-23.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-24.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-25.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-26.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-27.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-28.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-29.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-30.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-31.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-32.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-33.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-34.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/decisioning-congress-35.jpg" }
+				],
+				year: "2025",
+				client: "Event",
+				role: "Photographer",
+				description: "Decisioning Congress was an insightful two-days filled with engaging content sessions, knowledge sharing with likeminded peers, and fantastic networking opportunities with key leaders within the decisioning community. I took and edited more than 600 photos to capture the whole event.",
+				link: "https://rachelchanphotography.com/street-life"
+			},
+					    	{
+				id: "ph4",
+				title: "The Only Constant",
+				image: "https://rachelchan.co/photos/the-only-constant-cover.jpg?v2",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-2.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-3.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-4.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-5.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-6.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-7.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-8.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-9.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-10.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-11.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-12.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-13.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-14.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-15.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-16.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/the-only-constant-17.jpg" },
+				],
+				year: "Oct 2023",
+				client: "Asia One Photographic Awards",
+				role: "Awarding-Winning Photographer",
+				description: "Asia One Photographic Awards 2022/23 - In Honour of Mr Julian Lee - presents: Transcendence &quot;The Only Constant&quot; <br><br>The slowest shutter speed of a digital camera is generally 30 seconds. I'm back to the essence of photography—time and space—with pinhole photography to explore exposure times of more than 30 seconds.",
+				link: "https://hrf.org/faces-of-change"
+			},
+		    {
+				id: "ph2",
+				title: "Essence",
+				image: "https://rachelchan.co/photos/essence-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/essence-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-2.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-3.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-4.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-5.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-6.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-7.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-8.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/essence-9.jpg" }
+				],
+				year: "2025",
+				client: "Photography",
+				role: "Photographer",
+				description: "",
+				link: "https://rachelchanphotography.com/street-life"
+			},
+			{
+				id: "ph3",
+				title: "Adolescence",
+				image: "https://rachelchan.co/photos/adolescence-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-2.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-3.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-4.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-5.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-6.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/adolescence-7.jpg" }
+				],
+				year: "2022",
+				client: "Digital Photography, Portrait Photography",
+				role: "Photographer",
+				description: "",
+				link: "https://vogue.com/metropolis"
+			}
+		],
+		"visuals": [
+		    {
+				id: "vs1",
+				title: "Kellanova",
+				image: "https://rachelchan.co/photos/kellanova-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/AYdCwxuNHgU?si=aAxspPuV1CLRe4Qy",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2025",
+				client: "Commercial",
+				role: "Producer, Editor",
+				description: "",
+				link: "https://hrf.org/faces-of-change"
+			},
+		    {
+				id: "vs2",
+				title: "Compare the Market pitch animation",
+				image: "https://rachelchan.co/photos/ctm-cover.jpg",
+				media: [
+				    {
+					type: "youtube",
+					url: "https://www.youtube.com/embed/2_q-zXrnYWE?si=-nLlFTcJp6JVujO1",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+					{ type: "image", url: "https://rachelchan.co/photos/ctm-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/ctm-2.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/ctm-3.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/ctm-4.jpg" }
+				],
+				year: "2026",
+				client: "Commercial",
+				role: "Producer, Editor",
+				description: "A short motion graphics animation created to introduce ‘Mission O’ for a Compare the Market pitch, designed with a futuristic, technological, and mission-driven feel",
+				link: "https://www.youtube.com/embed/2_q-zXrnYWE?si=-nLlFTcJp6JVujO1"
+			},
+			{
+				id: "vs3",
+				title: "CE Summit intro",
+				image: "https://rachelchan.co/photos/ces-cover.jpg",
+				media: [
+				    {
+					type: "youtube",
+					url: "https://www.youtube.com/embed/4ETZ6-dNO5M?si=AXdt9uR-2NniwX4u",
+					autoplay: false,
+					controls: true,
+					start: 0
+				},
+					{ type: "image", url: "https://rachelchan.co/photos/ces-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/ces-2.jpg" }
+				],
+				year: "2026",
+				client: "Commercial",
+				role: "Producer, Editor",
+				description: "Created an intro that integrates different text animations and movements to align with the branding of the event",
+				link: "https://www.youtube.com/embed/4ETZ6-dNO5M?si=AXdt9uR-2NniwX4u"
+			},
+		    {
+				id: "vs4",
+				title: "ArtAsiaPacific Issue 138-141",
+				image: "https://rachelchan.co/photos/art-asia-pacific-cover.png",
+				media: [
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-1.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-2.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-3.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-4.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-5.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-6.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-7.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-8.jpg" },
+				    { type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-9.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-10.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-1.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-2.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-3.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-4.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-5.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-6.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-7.png" },
+					{ type: "image", url: "https://rachelchan.co/photos/art-asia-pacific-8.png" }
+				],
+				year: "2024",
+				client: "Magazine",
+				role: "Designer",
+				description: "",
+				link: "https://rachelchanphotography.com/street-life"
+			},
+			{
+				id: "vs5",
+				title: "Shuttle",
+				image: "https://rachelchan.co/photos/shuttle-cover.jpg",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/RejYZlHgiZs?si=4p7Rl8KcDL063rTB",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2021",
+				client: "Rentless Melt no.24, 37th VIDEOFORMES Digital Arts, SIGGRAPH Asia, Animex Awards UK, Ottawa International Animation Festival",
+				role: "Director, Animator",
+				description: "SHUTTLE IN THE CITY <br><br>Created and composited with footages, images, elements of a condensed city",
+				link: "https://hrf.org/faces-of-change"
+			},
+			{
+				id: "vs6",
+				title: "The Home Appliance That Changed Japan",
+				image: "https://rachelchan.co/photos/the-home-appliance-that-changed-japan.png",
+				media: [{
+					type: "youtube",
+					url: "https://www.youtube.com/embed/qdHjYuhfeMU?si=XvFCKR2LlCBlcfuY",
+					autoplay: false,
+					controls: true,
+					start: 0
+				}],
+				year: "2024",
+				client: "Motion Graphic",
+				role: "Producer",
+				description: "",
+				link: "https://techforward.com/products"
+			}
+		],
+		"social-media": [{
+				id: "sm1",
+				title: "Madame Song & Pierre Cardin",
+				image: "https://rachelchan.co/photos/madame-song-n-pierre-cardin-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/madame-song-n-pierre-cardin-1.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "While Madame Song Huai-Kuei may not be widely known today, she was a prominent figure in Chinese cultural spheres just two decades ago. Song is the subject of a special exhibition at M+, ‘Madame Song: Pioneering Art and Fashion in China’.<br><br>We spoke to Boryana Varbanov, Song’s daughter, about her mother’s collaborations with fashion designer Pierre Cardin, including a watershed fashion show in the Beijing Hotel, and the first Western dining establishment to open in China after the Cultural Revolution, Maxim’s.<br><br>Link: https://www.instagram.com/reel/CxsQmz9LwIG/",
+				link: "https://tiktok.com/@brandx/series"
+			},
+			{
+				id: "sm2",
+				title: "Hong Kong as mise en scene' teaser",
+				image: "https://rachelchan.co/photos/hong-kong-as-mise-en-scene-teaser-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/hong-kong-as-mise-en-scene-teaser-1.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "Five short films by five Hong Kong artists 🎬 <br><br>Get ready for a cinematic journey through Hong Kong. Our newest video commission project, ‘Hong Kong as Mise-en-scène’, invites you to experience the city through the eyes of five local artists. Their thought-provoking short films capture the complexities and rich visual texture of Hong Kong from a fresh perspective.<br><br>Link: https://www.instagram.com/reel/CsqYihMP4ir/",
+				link: "https://instagram.com/luxefashion/reels"
+			},
+			{
+				id: "sm3",
+				title: "M+ Facade",
+				image: "https://rachelchan.co/photos/mplus-facade-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/mplus-facade-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/mplus-facade-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagrem",
+				role: "Producer",
+				description: "As the sun sets each night, the M+ Facade transforms into a canvas of light, exhibiting a dynamic display of moving image works.<br><br>The M+ building, designed by Herzog & de Meuron (@herzogdemeuron), features terracotta mullions that serve as sun-shading louvres and LED light fixtures. To create an outdoor exhibition space on the building’s harbour-facing facade, the architects collaborated with media architecture specialist Valentin Spiess of iart (@iart_basel) and creative technologists Andrew Crowe and Ashley Lee Wong from MetaObjects (@metaobjects).<br><br>Awarded the best Animated Media Architecture project at the 2023 Media Architecture Awards, the M+ Facade is a tool for exploring the boundaries of art and technology and a platform for contemporary visual culture.<br><br>Link: https://www.instagram.com/reel/Cug3Uzwx5NR/",
+				link: "https://youtube.com/techforward/shorts"
+			},
+			{
+				id: "sm4",
+				title: "Connecting Through Architecture with Raj Rewal",
+				image: "https://rachelchan.co/photos/connecting-through-architecture-with-raj-rewal-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/connecting-through-architecture-with-raj-rewal-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/connecting-through-architecture-with-raj-rewal-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "By blending historical architectural principles with modern elements, Raj Rewal’s designs aren’t just functional—they’re infused with an emotional quality that he calls a ‘rasa’ – a term that embodies his singular vision and creative expression.<br><br>The M+ collections house an array of design objects from Rewal, including models, plans, and sketches from projects such as the Hall of Nations (1970) and the Parliament Library (1985).<br><br>Rewal’s designs balance form and function, resulting in visually striking and highly efficient spaces. Through his innovative approach, he’s reshaped the field of architecture and paved the way for a new era of sustainable, human-centred design.🔗<br><br>Link: https://www.instagram.com/reel/Csa-d08L90t/",
+				link: "https://tiktok.com/tag/dancewithstyle"
+			},
+			{
+				id: "sm6",
+				title: "‘Triosophia’",
+				image: "https://rachelchan.co/photos/triosophia-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/triosophia-1.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "Paul Chan’s ‘Breathers’ series explores the idea that a moving image can be experienced in three dimensions. ‘Trisophia’ features three billowing figures dancing and swaying with industrial air fans. As the nylon fabric gets filled with air, the figures swell with mesmerising and repetitive movements that resemble people pushing and pulling one another. They seem to be constantly trying to coexist between discord and harmony.<br><br>Curator Pauline J. Yao provides perspective on Chan's unique blending of the traditionally separate domains of sculpture and moving image within his artistic practice.<br><br>‘Trisophia’ is now on view in the M+ Focus Gallery. 🔗 Link in our bio for details!<br><br>Link: https://www.instagram.com/reel/CyS2DJvSs7L/"
+			},
+			{
+				id: "sm7",
+				title: "Balkrishna V. Doshi: What is Architecture?",
+				image: "https://rachelchan.co/photos/balkrishna-v-doshi-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/balkrishna-v-doshi-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/balkrishna-v-doshi-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "The late Balkrishna Vithaldas Doshi (1927—2023) was one of the most significant Indian architects of the twentieth century. Recipient of the 2018 Pritzker Architecture Prize (often referred to as the Nobel Prize for Architecture), Doshi saw architecture as a dynamic and evolving practice that has the potential to enrich and transform lives, offering a means of expression, not solely about the physical form, but also about the underlying ideas, intentions, and meanings embedded within it.<br><br>Link: https://www.instagram.com/reel/CwXF5vioHEO/"
+			},
+			{
+				id: "sm8",
+				title: "Trevor Yeung: Hanging in Limbo",
+				image: "https://rachelchan.co/photos/trevor-yeung-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/trevor-yeung-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/trevor-yeung-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "Are you curious how art can unravel the intricacies of human connections?<br><br>Trevor Yeung (@plantertrevor) is an artist who delves into the inner workings of human relations. He is fascinated by botanic ecology and horticulture. He often uses carefully arranged objects, photos, and plants in his mixed media works to create emotional and intellectual situations that mirror his social experiences. By bending the rules of how ecosystems usually work, Trevor explores themes of failure and imperfection and creates powerful metaphors that capture the intricacies of human relationships.<br><br>https://www.instagram.com/reel/C1B55mgr5d7/?utm_source=ig_web_button_share_sheet"
+			},
+			{
+				id: "sm10",
+				title: "Jes Fan: Beyond Appearances",
+				image: "https://rachelchan.co/photos/jes-fan-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/jes-fan-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/jes-fan-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Host",
+				description: "What if nothing was fixed or stable?<br><br>Jes Fan’s art evokes a dynamic reality that explores this question. Fan works with various materials in his artmaking practice, including glass, which is of interest to Fan due to its non-binary properties. After kiln firing, Fan’s glass works retain a molten, mutable quality—defying stability yet forever in flux.<br><br>This fluid approach reflects how, throughout his work, Fan examines ideas of sexuality, gender, race and species, challenging fixed notions and binary classifications. His pieces also invite us to consider another question: what might intimacy with the natural world reveal about the self?<br><br>Link: https://www.instagram.com/reel/CzJB6oxLGGy/",
+				link: "https://instagram.com/rachelchan/live"
+			},
+			{
+				id: "sm11",
+				title: "Park Chan-wook: Expanding Cinematic Reach",
+				image: "https://rachelchan.co/photos/park-chan-wook-cover.png",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/park-chan-wook-1.png" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "In his own words, Park Chan-wook sums up his oeuvre as exploring ‘moral complexity’, throwing characters into agonising choices between good and bad with no easy answers that keep audiences thinking long after the credits roll.<br><br>Park’s films depict the messy dilemmas of life in a way that lingers, capturing that knot in your gut when a ‘right’ decision isn’t so clear. Through painful decisions that echo our own, Park aims to show truth is rarely simple.<br><br>Link: https://www.instagram.com/reel/C1WNDhFLW_T/",
+				link: "https://youtube.com/rachelchan/community"
+			},
+			{
+				id: "sm12",
+				title: "Luke Ching: Community as Canvas",
+				image: "https://rachelchan.co/photos/luke-ching-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/luke-ching-1.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "Ever wondered how art can be a tool for social change?<br><br>Meet Luke Ching (@lukechinghk), an artist who has spent the last twenty years using his creative practice to bring attention to important social issues in Hong Kong. He is committed to understanding the challenges faced by marginalised groups, and his research-led approach to artmaking involves immersing himself within local communities to gain a better understanding of their perspectives. Eluding traditional parameters of art, Luke’s practice often sees him take on jobs such as sanitation work and security guard questioning the boundaries that determine what one can and cannot do, while raising lesser-known issues into the public consciousness.<br><br>As a chronicler and advocate, Ching highlights pressing concerns and gives a voice to those who often go unheard.<br><br>Our full-length video with Luke comes out later this week. Keep an eye on our Instagram feed for updates! 👀<br><br>Link: https://www.instagram.com/reel/C0tThotLweC/",
+				link: "https://twitter.com/filmfest/moments"
+			},
+			{
+				id: "sm13",
+				title: "Behind 'City Magazine'",
+				image: "https://rachelchan.co/photos/behind-city-magazine-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/behind-city-magazine-1.jpg" },
+					{ type: "image", url: "https://rachelchan.co/photos/behind-city-magazine-2.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "In the beginning, ‘City Magazine’ didn’t have many resources, but it did have character. The magazine wasn’t concerned with commercial factors, which afforded its team huge creative freedom.<br><br>Tina Liu (@toliutina) joined the team as executive editor in 1981.<br><br>The team behind ‘City Magazine’ came armed with a shared sensitivity towards pop culture and various talents, which combined to create a fresh and unique chemistry for producing the magazine’s content.<br><br>Says Liu: ‘The magazine attracted many more creative, young and dynamic people who gladly contributed to a publication reflecting Hong Kong’s city life. Back then, it seemed that everyone was happily multi-tasking. When I chat with old friends these days, we often feel that we could do whatever we wanted back then, and the outcomes were pretty impressive! Everybody could make good use of their talents, bringing into play to create a blooming era.’<br><br>Link: https://www.instagram.com/reel/CxKwtwsSEi7/",
+				link: "https://pinterest.com/craftsupplies/videos"
+			},
+			{
+				id: "sm14",
+				title: "Miao Ying: Pixelated Pasts",
+				image: "https://rachelchan.co/photos/miao-ying-cover.jpg",
+				media: [
+					{ type: "image", url: "https://rachelchan.co/photos/miao-ying-1.jpg" },
+				],
+				year: "2023",
+				client: "Instagram",
+				role: "Producer",
+				description: "How do you distinguish human creativity from a machine’s?<br><br>Artist Miao Ying shares her exploration into how machine learning algorithms can influence creative processes in art and the possibilities and provocations this creates.<br><br>Miao’s ‘Pilgrimage into Walden XII (2019–2023)’ envisions a fantasy mediaeval land governed by AI, where machine learning generates a unique visual depiction with each viewing.<br><br>Link: https://www.instagram.com/reel/Cz_AhzIrjWt/",
+				link: "https://facebook.com/nonprofit/watch"
+			}
+		]
+	};
+
+	const tabContent = {
+		"home": `
+			<div class="home-video-container">
+				<video class="home-video" autoplay loop muted playsinline>
+					<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		`,
+		"video-projects": `
+			<section class="main-content-content tab-content-container">
+				<div class="photo-grid" id="video-projects-grid"></div>
+			</section>
+		`,
+		"short-films": `
+			<section class="main-content-content tab-content-container">
+				<div class="photo-grid" id="short-films-grid"></div>
+			</section>
+		`,
+		"photography": `
+			<section class="main-content-content tab-content-container">
+				<div class="photo-grid" id="photography-grid"></div>
+			</section>
+		`,
+		"visuals": `
+			<section class="main-content-content tab-content-container">
+				<div class="photo-grid" id="visuals-grid"></div>
+			</section>
+		`,
+		"social-media": `
+			<section class="main-content-content tab-content-container">
+				<div class="photo-grid" id="social-media-grid"></div>
+			</section>
+		`
+	};
+
+	// --- DESKTOP LOGIC ---
+	const sidebar = document.getElementById("sidebar");
+	const edgeToggle = document.getElementById("edgeToggle");
+	const toggleIcon = document.getElementById("toggleIcon");
+	const navLinks = document.querySelectorAll('.nav-menu a:not(.showreel-link)');
+	const aboutBtn = document.getElementById('aboutBtn');
+	const mainContent = document.querySelector('.main-content');
+	let sidebarShown = false;
+
+	function showSidebar() {
+		sidebar.classList.remove("hide");
+		sidebarShown = true;
+		aboutBtn.textContent = "ABOUT";
+		edgeToggle.style.left = "calc(var(--nav-width))";
+		toggleIcon.innerHTML = '<span>&#8592;</span>';
+	}
+
+	function hideSidebar() {
+		sidebar.classList.add("hide");
+		sidebarShown = false;
+		aboutBtn.textContent = "RACHEL CHAN";
+		edgeToggle.style.left = "0";
+		toggleIcon.innerHTML = '<span>&#8594;</span>';
+	}
+
+	function toggleSidebar() {
+		if (sidebarShown) hideSidebar();
+		else showSidebar();
+	}
+
+	edgeToggle.addEventListener("click", toggleSidebar);
+
+	// Desktop Navigation
+	function setMainContent(tabName) {
+		if (tabName === "home") {
+			mainContent.classList.remove("white-bg");
+			mainContent.innerHTML = tabContent["home"];
+		} else {
+			mainContent.classList.add("white-bg");
+			mainContent.innerHTML = tabContent[tabName] || "<section class='tab-content-container'><h1>Content Not Found</h1></section>";
+			if (projectsData[tabName]) {
+				const gridContainer = document.getElementById(`${tabName}-grid`);
+				if (gridContainer) {
+					const grid = createPhotoGrid(tabName, projectsData[tabName]);
+					gridContainer.replaceWith(grid);
+				}
+			}
+			mainContent.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}
+		setActiveTab(tabName);
+	}
+
+	function setActiveTab(tabName) {
+		navLinks.forEach(link => {
+			if (link.dataset.tab === tabName) {
+				link.classList.add('active');
+				link.setAttribute('aria-current', 'page');
+			} else {
+				link.classList.remove('active');
+				link.removeAttribute('aria-current');
+			}
+		});
+	}
+
+	navLinks.forEach(link => {
+		link.addEventListener('mouseenter', function() {
+			const tab = this.dataset.tab;
+			setMainContent(tab);
+		});
+
+		link.addEventListener('click', function(e) {
+			e.preventDefault();
+			const tab = this.dataset.tab;
+			setMainContent(tab);
+		});
+	});
+
+	function createPhotoGrid(tabId, projects) {
+		const grid = document.createElement('div');
+		grid.className = 'photo-grid';
+		grid.id = `${tabId}-grid`;
+
+		projects.forEach(project => {
+			const item = document.createElement('div');
+			item.className = 'photo-item';
+			item.innerHTML = `
+				<img src="${project.image}" alt="${project.title}">
+				<div class="photo-title">${project.title}</div>
+				<div class="photo-caption">
+					<h3>${project.title}</h3>
+					${project.year ? `<p class="project-year">${project.year}</p>` : ''}
+					${project.client ? `<p class="project-client">${project.client}</p>` : ''}
+					${project.role ? `<p class="project-role">${project.role}</p>` : ''}
+				</div>
+			`;
+			item.addEventListener('click', () => {
+				openProjectDialog(project.id, tabId);
+			});
+			grid.appendChild(item);
+		});
+		return grid;
+	}
+
+	// --- DIALOG LOGIC (Shared) ---
+	const projectDialog = document.getElementById('projectDialog');
+	const closeProjectBtn = document.getElementById('closeProject');
+	const projectDialogTitle = document.getElementById('projectDialogTitle');
+	const projectMediaContainer = document.getElementById('projectMediaContainer');
+	const projectDetails = document.getElementById('projectDetails');
+	const aboutDialog = document.getElementById('aboutDialog');
+	const dialogOverlay = document.getElementById('dialogOverlay');
+	const closeAbout = document.getElementById('closeAbout');
+
+	function openProjectDialog(projectId, category) {
+		const project = projectsData[category].find(p => p.id === projectId);
+		if (!project) return;
+
+		projectDialogTitle.textContent = project.title;
+		projectMediaContainer.innerHTML = '';
+		projectDetails.innerHTML = '';
+
+		project.media.forEach(mediaItem => {
+			if (mediaItem.type === 'image') {
+				const img = document.createElement('img');
+				img.src = mediaItem.url;
+				img.alt = project.title;
+				img.className = 'project-media';
+				projectMediaContainer.appendChild(img);
+			} else if (mediaItem.type === 'video') {
+				const video = document.createElement('video');
+				video.src = mediaItem.url;
+				video.controls = true;
+				video.className = 'project-video';
+				projectMediaContainer.appendChild(video);
+			} else if (mediaItem.type === 'youtube') {
+				const iframe = document.createElement('iframe');
+				let youtubeUrl = mediaItem.url;
+				const params = new URLSearchParams();
+				if (!mediaItem.autoplay) params.append('autoplay', '0');
+				if (!mediaItem.controls) params.append('controls', '0');
+				if (mediaItem.start) params.append('start', mediaItem.start);
+				if (params.toString()) youtubeUrl += (youtubeUrl.includes('?') ? '&' : '?') + params.toString();
+
+				iframe.src = youtubeUrl;
+				iframe.width = '100%';
+				iframe.height = '400';
+				iframe.frameBorder = '0';
+				iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+				iframe.allowFullscreen = true;
+				iframe.className = 'project-video youtube-video';
+				projectMediaContainer.appendChild(iframe);
+			}
+		});
+
+		const metaHtml = [];
+		if (project.year) metaHtml.push(`<span class="project-meta-item">${project.year}</span>`);
+		if (project.client) metaHtml.push(`<span class="project-meta-item">${project.client}</span>`);
+		if (project.role) metaHtml.push(`<span class="project-meta-item">${project.role}</span>`);
+
+		projectDetails.innerHTML = `<div class="project-meta">${metaHtml.join('')}</div><div class="project-description">${project.description}</div>`;
+
+		projectDialog.classList.add('active');
+		document.body.style.overflow = 'hidden';
+	}
+
+	function closeProjectDialog() {
+		projectDialog.classList.remove('active');
+		document.body.style.overflow = '';
+	}
+
+	closeProjectBtn.addEventListener('click', closeProjectDialog);
+	projectDialog.addEventListener('click', (e) => {
+		if (e.target === projectDialog) closeProjectDialog();
+	});
+
+	function openAboutDialog() {
+		aboutDialog.classList.add('active');
+		dialogOverlay.classList.add('active');
+		document.body.style.overflow = 'hidden';
+		closeAbout.focus();
+	}
+
+	function closeAboutDialog() {
+		aboutDialog.classList.remove('active');
+		dialogOverlay.classList.remove('active');
+		document.body.style.overflow = '';
+	}
+
+	dialogOverlay.addEventListener('click', closeAboutDialog);
+	closeAbout.addEventListener('click', closeAboutDialog);
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') {
+			if (projectDialog.classList.contains('active')) closeProjectDialog();
+			if (aboutDialog.classList.contains('active')) closeAboutDialog();
+		}
+	});
+
+	aboutBtn.addEventListener('click', function(e) {
+		e.preventDefault();
+		openAboutDialog();
+	});
+
+	// --- NEW MOBILE LOGIC (Snap Scroll) ---
+	const mobileContainer = document.getElementById('mobileContainer');
+	const mobileIndicator = document.getElementById('mobileIndicator');
+	const mobileHeaderTitle = document.getElementById('mobileHeaderTitle');
+	const mobileHeaderRightBtn = document.getElementById('mobileHeaderRightBtn');
+
+	function initMobileView() {
+		// 1. Clear existing
+		mobileContainer.innerHTML = '';
+		mobileIndicator.innerHTML = '';
+
+		// 2. Define Section Order
+		const sectionOrder = [
+			{ id: 'home', title: 'Home' },
+			{ id: 'video-projects', title: 'Video Projects' },
+			{ id: 'short-films', title: 'Short Films' },
+			{ id: 'photography', title: 'Photography' },
+			{ id: 'visuals', title: 'Visuals' },
+			{ id: 'social-media', title: 'Social/Short' },
+		    //{ id: 'showreel', title: 'Showreel' }
+		];
+
+		// 3. Generate HTML
+		sectionOrder.forEach((section, index) => {
+			// Indicator Dot
+			const dot = document.createElement('div');
+			dot.className = 'indicator-dot';
+			dot.id = `dot-${section.id}`;
+			mobileIndicator.appendChild(dot);
+
+			// Section Container
+			const sectionEl = document.createElement('section');
+			sectionEl.className = 'm-section';
+			sectionEl.id = `m-section-${section.id}`;
+			sectionEl.dataset.title = section.title; // Store title for observer
+
+			if (section.id === 'home') {
+				sectionEl.classList.add('m-home-section');
+				sectionEl.innerHTML = `
+					<video class="m-home-video" autoplay loop muted playsinline>
+						<source src="https://rachelchan.co/videos/home-video.mp4" type="video/mp4">
+					</video>
+					<div class="m-home-overlay">
+						<h1>Rachel Chan</h1>
+						<p>Creative Producer & Filmmaker</p>
+					</div>
+				`;
+			} else if (section.id === 'showreel') {
+				sectionEl.innerHTML = `
+					<div class="m-showreel-container">
+						<iframe class="m-showreel-iframe" src="https://www.youtube.com/embed/UsHlXoQzQ7k?si=ALXTh57OQvDJlush" allowfullscreen></iframe>
+					</div>
+				`;
+			} else {
+				// Horizontal Scroll Category Section
+				sectionEl.classList.add('m-category-section');
+				
+				// Project Cards
+				const projects = projectsData[section.id];
+				if (projects) {
+					projects.forEach((p, idx) => {
+						const card = document.createElement('div');
+						card.className = 'm-project-card';
+						
+						// Add glassy hint only to the first card
+						let hintHtml = '';
+						if (idx === 0) {
+							hintHtml = `
+								<div class="m-horiz-hint">
+									<span class="arrow">&larr;</span>
+									<span class="text">Swipe</span>
+								</div>
+							`;
+						}
+
+						card.innerHTML = `
+							<img src="${p.image}" class="m-project-bg" alt="${p.title}">
+							<div class="m-project-info">
+								<h2>${p.title}</h2>
+								<p>${p.year || ''} ${p.role ? ' | ' + p.role : ''}</p>
+								<button class="m-view-btn">View Project</button>
+							</div>
+							${hintHtml}
+						`;
+						// Bind click to open dialog
+						card.querySelector('.m-view-btn').addEventListener('click', (e) => {
+							e.preventDefault();
+							openProjectDialog(p.id, section.id);
+						});
+						sectionEl.appendChild(card);
+					});
+				}
+			}
+
+			mobileContainer.appendChild(sectionEl);
+		});
+
+		// 4. Setup Intersection Observer for Wheel Text & Header Logic
+		const observerOptions = {
+			root: mobileContainer,
+			threshold: 0.5 // Trigger when 50% visible
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					// Remove active from all dots
+					document.querySelectorAll('.indicator-dot').forEach(d => d.classList.remove('active'));
+					
+					const sectionId = entry.target.id.replace('m-section-', '');
+					const sectionTitle = entry.target.dataset.title;
+
+					// Add active to current dot
+					const dot = document.getElementById(`dot-${sectionId}`);
+					if (dot) dot.classList.add('active');
+
+					// --- HEADER LOGIC CHANGE ---
+					if (sectionId === 'home') {
+						mobileHeaderTitle.textContent = "RACHEL CHAN";
+						mobileHeaderRightBtn.textContent = "ABOUT";
+						
+						// On Home: Left = Scroll Top (already default), Right = Open About
+						mobileHeaderTitle.onclick = function() { document.querySelector('.m-vertical-container').scrollTo(0,0); return false; };
+						mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
+					} else {
+						mobileHeaderTitle.textContent = sectionTitle.toUpperCase();
+						mobileHeaderRightBtn.textContent = "RACHEL CHAN";
+
+						// On Other Sections: 
+						// Left (Title) -> Scroll Top (Home)
+						mobileHeaderTitle.onclick = function() { document.querySelector('.m-vertical-container').scrollTo(0,0); return false; };
+						
+						// Right (Name) -> Open About (NEW REQUEST)
+						mobileHeaderRightBtn.onclick = function() { openAboutDialog(); return false; };
+					}
+				}
+			});
+		}, observerOptions);
+
+		document.querySelectorAll('.m-section').forEach(section => {
+			observer.observe(section);
+		});
+	}
+
+	// Initialize
+	setMainContent('home'); // Desktop Default
+	initMobileView(); // Mobile Init
+</script>
+
+
+
+</body></html>
