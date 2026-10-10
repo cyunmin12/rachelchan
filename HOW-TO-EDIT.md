@@ -29,7 +29,19 @@ A panel opens on the right. Everything you change is **previewed live** on the p
 | **Projects** | Every project in every category: title, year, client, role, description, cover image, external link, and its media (image / YouTube embed / video). Add, delete, duplicate, and re-order with the ↑ ↓ buttons |
 | **Publish** | Download the file, save/discard your draft, or push a copy to GitHub |
 
-## 3. Publish your changes
+## 3. Uploading images & videos
+
+You can upload media files straight from the editor — no separate uploading tool needed:
+
+- **⬆ Upload** buttons appear next to the *home video*, the *share image*, each project's *cover image*, and every *media row* inside a project.
+- The first time, paste your **GitHub token** into the *Publish* section (fine-grained token with **Contents: Read and write** for `cyunmin12/rachelchan`). It is stored only in your browser.
+- Pick a file → it is uploaded to the repo's `media/` folder → the permanent public URL is **filled into the field automatically** and previews live.
+- For project media, the type (image / video) is detected automatically.
+- Limits: **95 MB per file**. Keep the home background video small (a few MB) so your site loads fast.
+
+> **Important:** uploaded media is served from GitHub, so the repository must be **public** for visitors to see the images/videos. (Your GitHub → repo → Settings → General → Danger Zone → Change visibility.) The rest of your site is unaffected.
+
+## 4. Publish your changes
 
 Your website is uploaded manually to your host, so publishing is a 3-step routine:
 
@@ -41,11 +53,11 @@ Done — your changes are live immediately. You never need to touch `index.html`
 
 > **Drafts:** your in-progress edits are auto-saved in the browser you're using. If you close the tab and come back to `#edit`, they're still there until you publish or click **Discard**. Drafts are per-browser and per-device.
 
-## 4. Optional: keep GitHub in sync
+## 5. Optional: keep GitHub in sync
 
 In the **Publish** section you can paste a GitHub *fine-grained personal access token* (with **Contents: Read and write** permission for `cyunmin12/rachelchan`) and click **Push to GitHub**. This commits `site-config.js` to your repository so your GitHub copy always matches the live site. The token stays only in your browser.
 
-## 5. If something goes wrong
+## 6. If something goes wrong
 
 - **Site looks wrong after publishing:** open the editor, click **Discard**, download a fresh `site-config.js`, and upload it — that restores the content the site was built with.
 - **Deleting site-config.js** from the host also works: the site falls back to its built-in defaults automatically. Nothing breaks.
