@@ -12,6 +12,7 @@ window.SITE_CONFIG = {
     "email": "rachelc1213@gmail.com",
     "linkedin": "https://www.linkedin.com/in/rachelchan1213/",
     "aboutHeading": "About Me",
+    "aboutImage": "",
     "aboutParagraphs": [
       "A video producer, filmmaker, and passionate storyteller dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a advertising agency in the heart of Central London. She believe that every piece of content—from a brand message to an individual's narrative—is a story brought to life through moving images.",
       "She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. After producing digital content at the M+ Museum, she completed her Master’s in Producing at Goldsmiths, University of London in 2024."
@@ -31,6 +32,10 @@ window.SITE_CONFIG = {
     "social-media": "SOCIAL/ SHORT"
   },
   "homeVideo": "https://rachelchan.co/videos/home-video.mp4",
+  "layout": {
+    "coverRatio": "4/5",
+    "coverFit": "contain"
+  },
   "projects": {
     "video-projects": [
       {
