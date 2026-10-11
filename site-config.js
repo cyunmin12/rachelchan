@@ -33,8 +33,8 @@ window.SITE_CONFIG = {
   },
   "homeVideo": "https://rachelchan.co/videos/home-video.mp4",
   "layout": {
-    "coverRatio": "4/5",
-    "coverFit": "contain"
+    "coverRatio": "16/9",
+    "coverFit": "cover"
   },
   "projects": {
     "video-projects": [
@@ -173,7 +173,7 @@ window.SITE_CONFIG = {
       {
         "id": "vp5",
         "title": "Seicho 2026",
-        "image": "https://rachelchan.co/photos/seicho.jpg",
+        "image": "https://raw.githubusercontent.com/cyunmin12/rachelchan/main/media/mv2o18al-cover-video.00_00_26_23.still010.jpg",
         "media": [
           {
             "type": "youtube",
