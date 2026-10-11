@@ -410,7 +410,7 @@
 	.photo-item {
 		position: relative;
 		width: 100%;
-		aspect-ratio: 16/9;
+		aspect-ratio: var(--cover-ratio, 16/9);
 		overflow: hidden;
 		border-radius: 4px;
 		cursor: pointer;
@@ -425,7 +425,7 @@
 	.photo-item img {
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
+		object-fit: var(--cover-fit, cover);
 		transition: transform 0.5s ease;
 	}
 
@@ -677,6 +677,16 @@
 		color: #555;
 		line-height: 1.7;
 		font-weight: 200;
+	}
+
+	.about-photo {
+		display: block;
+		width: 160px;
+		height: 160px;
+		object-fit: cover;
+		border-radius: 50%;
+		margin: 0 auto 1.5rem;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 	}
 
 	.close-about {
@@ -1110,6 +1120,12 @@
 			font-size: var(--fs-base);
 			line-height: 1.6;
 		}
+
+		.about-photo {
+			width: 120px;
+			height: 120px;
+			margin: 0 auto 1.2rem;
+		}
 	}
 
 	/* ============ EDIT MODE PANEL (#edit) ============ */
@@ -1117,7 +1133,7 @@
 		position: fixed;
 		top: 0;
 		right: 0;
-		width: 400px;
+		width: 480px;
 		max-width: 100vw;
 		height: 100vh;
 		background: #fff;
@@ -1290,10 +1306,17 @@
 
 	.ed-proj-body { padding: 8px; border-top: 1px solid #eee; }
 
-	.ed-media-row { display: flex; gap: 6px; margin-top: 6px; }
-	.ed-media-row select { width: 105px; flex: none; }
-	.ed-media-row input { flex: 1; }
+	.ed-media-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; padding: 6px; border: 1px solid #eee; border-radius: 6px; background: #fff; }
+	.ed-media-thumb { width: 56px; height: 40px; object-fit: cover; border-radius: 4px; background: #f0f0f0; flex: none; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #999; overflow: hidden; }
+	.ed-media-row select { width: 96px; flex: none; }
+	.ed-media-row input[type="text"] { flex: 1 1 140px; min-width: 120px; }
+	.ed-mrow-btns { display: flex; gap: 4px; flex: none; }
 	.ed-media-row button { flex: none; background: none; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; padding: 0 9px; }
+	.ed-media-row button:disabled { opacity: 0.35; cursor: default; }
+
+	#ed-resizer { position: fixed; top: 0; height: 100vh; width: 8px; cursor: col-resize; z-index: 5002; background: transparent; }
+	#ed-resizer:hover, #ed-resizer.ed-dragging { background: rgba(176, 0, 0, 0.28); }
+	@media (max-width: 900px) { #ed-resizer { display: none; } }
 
 	.ed-hint { font-size: 11px; color: #777; margin-top: 10px; line-height: 1.6; }
 
@@ -2244,6 +2267,7 @@
 			email: 'rachelc1213@gmail.com',
 			linkedin: 'https://www.linkedin.com/in/rachelchan1213/',
 			aboutHeading: 'About Rachel Chan',
+			aboutImage: '',
 			aboutParagraphs: ['RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master’s in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.']
 		},
 		typography: {
@@ -2259,7 +2283,11 @@
 			'visuals': 'VISUALS',
 			'social-media': 'SOCIAL/ SHORT'
 		},
-		homeVideo: 'https://rachelchan.co/videos/home-video.mp4'
+		homeVideo: 'https://rachelchan.co/videos/home-video.mp4',
+		layout: {
+			coverRatio: '16/9',
+			coverFit: 'cover'
+		}
 	};
 
 	function getCfg() {
@@ -2270,6 +2298,7 @@
 			typography: Object.assign({}, CONFIG_DEFAULTS.typography, c.typography),
 			navLabels: Object.assign({}, CONFIG_DEFAULTS.navLabels, c.navLabels),
 			homeVideo: c.homeVideo || CONFIG_DEFAULTS.homeVideo,
+			layout: Object.assign({}, CONFIG_DEFAULTS.layout, c.layout),
 			projects: c.projects || defaultProjectsData
 		};
 	}
@@ -2307,9 +2336,26 @@
 		}
 	}
 
+	function applyLayout(l) {
+		const root = document.documentElement;
+		root.style.setProperty('--cover-ratio', (l && l.coverRatio) || '16/9');
+		root.style.setProperty('--cover-fit', (l && l.coverFit) || 'cover');
+	}
+
 	function rebuildAboutDialog(cfg) {
 		const dlg = document.getElementById('aboutDialog');
+		const titleEl = document.getElementById('aboutDialogTitle');
 		dlg.querySelectorAll('p').forEach(p => p.remove());
+		const oldPhoto = dlg.querySelector('.about-photo');
+		if (oldPhoto) oldPhoto.remove();
+		if (cfg.identity.aboutImage) {
+			const photo = document.createElement('img');
+			photo.className = 'about-photo';
+			photo.src = cfg.identity.aboutImage;
+			photo.alt = cfg.identity.name || 'Profile photo';
+			if (titleEl && titleEl.nextSibling) dlg.insertBefore(photo, titleEl.nextSibling);
+			else dlg.appendChild(photo);
+		}
 		cfg.identity.aboutParagraphs.forEach(text => {
 			if (!text) return;
 			const p = document.createElement('p');
@@ -2365,6 +2411,7 @@
 		});
 
 		applyTypography(cfg.typography);
+		applyLayout(cfg.layout);
 
 		if (rerender) {
 			if (desktopInited) setMainContent(currentTab);
@@ -2543,6 +2590,7 @@
 			item.setAttribute('role', 'button');
 			item.setAttribute('tabindex', '0');
 			item.setAttribute('aria-label', `View project: ${project.title}`);
+			if (project.coverRatio) item.style.aspectRatio = project.coverRatio;
 			item.innerHTML = `
 				<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
 				<div class="photo-title">${safeTitle}</div>
@@ -2874,6 +2922,14 @@
 	const TOKEN_KEY = 'rc_gh_token';
 	const REPO = 'cyunmin12/rachelchan';
 	const CATEGORIES = ['video-projects', 'short-films', 'photography', 'visuals', 'social-media'];
+	const RATIOS = ['16/9', '3/2', '4/3', '1/1', '4/5', '3/4', '2/3', '9/16', '21/9'];
+	const FITS = ['cover', 'contain'];
+	const WIDTH_KEY = 'rc_ed_width';
+	function ratioOptions(selected, includeDefault) {
+		let html = includeDefault ? '<option value=""' + (!selected ? ' selected' : '') + '>— default —</option>' : '';
+		html += RATIOS.map(r => '<option value="' + r + '"' + (r === selected ? ' selected' : '') + '>' + r + '</option>').join('');
+		return html;
+	}
 
 	let panel = null;
 	let peekBtn = null;
@@ -3085,6 +3141,8 @@
 			${textF('Welcome heading', 'identity.introHeading')}
 			${textF('Welcome tagline', 'identity.introText')}
 			${textF('"About me" heading', 'identity.aboutHeading')}
+			${textF('Profile picture (About)', 'identity.aboutImage', 'url')}
+			${uploadBtn('identity.aboutImage', 'image/*', '⬆ Upload profile picture')}
 			<label>"About me" paragraphs</label>
 			<div id="ed-about-paras"></div>
 			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
@@ -3113,6 +3171,12 @@
 			<label>Letter spacing — <span id="ed-ls-val">${draft.typography.letterSpacing}</span>em</label>
 			<input type="range" id="ed-ls" min="-0.01" max="0.08" step="0.0025" value="${draft.typography.letterSpacing}">
 			<p class="ed-hint">Watch your page while dragging — it updates live.</p>
+			<h3 style="margin-top:22px">Cover pictures</h3>
+			<label>Shape (aspect ratio) of project cover pictures</label>
+			<select id="ed-cover-ratio">${ratioOptions(draft.layout.coverRatio, false)}</select>
+			<label>Fit — how the picture fills that shape</label>
+			<select id="ed-cover-fit">${FITS.map(f => '<option value="' + f + '"' + (f === draft.layout.coverFit ? ' selected' : '') + '>' + f + '</option>').join('')}</select>
+			<p class="ed-hint">Applies to every section's cover grid. Override a single project under <b>Projects</b>.</p>
 			<h3 style="margin-top:22px">Home background video</h3>
 			${textF('Video URL', 'homeVideo', 'url')}
 			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
@@ -3124,7 +3188,7 @@
 			<select id="ed-cat">${catOpts}</select>
 			<div id="ed-proj-list" style="margin-top:10px"></div>
 			<button class="ed-btn small secondary" id="ed-add-proj">+ Add new project</button>
-			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video from your computer.</p>
+			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder projects · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video. Inside a project, use each media item's <b>↑ ↓</b> to reorder media.</p>
 		</section>
 		<section data-tab="publish">
 			<h3>Make your changes live</h3>
@@ -3171,17 +3235,38 @@
 		return sel ? sel.value : CATEGORIES[0];
 	}
 
+	function ytId(url) {
+		const m = String(url || '').match(/(?:youtube\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+		return m ? m[1] : '';
+	}
+
+	function thumbHtml(m, mi) {
+		const url = m.url || '';
+		if (m.type === 'image' && url) return '<img class="ed-media-thumb" data-thumb="' + mi + '" src="' + escapeHtml(url) + '" alt="">';
+		if (m.type === 'youtube') {
+			const id = ytId(url);
+			return id ? '<img class="ed-media-thumb" data-thumb="' + mi + '" src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="">' : '<span class="ed-media-thumb" data-thumb="' + mi + '">▶</span>';
+		}
+		if (m.type === 'video') return '<span class="ed-media-thumb" data-thumb="' + mi + '">🎬</span>';
+		return '<span class="ed-media-thumb" data-thumb="' + mi + '">🖼</span>';
+	}
+
 	function projectBodyHtml(p) {
 		const mediaRows = (p.media || []).map((m, mi) => `
 			<div class="ed-media-row">
+				${thumbHtml(m, mi)}
 				<select data-mi="${mi}" data-mk="type">
 					<option value="youtube"${m.type === 'youtube' ? ' selected' : ''}>youtube</option>
 					<option value="image"${m.type === 'image' ? ' selected' : ''}>image</option>
 					<option value="video"${m.type === 'video' ? ' selected' : ''}>video</option>
 				</select>
 				<input type="text" data-mi="${mi}" data-mk="url" value="${escapeHtml(m.url || '')}" placeholder="https://…">
-				<button data-up-media="${mi}" title="Upload image or video file">⬆</button>
-				<button data-mdel="${mi}" title="Remove media">✕</button>
+				<span class="ed-mrow-btns">
+					<button data-mup="${mi}" title="Move up"${mi === 0 ? ' disabled' : ''}>↑</button>
+					<button data-mdown="${mi}" title="Move down"${mi === (p.media.length - 1) ? ' disabled' : ''}>↓</button>
+					<button data-up-media="${mi}" title="Upload image or video file">⬆</button>
+					<button data-mdel="${mi}" title="Remove media">✕</button>
+				</span>
 			</div>`).join('');
 		return `
 			<div class="ed-proj-body">
@@ -3191,6 +3276,8 @@
 				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
 				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
 				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
+				<label>Cover ratio (override for this project)</label>
+				<select data-f="coverRatio">${ratioOptions(p.coverRatio || '', true)}</select>
 				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
 				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
 				<label>Media (top item shows first; youtube = embed URL)</label>
@@ -3201,8 +3288,15 @@
 
 	function bindProjectBody(row, cat, idx) {
 		const p = draft.projects[cat][idx];
+		function refreshThumb(mi) {
+			const old = row.querySelector('[data-thumb="' + mi + '"]');
+			if (!old || !p.media[mi]) return;
+			const wrap = document.createElement('div');
+			wrap.innerHTML = thumbHtml(p.media[mi], mi);
+			if (wrap.firstElementChild) old.replaceWith(wrap.firstElementChild);
+		}
 		row.querySelectorAll('[data-f]').forEach(inp => {
-			inp.addEventListener('input', () => {
+			inp.addEventListener(inp.tagName === 'SELECT' ? 'change' : 'input', () => {
 				p[inp.dataset.f] = inp.value;
 				if (inp.dataset.f === 'title') {
 					const t = row.querySelector('.ed-proj-title');
@@ -3214,7 +3308,20 @@
 		row.querySelectorAll('[data-mk]').forEach(inp => {
 			inp.addEventListener(inp.tagName === 'SELECT' ? 'change' : 'input', () => {
 				p.media[+inp.dataset.mi][inp.dataset.mk] = inp.value;
+				refreshThumb(+inp.dataset.mi);
 				liveUpdate();
+			});
+		});
+		row.querySelectorAll('[data-mup]').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const mi = +btn.dataset.mup;
+				if (mi > 0) { const t = p.media[mi - 1]; p.media[mi - 1] = p.media[mi]; p.media[mi] = t; renderProjects(); liveUpdate(); }
+			});
+		});
+		row.querySelectorAll('[data-mdown]').forEach(btn => {
+			btn.addEventListener('click', () => {
+				const mi = +btn.dataset.mdown;
+				if (mi < p.media.length - 1) { const t = p.media[mi + 1]; p.media[mi + 1] = p.media[mi]; p.media[mi] = t; renderProjects(); liveUpdate(); }
 			});
 		});
 		row.querySelectorAll('[data-mdel]').forEach(btn => {
@@ -3237,6 +3344,7 @@
 				const guess = ['mp4', 'webm', 'mov', 'm4v'].indexOf(ext) > -1 ? 'video' : 'image';
 				if (sel.value === 'youtube' || !sel.value) { sel.value = guess; p.media[mi].type = guess; }
 			}
+			refreshThumb(mi);
 		}, 'image/*,video/*');
 		const addBtn = row.querySelector('[data-madd]');
 		if (addBtn) addBtn.addEventListener('click', () => {
@@ -3333,6 +3441,10 @@
 			document.getElementById('ed-ls-val').textContent = ls.value;
 			applyTypography(draft.typography);
 		});
+		const coverRatio = document.getElementById('ed-cover-ratio');
+		if (coverRatio) coverRatio.addEventListener('change', () => { draft.layout.coverRatio = coverRatio.value; liveUpdate(); });
+		const coverFit = document.getElementById('ed-cover-fit');
+		if (coverFit) coverFit.addEventListener('change', () => { draft.layout.coverFit = coverFit.value; liveUpdate(); });
 		document.getElementById('ed-cat').addEventListener('change', () => { expandedProject = null; renderProjects(); });
 		document.getElementById('ed-add-proj').addEventListener('click', () => {
 			const cat = currentCat();
@@ -3364,6 +3476,41 @@
 		document.getElementById('ed-gh-push').addEventListener('click', pushToGitHub);
 	}
 
+	function buildResizer() {
+		if (document.getElementById('ed-resizer')) return;
+		const rz = document.createElement('div');
+		rz.id = 'ed-resizer';
+		document.body.appendChild(rz);
+		const place = () => {
+			const w = panel && panel.offsetWidth ? panel.offsetWidth : 480;
+			if (window.innerWidth > 900) { rz.style.display = 'block'; rz.style.right = w + 'px'; }
+			else { rz.style.display = 'none'; }
+		};
+		place();
+		window.addEventListener('resize', place);
+		let dragging = false;
+		rz.addEventListener('pointerdown', (e) => {
+			if (window.innerWidth <= 900) return;
+			dragging = true; rz.classList.add('ed-dragging');
+			if (rz.setPointerCapture) rz.setPointerCapture(e.pointerId);
+			e.preventDefault();
+		});
+		rz.addEventListener('pointermove', (e) => {
+			if (!dragging || !panel) return;
+			let w = window.innerWidth - e.clientX;
+			w = Math.min(Math.max(w, 360), Math.round(window.innerWidth * 0.9));
+			panel.style.width = w + 'px';
+			rz.style.right = w + 'px';
+		});
+		const endDrag = () => {
+			if (!dragging) return;
+			dragging = false; rz.classList.remove('ed-dragging');
+			try { localStorage.setItem(WIDTH_KEY, String(panel.offsetWidth)); } catch (err) { /* ignore */ }
+		};
+		rz.addEventListener('pointerup', endDrag);
+		rz.addEventListener('pointercancel', endDrag);
+	}
+
 	function buildPanel() {
 		panel = document.createElement('div');
 		panel.id = 'edit-panel';
@@ -3386,6 +3533,11 @@
 			</div>
 			<div id="ed-sections"></div>`;
 		document.body.appendChild(panel);
+		try {
+			const savedW = parseInt(localStorage.getItem(WIDTH_KEY) || '', 10);
+			if (savedW && window.innerWidth > 900) panel.style.width = Math.min(Math.max(savedW, 360), Math.round(window.innerWidth * 0.9)) + 'px';
+		} catch (e) { /* ignore */ }
+		buildResizer();
 		panel.querySelectorAll('#ed-tabs button').forEach(b => {
 			b.addEventListener('click', () => activateTab(b.dataset.tab));
 		});
@@ -3394,11 +3546,11 @@
 		peekBtn.id = 'ed-peek';
 		peekBtn.textContent = '✎';
 		peekBtn.title = 'Show editor';
-		peekBtn.addEventListener('click', () => { panel.classList.remove('ed-hidden'); peekBtn.style.display = 'none'; });
+		peekBtn.addEventListener('click', () => { panel.classList.remove('ed-hidden'); peekBtn.style.display = 'none'; const rz = document.getElementById('ed-resizer'); if (rz && window.innerWidth > 900) rz.style.display = 'block'; });
 		document.body.appendChild(peekBtn);
 
 		panel.querySelector('#ed-close').addEventListener('click', () => closeEditor(true));
-		panel.querySelector('#ed-preview').addEventListener('click', () => { panel.classList.add('ed-hidden'); peekBtn.style.display = 'block'; });
+		panel.querySelector('#ed-preview').addEventListener('click', () => { panel.classList.add('ed-hidden'); peekBtn.style.display = 'block'; const rz = document.getElementById('ed-resizer'); if (rz) rz.style.display = 'none'; });
 
 		renderPanelBody();
 		try { const t = localStorage.getItem(TOKEN_KEY); if (t) document.getElementById('ed-gh-token').value = t; } catch (e) { /* ignore */ }
@@ -3408,6 +3560,10 @@
 	function openEditor() {
 		if (panel) return;
 		draft = loadDraft() || clone(getCfg());
+		// Ensure newer config groups exist even on drafts saved by older versions
+		if (!draft.layout) draft.layout = { coverRatio: '16/9', coverFit: 'cover' };
+		if (!draft.identity) draft.identity = {};
+		if (draft.identity.aboutImage === undefined) draft.identity.aboutImage = '';
 		window.SITE_CONFIG = draft;
 		buildPanel();
 		applyConfig(true);
@@ -3419,6 +3575,7 @@
 		panel.remove();
 		panel = null;
 		if (peekBtn) { peekBtn.remove(); peekBtn = null; }
+		const rz = document.getElementById('ed-resizer'); if (rz) rz.remove();
 		window.SITE_CONFIG = publishedCfg;
 		applyConfig(true);
 		if (location.hash === '#edit') history.replaceState(null, '', location.pathname + location.search);
