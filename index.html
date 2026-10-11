@@ -3009,25 +3009,42 @@
 		const url = 'https://api.github.com/repos/' + REPO + '/contents/site-config.js';
 		const headers = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' };
 		setStatus('Pushing to GitHub…');
-		try {
-			let sha = null;
-			const head = await fetch(url + '?ref=' + encodeURIComponent(branch), { headers });
-			if (head.ok) sha = (await head.json()).sha;
-			const payload = {
-				message: 'Update site content via built-in editor\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
-				content: btoa(unescape(encodeURIComponent(configFileBody()))),
-				branch: branch
-			};
-			if (sha) payload.sha = sha;
-			const res = await fetch(url, {
-				method: 'PUT',
-				headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
-				body: JSON.stringify(payload)
-			});
-			if (!res.ok) throw new Error((await res.text()).slice(0, 220));
-			setStatus('✅ Saved to GitHub (branch: ' + branch + '). Remember: your live site is served by your web host — also click <b>Download</b> and upload site-config.js there.');
-		} catch (err) {
-			setStatus('❌ GitHub push failed: ' + err.message);
+		const content = btoa(unescape(encodeURIComponent(configFileBody())));
+		const MAX_TRIES = 4;
+		for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
+			try {
+				// cache:'no-store' + cache-buster: GitHub sends max-age=60 on this GET, so a
+				// stale blob sha makes the PUT fail with 409 on quick back-to-back publishes.
+				let sha = null;
+				const head = await fetch(url + '?ref=' + encodeURIComponent(branch) + '&_=' + Date.now(), { headers: headers, cache: 'no-store' });
+				if (head.ok) sha = (await head.json()).sha;
+				const payload = {
+					message: 'Update site content via built-in editor\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+					content: content,
+					branch: branch
+				};
+				if (sha) payload.sha = sha;
+				const res = await fetch(url, {
+					method: 'PUT',
+					cache: 'no-store',
+					headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+					body: JSON.stringify(payload)
+				});
+				if (!res.ok) {
+					const body = (await res.text()).slice(0, 220);
+					if ((res.status === 409 || res.status === 422) && attempt < MAX_TRIES) {
+						setStatus('↻ site-config.js changed on GitHub mid-save — retrying (' + attempt + ' of ' + (MAX_TRIES - 1) + ')…');
+						await new Promise(r => setTimeout(r, 350 * attempt));
+						continue;
+					}
+					throw new Error(body);
+				}
+				setStatus('✅ Saved to GitHub (branch: ' + branch + '). Remember: your live site is served by your web host — also click <b>Download</b> and upload site-config.js there.');
+				return;
+			} catch (err) {
+				setStatus('❌ GitHub push failed: ' + err.message);
+				return;
+			}
 		}
 	}
 
@@ -3037,10 +3054,12 @@
 	// instead of the contents API so videos larger than 1 MB work too.
 	const MEDIA_BRANCH = 'main';
 	const MAX_UPLOAD_MB = 95;
+	let mediaQueue = Promise.resolve();
 
 	async function ghApi(method, path, payload, token) {
 		const res = await fetch('https://api.github.com/repos/' + REPO + path, {
 			method: method,
+			cache: 'no-store',
 			headers: {
 				Authorization: 'Bearer ' + token,
 				Accept: 'application/vnd.github+json',
@@ -3048,7 +3067,13 @@
 			},
 			body: payload ? JSON.stringify(payload) : undefined
 		});
-		if (!res.ok) throw new Error(method + ' ' + path + ' → HTTP ' + res.status + ': ' + (await res.text()).slice(0, 180));
+		if (!res.ok) {
+			const body = (await res.text()).slice(0, 180);
+			const err = new Error(method + ' ' + path + ' → HTTP ' + res.status + ': ' + body);
+			err.status = res.status;
+			err.body = body;
+			throw err;
+		}
 		return res.status === 204 ? {} : res.json();
 	}
 
@@ -3061,7 +3086,14 @@
 		});
 	}
 
-	async function uploadMedia(file) {
+	function uploadMedia(file) {
+		// Serialize uploads in this tab so two files never race the main ref.
+		const task = mediaQueue.then(() => performMediaUpload(file), () => performMediaUpload(file));
+		mediaQueue = task.then(() => {}, () => {});
+		return task;
+	}
+
+	async function performMediaUpload(file) {
 		const tokenEl = document.getElementById('ed-gh-token');
 		const token = (tokenEl.value || '').trim();
 		if (!token) { setStatus('⬆ Uploads need your GitHub token — I\'ve opened the <b>Publish</b> tab for you. Paste the token under <b>GitHub (advanced)</b>, then click the upload button again.'); showTokenHelp(); return null; }
@@ -3072,23 +3104,44 @@
 		const path = 'media/' + Date.now().toString(36) + '-' + safeName;
 		setStatus('⬆ Uploading <b>' + escapeHtml(file.name) + '</b> (' + mb.toFixed(1) + ' MB) to GitHub… this can take a minute for videos.');
 		try {
+			// Upload the (possibly large) blob once — it is content-addressed, so the
+			// same blob sha is safely reused across the ref-update retries below.
 			const b64 = await fileToBase64(file);
 			const blob = await ghApi('POST', '/git/blobs', { content: b64, encoding: 'base64' }, token);
-			const ref = await ghApi('GET', '/git/refs/heads/' + MEDIA_BRANCH, null, token);
-			const headCommit = await ghApi('GET', '/git/commits/' + ref.object.sha, null, token);
-			const tree = await ghApi('POST', '/git/trees', {
-				base_tree: headCommit.tree.sha,
-				tree: [{ path: path, mode: '100644', type: 'blob', sha: blob.sha }]
-			}, token);
-			const newCommit = await ghApi('POST', '/git/commits', {
-				message: 'Add media: ' + safeName + '\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
-				tree: tree.sha,
-				parents: [headCommit.sha]
-			}, token);
-			await ghApi('PATCH', '/git/refs/heads/' + MEDIA_BRANCH, { sha: newCommit.sha }, token);
-			const url = 'https://raw.githubusercontent.com/' + REPO + '/' + MEDIA_BRANCH + '/' + path;
-			setStatus('✅ Uploaded! The file URL was filled in automatically. Remember to <b>Download site-config.js</b> and upload it to your host to publish.');
-			return url;
+			// Read tip → build tree/commit → move the ref. If main moved underneath us
+			// (a second quick upload, another tab, or automation) the force-less PATCH
+			// 422s as "not a fast forward"; re-read the fresh tip and retry.
+			const MAX_TRIES = 5;
+			let lastErr = null;
+			for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
+				try {
+					const ref = await ghApi('GET', '/git/refs/heads/' + MEDIA_BRANCH, null, token);
+					const headCommit = await ghApi('GET', '/git/commits/' + ref.object.sha, null, token);
+					const tree = await ghApi('POST', '/git/trees', {
+						base_tree: headCommit.tree.sha,
+						tree: [{ path: path, mode: '100644', type: 'blob', sha: blob.sha }]
+					}, token);
+					const newCommit = await ghApi('POST', '/git/commits', {
+						message: 'Add media: ' + safeName + '\n\nCo-Authored-By: Claude Code <noreply@anthropic.com>',
+						tree: tree.sha,
+						parents: [headCommit.sha]
+					}, token);
+					await ghApi('PATCH', '/git/refs/heads/' + MEDIA_BRANCH, { sha: newCommit.sha }, token);
+					const url = 'https://raw.githubusercontent.com/' + REPO + '/' + MEDIA_BRANCH + '/' + path;
+					setStatus('✅ Uploaded! The file URL was filled in automatically. Remember to <b>Download site-config.js</b> and upload it to your host to publish.');
+					return url;
+				} catch (e) {
+					lastErr = e;
+					const notFF = e.status === 422 && /fast forward/i.test((e.body || '') + ' ' + (e.message || ''));
+					if (notFF && attempt < MAX_TRIES) {
+						setStatus('↻ The site was updated mid-upload — retrying (' + attempt + ' of ' + (MAX_TRIES - 1) + ')…');
+						await new Promise(r => setTimeout(r, 350 * attempt));
+						continue;
+					}
+					throw e;
+				}
+			}
+			throw lastErr || new Error('Upload failed after ' + MAX_TRIES + ' attempts.');
 		} catch (err) {
 			setStatus('❌ Upload failed: ' + err.message + (err.message.indexOf('404') > -1 ? ' — make sure the token has Contents: Read and write permission, and that the repo name is correct.' : ''));
 			return null;
