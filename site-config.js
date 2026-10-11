@@ -12,7 +12,7 @@ window.SITE_CONFIG = {
     "email": "rachelc1213@gmail.com",
     "linkedin": "https://www.linkedin.com/in/rachelchan1213/",
     "aboutHeading": "About Me",
-    "aboutImage": "",
+    "aboutImage": "https://raw.githubusercontent.com/cyunmin12/rachelchan/main/media/mv41zzez-r0291884.jpg",
     "aboutParagraphs": [
       "A video producer, filmmaker, and passionate storyteller dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a advertising agency in the heart of Central London. She believe that every piece of content—from a brand message to an individual's narrative—is a story brought to life through moving images.",
       "She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. After producing digital content at the M+ Museum, she completed her Master’s in Producing at Goldsmiths, University of London in 2024."
@@ -1074,7 +1074,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "While Madame Song Huai-Kuei may not be widely known today, she was a prominent figure in Chinese cultural spheres just two decades ago. Song is the subject of a special exhibition at M+, ‘Madame Song: Pioneering Art and Fashion in China’.<br><br>We spoke to Boryana Varbanov, Song’s daughter, about her mother’s collaborations with fashion designer Pierre Cardin, including a watershed fashion show in the Beijing Hotel, and the first Western dining establishment to open in China after the Cultural Revolution, Maxim’s.<br><br>Link: https://www.instagram.com/reel/CxsQmz9LwIG/",
-        "link": "https://tiktok.com/@brandx/series"
+        "link": "https://tiktok.com/@brandx/series",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm2",
@@ -1090,7 +1091,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "Five short films by five Hong Kong artists 🎬 <br><br>Get ready for a cinematic journey through Hong Kong. Our newest video commission project, ‘Hong Kong as Mise-en-scène’, invites you to experience the city through the eyes of five local artists. Their thought-provoking short films capture the complexities and rich visual texture of Hong Kong from a fresh perspective.<br><br>Link: https://www.instagram.com/reel/CsqYihMP4ir/",
-        "link": "https://instagram.com/luxefashion/reels"
+        "link": "https://instagram.com/luxefashion/reels",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm3",
@@ -1110,7 +1112,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "As the sun sets each night, the M+ Facade transforms into a canvas of light, exhibiting a dynamic display of moving image works.<br><br>The M+ building, designed by Herzog & de Meuron (@herzogdemeuron), features terracotta mullions that serve as sun-shading louvres and LED light fixtures. To create an outdoor exhibition space on the building’s harbour-facing facade, the architects collaborated with media architecture specialist Valentin Spiess of iart (@iart_basel) and creative technologists Andrew Crowe and Ashley Lee Wong from MetaObjects (@metaobjects).<br><br>Awarded the best Animated Media Architecture project at the 2023 Media Architecture Awards, the M+ Facade is a tool for exploring the boundaries of art and technology and a platform for contemporary visual culture.<br><br>Link: https://www.instagram.com/reel/Cug3Uzwx5NR/",
-        "link": "https://youtube.com/techforward/shorts"
+        "link": "https://youtube.com/techforward/shorts",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm4",
@@ -1130,7 +1133,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "By blending historical architectural principles with modern elements, Raj Rewal’s designs aren’t just functional—they’re infused with an emotional quality that he calls a ‘rasa’ – a term that embodies his singular vision and creative expression.<br><br>The M+ collections house an array of design objects from Rewal, including models, plans, and sketches from projects such as the Hall of Nations (1970) and the Parliament Library (1985).<br><br>Rewal’s designs balance form and function, resulting in visually striking and highly efficient spaces. Through his innovative approach, he’s reshaped the field of architecture and paved the way for a new era of sustainable, human-centred design.🔗<br><br>Link: https://www.instagram.com/reel/Csa-d08L90t/",
-        "link": "https://tiktok.com/tag/dancewithstyle"
+        "link": "https://tiktok.com/tag/dancewithstyle",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm6",
@@ -1145,7 +1149,8 @@ window.SITE_CONFIG = {
         "year": "2023",
         "client": "Instagram",
         "role": "Producer",
-        "description": "Paul Chan’s ‘Breathers’ series explores the idea that a moving image can be experienced in three dimensions. ‘Trisophia’ features three billowing figures dancing and swaying with industrial air fans. As the nylon fabric gets filled with air, the figures swell with mesmerising and repetitive movements that resemble people pushing and pulling one another. They seem to be constantly trying to coexist between discord and harmony.<br><br>Curator Pauline J. Yao provides perspective on Chan's unique blending of the traditionally separate domains of sculpture and moving image within his artistic practice.<br><br>‘Trisophia’ is now on view in the M+ Focus Gallery. 🔗 Link in our bio for details!<br><br>Link: https://www.instagram.com/reel/CyS2DJvSs7L/"
+        "description": "Paul Chan’s ‘Breathers’ series explores the idea that a moving image can be experienced in three dimensions. ‘Trisophia’ features three billowing figures dancing and swaying with industrial air fans. As the nylon fabric gets filled with air, the figures swell with mesmerising and repetitive movements that resemble people pushing and pulling one another. They seem to be constantly trying to coexist between discord and harmony.<br><br>Curator Pauline J. Yao provides perspective on Chan's unique blending of the traditionally separate domains of sculpture and moving image within his artistic practice.<br><br>‘Trisophia’ is now on view in the M+ Focus Gallery. 🔗 Link in our bio for details!<br><br>Link: https://www.instagram.com/reel/CyS2DJvSs7L/",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm7",
@@ -1164,7 +1169,8 @@ window.SITE_CONFIG = {
         "year": "2023",
         "client": "Instagram",
         "role": "Producer",
-        "description": "The late Balkrishna Vithaldas Doshi (1927—2023) was one of the most significant Indian architects of the twentieth century. Recipient of the 2018 Pritzker Architecture Prize (often referred to as the Nobel Prize for Architecture), Doshi saw architecture as a dynamic and evolving practice that has the potential to enrich and transform lives, offering a means of expression, not solely about the physical form, but also about the underlying ideas, intentions, and meanings embedded within it.<br><br>Link: https://www.instagram.com/reel/CwXF5vioHEO/"
+        "description": "The late Balkrishna Vithaldas Doshi (1927—2023) was one of the most significant Indian architects of the twentieth century. Recipient of the 2018 Pritzker Architecture Prize (often referred to as the Nobel Prize for Architecture), Doshi saw architecture as a dynamic and evolving practice that has the potential to enrich and transform lives, offering a means of expression, not solely about the physical form, but also about the underlying ideas, intentions, and meanings embedded within it.<br><br>Link: https://www.instagram.com/reel/CwXF5vioHEO/",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm8",
@@ -1183,7 +1189,8 @@ window.SITE_CONFIG = {
         "year": "2023",
         "client": "Instagram",
         "role": "Producer",
-        "description": "Are you curious how art can unravel the intricacies of human connections?<br><br>Trevor Yeung (@plantertrevor) is an artist who delves into the inner workings of human relations. He is fascinated by botanic ecology and horticulture. He often uses carefully arranged objects, photos, and plants in his mixed media works to create emotional and intellectual situations that mirror his social experiences. By bending the rules of how ecosystems usually work, Trevor explores themes of failure and imperfection and creates powerful metaphors that capture the intricacies of human relationships.<br><br>https://www.instagram.com/reel/C1B55mgr5d7/?utm_source=ig_web_button_share_sheet"
+        "description": "Are you curious how art can unravel the intricacies of human connections?<br><br>Trevor Yeung (@plantertrevor) is an artist who delves into the inner workings of human relations. He is fascinated by botanic ecology and horticulture. He often uses carefully arranged objects, photos, and plants in his mixed media works to create emotional and intellectual situations that mirror his social experiences. By bending the rules of how ecosystems usually work, Trevor explores themes of failure and imperfection and creates powerful metaphors that capture the intricacies of human relationships.<br><br>https://www.instagram.com/reel/C1B55mgr5d7/?utm_source=ig_web_button_share_sheet",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm10",
@@ -1203,7 +1210,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Host",
         "description": "What if nothing was fixed or stable?<br><br>Jes Fan’s art evokes a dynamic reality that explores this question. Fan works with various materials in his artmaking practice, including glass, which is of interest to Fan due to its non-binary properties. After kiln firing, Fan’s glass works retain a molten, mutable quality—defying stability yet forever in flux.<br><br>This fluid approach reflects how, throughout his work, Fan examines ideas of sexuality, gender, race and species, challenging fixed notions and binary classifications. His pieces also invite us to consider another question: what might intimacy with the natural world reveal about the self?<br><br>Link: https://www.instagram.com/reel/CzJB6oxLGGy/",
-        "link": "https://instagram.com/rachelchan/live"
+        "link": "https://instagram.com/rachelchan/live",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm11",
@@ -1219,7 +1227,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "In his own words, Park Chan-wook sums up his oeuvre as exploring ‘moral complexity’, throwing characters into agonising choices between good and bad with no easy answers that keep audiences thinking long after the credits roll.<br><br>Park’s films depict the messy dilemmas of life in a way that lingers, capturing that knot in your gut when a ‘right’ decision isn’t so clear. Through painful decisions that echo our own, Park aims to show truth is rarely simple.<br><br>Link: https://www.instagram.com/reel/C1WNDhFLW_T/",
-        "link": "https://youtube.com/rachelchan/community"
+        "link": "https://youtube.com/rachelchan/community",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm12",
@@ -1235,7 +1244,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "Ever wondered how art can be a tool for social change?<br><br>Meet Luke Ching (@lukechinghk), an artist who has spent the last twenty years using his creative practice to bring attention to important social issues in Hong Kong. He is committed to understanding the challenges faced by marginalised groups, and his research-led approach to artmaking involves immersing himself within local communities to gain a better understanding of their perspectives. Eluding traditional parameters of art, Luke’s practice often sees him take on jobs such as sanitation work and security guard questioning the boundaries that determine what one can and cannot do, while raising lesser-known issues into the public consciousness.<br><br>As a chronicler and advocate, Ching highlights pressing concerns and gives a voice to those who often go unheard.<br><br>Our full-length video with Luke comes out later this week. Keep an eye on our Instagram feed for updates! 👀<br><br>Link: https://www.instagram.com/reel/C0tThotLweC/",
-        "link": "https://twitter.com/filmfest/moments"
+        "link": "https://twitter.com/filmfest/moments",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm13",
@@ -1255,7 +1265,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "In the beginning, ‘City Magazine’ didn’t have many resources, but it did have character. The magazine wasn’t concerned with commercial factors, which afforded its team huge creative freedom.<br><br>Tina Liu (@toliutina) joined the team as executive editor in 1981.<br><br>The team behind ‘City Magazine’ came armed with a shared sensitivity towards pop culture and various talents, which combined to create a fresh and unique chemistry for producing the magazine’s content.<br><br>Says Liu: ‘The magazine attracted many more creative, young and dynamic people who gladly contributed to a publication reflecting Hong Kong’s city life. Back then, it seemed that everyone was happily multi-tasking. When I chat with old friends these days, we often feel that we could do whatever we wanted back then, and the outcomes were pretty impressive! Everybody could make good use of their talents, bringing into play to create a blooming era.’<br><br>Link: https://www.instagram.com/reel/CxKwtwsSEi7/",
-        "link": "https://pinterest.com/craftsupplies/videos"
+        "link": "https://pinterest.com/craftsupplies/videos",
+        "coverRatio": "2/3"
       },
       {
         "id": "sm14",
@@ -1271,7 +1282,8 @@ window.SITE_CONFIG = {
         "client": "Instagram",
         "role": "Producer",
         "description": "How do you distinguish human creativity from a machine’s?<br><br>Artist Miao Ying shares her exploration into how machine learning algorithms can influence creative processes in art and the possibilities and provocations this creates.<br><br>Miao’s ‘Pilgrimage into Walden XII (2019–2023)’ envisions a fantasy mediaeval land governed by AI, where machine learning generates a unique visual depiction with each viewing.<br><br>Link: https://www.instagram.com/reel/Cz_AhzIrjWt/",
-        "link": "https://facebook.com/nonprofit/watch"
+        "link": "https://facebook.com/nonprofit/watch",
+        "coverRatio": "2/3"
       }
     ]
   }
