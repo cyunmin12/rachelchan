@@ -677,6 +677,28 @@
 		margin-top: 4px;
 	}
 
+	/* Outline flavour of the shared button (used in the About contact footer) */
+	.site-btn.ghost {
+		background: transparent;
+		color: var(--primary, #000);
+		border-color: var(--primary, #000);
+	}
+
+	.site-btn.ghost:hover {
+		background: var(--primary, #000);
+		color: #fff;
+	}
+
+	/* About contact footer: email & LinkedIn as buttons, separated by a hairline */
+	.about-contact {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		align-items: center;
+		border-top: 1px solid #eee;
+		padding-top: 20px;
+	}
+
 	.home-video-container {
 		position: absolute;
 		top: 0;
@@ -740,6 +762,7 @@
 		justify-content: space-between;
 		gap: 28px;
 		margin-bottom: 1.5rem;
+		padding-right: 44px; /* clearance so the ✕ button never sits on the photo */
 	}
 
 	.about-head h1 {
@@ -1198,6 +1221,7 @@
 			align-items: flex-start;
 			gap: 14px;
 			margin-bottom: 1.2rem;
+			padding-right: 0;
 		}
 
 		.about-photo {
@@ -1205,6 +1229,17 @@
 			align-self: flex-end;
 			width: 120px;
 			height: 120px;
+		}
+
+		.about-contact {
+			padding-top: 16px;
+			gap: 8px;
+		}
+
+		.about-contact .site-btn {
+			font-size: calc(var(--fs-sm) * var(--m-scale, 1));
+			padding: calc(9px * var(--m-scale, 1)) calc(16px * var(--m-scale, 1));
+			word-break: break-all;
 		}
 	}
 
@@ -1406,10 +1441,18 @@
 		line-height: 1;
 	}
 	.ed-drag-handle:active { cursor: grabbing; }
-	.ed-proj.ed-dragging, .ed-media-row.ed-dragging { opacity: 0.45; }
-	.ed-proj.ed-drop-before, .ed-media-row.ed-drop-before { box-shadow: 0 -3px 0 0 #b00000; }
-	.ed-proj.ed-drop-after, .ed-media-row.ed-drop-after { box-shadow: 0 3px 0 0 #b00000; }
+	.ed-proj.ed-dragging, .ed-media-row.ed-dragging, .ed-para-row.ed-dragging { opacity: 0.45; }
+	.ed-proj.ed-drop-before, .ed-media-row.ed-drop-before, .ed-para-row.ed-drop-before { box-shadow: 0 -3px 0 0 #b00000; }
+	.ed-proj.ed-drop-after, .ed-media-row.ed-drop-after, .ed-para-row.ed-drop-after { box-shadow: 0 3px 0 0 #b00000; }
 	#edit-panel .ed-btn.ed-drop-hover { outline: 2px dashed #b00000; outline-offset: 2px; background: #fff5f5; }
+
+	/* About-paragraph row: ⠿ handle + textarea + ✕ */
+	.ed-para-row { display: flex; align-items: flex-start; gap: 6px; margin-top: 6px; }
+	.ed-para-row textarea { flex: 1; min-height: 60px; }
+	.ed-para-row .ed-drag-handle { margin-top: 8px; }
+
+	/* Live preview of a project's cover picture */
+	.ed-cover-thumb { display: block; margin-top: 6px; width: 96px; height: 54px; }
 
 	#ed-resizer { position: fixed; top: 0; height: 100vh; width: 8px; cursor: col-resize; z-index: 5002; background: transparent; }
 	#ed-resizer:hover, #ed-resizer.ed-dragging { background: rgba(176, 0, 0, 0.28); }
@@ -2504,23 +2547,28 @@
 			p.textContent = text;
 			dlg.appendChild(p);
 		});
-		const contact = document.createElement('p');
-		contact.appendChild(document.createTextNode('Contact: '));
-		const mail = document.createElement('a');
-		mail.href = 'mailto:' + cfg.identity.email;
-		mail.textContent = cfg.identity.email;
-		contact.appendChild(mail);
+		// Contact footer: email & LinkedIn as unified ghost buttons
+		const oldContact = dlg.querySelector('.about-contact');
+		if (oldContact) oldContact.remove();
+		const contact = document.createElement('div');
+		contact.className = 'about-contact';
+		if (cfg.identity.email) {
+			const mail = document.createElement('a');
+			mail.className = 'site-btn ghost';
+			mail.href = 'mailto:' + cfg.identity.email;
+			mail.textContent = '✉ ' + cfg.identity.email;
+			contact.appendChild(mail);
+		}
 		if (cfg.identity.linkedin) {
-			contact.appendChild(document.createElement('br'));
-			contact.appendChild(document.createTextNode('LinkedIn: '));
 			const li = document.createElement('a');
+			li.className = 'site-btn ghost';
 			li.href = cfg.identity.linkedin;
 			li.target = '_blank';
 			li.rel = 'noopener noreferrer';
-			li.textContent = cfg.identity.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+			li.textContent = 'LinkedIn ↗';
 			contact.appendChild(li);
 		}
-		dlg.appendChild(contact);
+		if (contact.children.length) dlg.appendChild(contact);
 	}
 
 	function applyConfig(rerender) {
@@ -3176,7 +3224,7 @@
 	function liveUpdate(fullRerender) {
 		window.SITE_CONFIG = draft;
 		clearTimeout(debounceTimer);
-		debounceTimer = setTimeout(() => { applyConfig(fullRerender !== false); pushToPhone(false); }, 180);
+		debounceTimer = setTimeout(() => { applyConfig(fullRerender !== false); pushToPhone(false); saveDraft(true); }, 180);
 	}
 
 	// Send the current draft to the phone-preview iframe (Mobile tab), if open.
@@ -3536,17 +3584,60 @@
 		const box = document.getElementById('ed-about-paras');
 		if (!box) return;
 		box.innerHTML = '';
+		let dragPara = null; // index of the paragraph currently being dragged
 		draft.identity.aboutParagraphs.forEach((para, i) => {
+			const row = document.createElement('div');
+			row.className = 'ed-para-row';
+			const handle = document.createElement('span');
+			handle.className = 'ed-drag-handle';
+			handle.textContent = '⠿';
+			handle.title = 'Drag to reorder';
+			handle.draggable = true;
 			const ta = document.createElement('textarea');
 			ta.value = para;
-			ta.style.marginTop = '6px';
+			ta.placeholder = 'Paragraph ' + (i + 1);
 			ta.addEventListener('input', () => { draft.identity.aboutParagraphs[i] = ta.value; liveUpdate(); });
 			const rm = document.createElement('button');
 			rm.className = 'ed-btn small danger';
-			rm.textContent = 'Remove paragraph';
+			rm.title = 'Remove paragraph';
+			rm.textContent = '✕';
 			rm.addEventListener('click', () => { draft.identity.aboutParagraphs.splice(i, 1); renderAboutParas(); liveUpdate(); });
-			box.appendChild(ta);
-			box.appendChild(rm);
+			row.appendChild(handle);
+			row.appendChild(ta);
+			row.appendChild(rm);
+			handle.addEventListener('dragstart', (e) => {
+				dragPara = i;
+				if (e.dataTransfer) {
+					e.dataTransfer.effectAllowed = 'move';
+					try { e.dataTransfer.setData('text/plain', String(i)); } catch (err) { /* ignore */ }
+				}
+				row.classList.add('ed-dragging');
+			});
+			handle.addEventListener('dragend', () => {
+				dragPara = null;
+				box.querySelectorAll('.ed-para-row').forEach(r => r.classList.remove('ed-dragging', 'ed-drop-before', 'ed-drop-after'));
+			});
+			row.addEventListener('dragover', (e) => {
+				if (dragPara === null || dragPara === i) return;
+				e.preventDefault();
+				if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+				const rect = row.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				row.classList.toggle('ed-drop-before', before);
+				row.classList.toggle('ed-drop-after', !before);
+			});
+			row.addEventListener('dragleave', () => row.classList.remove('ed-drop-before', 'ed-drop-after'));
+			row.addEventListener('drop', (e) => {
+				if (dragPara === null || dragPara === i) return;
+				e.preventDefault();
+				const rect = row.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				moveInArray(draft.identity.aboutParagraphs, dragPara, i + (before ? 0 : 1));
+				dragPara = null;
+				renderAboutParas();
+				liveUpdate();
+			});
+			box.appendChild(row);
 		});
 	}
 
@@ -3597,6 +3688,7 @@
 				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
 				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
 				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
+				${p.image ? '<img class="ed-media-thumb ed-cover-thumb" data-cover-thumb src="' + escapeHtml(p.image) + '" alt="Cover preview">' : ''}
 				<details>
 					<summary>Cover shape, columns &amp; showreel (optional)</summary>
 					<label>Cover ratio (override for this project)</label>
@@ -3633,6 +3725,10 @@
 				if (inp.dataset.f === 'title') {
 					const t = row.querySelector('.ed-proj-title');
 					if (t) t.textContent = inp.value || '(untitled)';
+				}
+				if (inp.dataset.f === 'image') {
+					const th = row.querySelector('[data-cover-thumb]');
+					if (th) th.src = inp.value;
 				}
 				liveUpdate();
 			});
@@ -3674,6 +3770,10 @@
 			p[btn.dataset.upField] = url;
 			const inp = row.querySelector('[data-f="' + btn.dataset.upField + '"]');
 			if (inp) inp.value = url;
+			if (btn.dataset.upField === 'image') {
+				const th = row.querySelector('[data-cover-thumb]');
+				if (th) th.src = url;
+			}
 		}, 'image/*');
 		attachUpload(row.querySelectorAll('[data-up-media]'), async (url, btn) => {
 			const mi = +btn.dataset.upMedia;

@@ -23,7 +23,7 @@ Everything is grouped into five tabs at the top of the panel:
 
 | Tab | What you do there |
 |---|---|
-| **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs), email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
+| **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs, **drag ⠿ to re-order them**), profile picture, email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
 | **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, **cover picture shape/fit/size for all projects at once**, and — folded away under *🎬 Home background video* — the home video |
 | **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete with one tap, and **drag the ⠿ handle to re-order** (projects *and* the media inside them). Folded under *Cover shape, columns & showreel* you'll find the **cover ratio override** (with one tap *apply it to all projects*), the **gallery columns** (how many pictures sit side-by-side inside the project), and the optional **showreel video** (see below). An **external link URL** makes a button appear on the project page |
 | **📱 Mobile** | Appearance of the **phone version only**: text size, spacing, gallery columns, plus a **📱 phone preview** that shows your site at phone width updating live |
@@ -35,9 +35,13 @@ Any single project can have its own **showreel video**: open the project in the 
 
 Want it first in its section? **Drag the project's ⠿ handle to the top of the list.** Leave the showreel URL empty to go back to a normal picture cover.
 
+### The About page
+
+The About dialog pairs your heading with the profile photo (heading left, photo right; stacked on phones), then your paragraphs, then a neat **contact footer** where your email and LinkedIn appear as buttons matching the site's button style. It's all edited in the **Text** tab — the buttons appear automatically once Email / LinkedIn are filled in.
+
 ### Drag & drop
 
-- **Re-order:** drag the **⠿** handle on any project row (or any media row inside a project) and drop it where you want — a red line shows the landing spot. The old **↑ ↓** buttons still work too.
+- **Re-order:** drag the **⠿** handle on any project row, any media row inside a project, or any "About me" paragraph — drop it where you want; a red line shows the landing spot. The old **↑ ↓** buttons still work too.
 - **Upload:** drag a picture/video file from your computer and **drop it straight onto any ⬆ Upload button** — no file-picker needed.
 
 ## 3. Uploading images & videos
@@ -62,7 +66,7 @@ Your website is uploaded manually to your host, so publishing is a 3-step routin
 
 Done — your changes are live immediately. You never need to touch `index.html` again for content changes.
 
-> **Drafts:** your in-progress edits are auto-saved in the browser you're using. If you close the tab and come back to `#edit`, they're still there until you publish or click **Discard**. Drafts are per-browser and per-device.
+> **Drafts:** your edits are saved in the browser **automatically as you type** — closing the tab or the whole browser won't lose them. Come back to `#edit` and carry on until you publish or click **Discard**. Drafts are per-browser and per-device.
 
 ## 5. Optional: keep GitHub in sync
 
