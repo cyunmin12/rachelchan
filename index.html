@@ -471,7 +471,16 @@
 	}
 
 	/* Showreel project tile: autoplay video instead of the cover picture —
-	   no title, no colour mask, but still clickable (opens the project) */
+	   no title, no colour mask, and NOT clickable (pure display) */
+	.photo-item.showreel-item {
+		cursor: default;
+	}
+
+	.photo-item.showreel-item:hover {
+		transform: none;
+		box-shadow: none;
+	}
+
 	.photo-item.showreel-item::after {
 		display: none;
 	}
@@ -770,14 +779,24 @@
 		margin-bottom: 0;
 	}
 
-	.about-photo {
-		display: block;
+	/* Profile photo: circular frame; the image inside can be moved & zoomed
+	   (object-position + scale are set inline from the identity config) */
+	.about-photo-frame {
 		flex: none;
 		width: 160px;
 		height: 160px;
-		object-fit: cover;
 		border-radius: 50%;
+		overflow: hidden;
 		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+		background: #f0f0f0;
+	}
+
+	.about-photo {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 50%;
 	}
 
 	.close-about {
@@ -1224,7 +1243,7 @@
 			padding-right: 0;
 		}
 
-		.about-photo {
+		.about-photo-frame {
 			order: -1;
 			align-self: flex-end;
 			width: 120px;
@@ -1453,6 +1472,29 @@
 
 	/* Live preview of a project's cover picture */
 	.ed-cover-thumb { display: block; margin-top: 6px; width: 96px; height: 54px; }
+
+	/* Profile picture move & crop: drag inside the circle, zoom with the slider */
+	#ed-photo-frame {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		overflow: hidden;
+		border: 1px solid #ddd;
+		background: #f0f0f0;
+		cursor: grab;
+		margin-top: 6px;
+		touch-action: none;
+	}
+	#ed-photo-frame:active { cursor: grabbing; }
+	#ed-photo-frame img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		pointer-events: none;
+		user-select: none;
+		-webkit-user-drag: none;
+	}
 
 	#ed-resizer { position: fixed; top: 0; height: 100vh; width: 8px; cursor: col-resize; z-index: 5002; background: transparent; }
 	#ed-resizer:hover, #ed-resizer.ed-dragging { background: rgba(176, 0, 0, 0.28); }
@@ -2432,6 +2474,9 @@
 			linkedin: 'https://www.linkedin.com/in/rachelchan1213/',
 			aboutHeading: 'About Rachel Chan',
 			aboutImage: '',
+			aboutImageFocusX: 50,  // % — horizontal position of the visible crop
+			aboutImageFocusY: 50,  // % — vertical position of the visible crop
+			aboutImageZoom: 100,   // % — crop zoom (100 = fit, up to 300)
 			aboutParagraphs: ['RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master’s in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.']
 		},
 		typography: {
@@ -2525,21 +2570,53 @@
 		root.style.setProperty('--m-gallery-cols', String((m && parseInt(m.galleryColumns, 10)) || 1));
 	}
 
+	function clampNum(v, lo, hi, dflt) {
+		const n = parseFloat(v);
+		return isNaN(n) ? dflt : Math.min(hi, Math.max(lo, n));
+	}
+
+	// Copy text to the clipboard (with an old-browser fallback)
+	function copyText(txt) {
+		if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(txt);
+		return new Promise((resolve, reject) => {
+			const ta = document.createElement('textarea');
+			ta.value = txt;
+			ta.style.position = 'fixed';
+			ta.style.opacity = '0';
+			document.body.appendChild(ta);
+			ta.focus();
+			ta.select();
+			let ok = false;
+			try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+			ta.remove();
+			if (ok) resolve(); else reject(new Error('copy failed'));
+		});
+	}
+
 	function rebuildAboutDialog(cfg) {
 		const dlg = document.getElementById('aboutDialog');
 		const titleEl = document.getElementById('aboutDialogTitle');
 		dlg.querySelectorAll('p').forEach(p => p.remove());
-		const oldPhoto = dlg.querySelector('.about-photo');
+		const oldPhoto = dlg.querySelector('.about-photo-frame, .about-photo');
 		if (oldPhoto) oldPhoto.remove();
 		const head = dlg.querySelector('.about-head');
 		if (cfg.identity.aboutImage) {
+			const frame = document.createElement('div');
+			frame.className = 'about-photo-frame';
 			const photo = document.createElement('img');
 			photo.className = 'about-photo';
 			photo.src = cfg.identity.aboutImage;
 			photo.alt = cfg.identity.name || 'Profile photo';
-			if (head) head.appendChild(photo);
-			else if (titleEl && titleEl.nextSibling) dlg.insertBefore(photo, titleEl.nextSibling);
-			else dlg.appendChild(photo);
+			// Owner-chosen move (object-position) & crop (scale) from the editor
+			const fx = clampNum(cfg.identity.aboutImageFocusX, 0, 100, 50);
+			const fy = clampNum(cfg.identity.aboutImageFocusY, 0, 100, 50);
+			const zoom = clampNum(cfg.identity.aboutImageZoom, 100, 300, 100);
+			photo.style.objectPosition = fx + '% ' + fy + '%';
+			if (zoom !== 100) photo.style.transform = 'scale(' + (zoom / 100) + ')';
+			frame.appendChild(photo);
+			if (head) head.appendChild(frame);
+			else if (titleEl && titleEl.nextSibling) dlg.insertBefore(frame, titleEl.nextSibling);
+			else dlg.appendChild(frame);
 		}
 		cfg.identity.aboutParagraphs.forEach(text => {
 			if (!text) return;
@@ -2547,16 +2624,29 @@
 			p.textContent = text;
 			dlg.appendChild(p);
 		});
-		// Contact footer: email & LinkedIn as unified ghost buttons
+		// Contact footer: email (click to copy) & LinkedIn as unified ghost buttons
 		const oldContact = dlg.querySelector('.about-contact');
 		if (oldContact) oldContact.remove();
 		const contact = document.createElement('div');
 		contact.className = 'about-contact';
 		if (cfg.identity.email) {
-			const mail = document.createElement('a');
+			const mailLabel = '✉ ' + cfg.identity.email;
+			const mail = document.createElement('button');
+			mail.type = 'button';
 			mail.className = 'site-btn ghost';
-			mail.href = 'mailto:' + cfg.identity.email;
-			mail.textContent = '✉ ' + cfg.identity.email;
+			mail.title = 'Click to copy the email address';
+			mail.textContent = mailLabel;
+			mail.addEventListener('click', () => {
+				if (mail.dataset.busy) return;
+				mail.dataset.busy = '1';
+				copyText(cfg.identity.email).then(() => {
+					mail.textContent = '✓ Copied to clipboard';
+				}).catch(() => {
+					mail.textContent = '✕ Copy failed — ' + cfg.identity.email;
+				}).then(() => {
+					setTimeout(() => { mail.textContent = mailLabel; delete mail.dataset.busy; }, 1600);
+				});
+			});
 			contact.appendChild(mail);
 		}
 		if (cfg.identity.linkedin) {
@@ -2778,13 +2868,10 @@
 			const item = document.createElement('div');
 			item.className = 'photo-item' + (project.showreel ? ' showreel-item' : '');
 			const safeTitle = escapeHtml(project.title);
-			item.setAttribute('role', 'button');
-			item.setAttribute('tabindex', '0');
-			item.setAttribute('aria-label', `View project: ${project.title}`);
 			if (project.coverRatio) item.style.aspectRatio = project.coverRatio;
 			if (project.showreel) {
-				// Per-project showreel: the tile autoplays this video instead of the
-				// cover picture — no title, no colour mask, but still clickable.
+				// Per-project showreel: pure autoplay video display — no title,
+				// no colour mask, and NOT clickable (no popup window).
 				const srVideo = document.createElement('video');
 				srVideo.autoplay = true;
 				srVideo.loop = true;
@@ -2792,22 +2879,26 @@
 				srVideo.playsInline = true;
 				srVideo.setAttribute('muted', '');
 				srVideo.setAttribute('playsinline', '');
-				srVideo.setAttribute('aria-label', project.title);
+				srVideo.setAttribute('aria-label', project.title + ' (showreel)');
 				srVideo.src = project.showreel;
 				item.appendChild(srVideo);
+				grid.appendChild(item);
 				ensureAutoplay(srVideo);
-			} else {
-				item.innerHTML = `
-					<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
-					<div class="photo-title">${safeTitle}</div>
-					<div class="photo-caption">
-						<h3>${safeTitle}</h3>
-						${project.year ? `<p class="project-year">${escapeHtml(project.year)}</p>` : ''}
-						${project.client ? `<p class="project-client">${escapeHtml(project.client)}</p>` : ''}
-						${project.role ? `<p class="project-role">${escapeHtml(project.role)}</p>` : ''}
-					</div>
-				`;
+				return;
 			}
+			item.setAttribute('role', 'button');
+			item.setAttribute('tabindex', '0');
+			item.setAttribute('aria-label', `View project: ${project.title}`);
+			item.innerHTML = `
+				<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
+				<div class="photo-title">${safeTitle}</div>
+				<div class="photo-caption">
+					<h3>${safeTitle}</h3>
+					${project.year ? `<p class="project-year">${escapeHtml(project.year)}</p>` : ''}
+					${project.client ? `<p class="project-client">${escapeHtml(project.client)}</p>` : ''}
+					${project.role ? `<p class="project-role">${escapeHtml(project.role)}</p>` : ''}
+				</div>
+			`;
 			const openDialog = () => openProjectDialog(project.id, tabId);
 			item.addEventListener('click', openDialog);
 			item.addEventListener('keydown', (e) => {
@@ -3043,7 +3134,7 @@
 
 						if (p.showreel) {
 							// Showreel project: plain autoplay video card — no title,
-							// no colour mask; tapping anywhere opens the project.
+							// no colour mask, and NOT tappable (pure display).
 							const srVideo = document.createElement('video');
 							srVideo.autoplay = true;
 							srVideo.loop = true;
@@ -3051,11 +3142,10 @@
 							srVideo.playsInline = true;
 							srVideo.setAttribute('muted', '');
 							srVideo.setAttribute('playsinline', '');
-							srVideo.setAttribute('aria-label', p.title);
+							srVideo.setAttribute('aria-label', p.title + ' (showreel)');
 							srVideo.src = p.showreel;
 							card.appendChild(srVideo);
 							if (hintHtml) card.insertAdjacentHTML('beforeend', hintHtml);
-							card.addEventListener('click', () => openProjectDialog(p.id, section.id));
 							ensureAutoplay(srVideo);
 						} else {
 							card.innerHTML = `
@@ -3493,6 +3583,12 @@
 			${textF('"About me" heading', 'identity.aboutHeading')}
 			${textF('Profile picture (About)', 'identity.aboutImage', 'url')}
 			${uploadBtn('identity.aboutImage', 'image/*', '⬆ Upload profile picture')}
+			<label>Profile picture — move &amp; crop</label>
+			<div id="ed-photo-frame" title="Drag the picture to move it"><img id="ed-photo-img" alt="Profile picture preview"></div>
+			<label>Zoom (crop in) — <span id="ed-photo-zoom-val">${Math.round(clampNum(draft.identity.aboutImageZoom, 100, 300, 100))}</span>%</label>
+			<input type="range" id="ed-photo-zoom" min="100" max="300" step="1" value="${clampNum(draft.identity.aboutImageZoom, 100, 300, 100)}">
+			<button class="ed-btn small secondary" id="ed-photo-reset">↺ Reset move &amp; zoom</button>
+			<p class="ed-hint" style="margin-top:4px">Drag the picture inside the circle to choose which part shows, and slide to zoom in. The About page updates live.</p>
 			<label>"About me" paragraphs</label>
 			<div id="ed-about-paras"></div>
 			<button class="ed-btn small secondary" id="ed-add-para">+ Add paragraph</button>
@@ -3641,6 +3737,76 @@
 		});
 	}
 
+	// --- Profile picture: move (drag) & crop (zoom) editor ---
+	function paintPhotoEditor() {
+		const img = document.getElementById('ed-photo-img');
+		if (!img) return;
+		const fx = clampNum(draft.identity.aboutImageFocusX, 0, 100, 50);
+		const fy = clampNum(draft.identity.aboutImageFocusY, 0, 100, 50);
+		const z = clampNum(draft.identity.aboutImageZoom, 100, 300, 100);
+		const src = draft.identity.aboutImage || '';
+		if (img.getAttribute('src') !== src) img.src = src;
+		img.style.visibility = src ? 'visible' : 'hidden';
+		img.style.objectPosition = fx + '% ' + fy + '%';
+		img.style.transform = z !== 100 ? 'scale(' + (z / 100) + ')' : '';
+		const zoom = document.getElementById('ed-photo-zoom');
+		if (zoom && +zoom.value !== z) zoom.value = String(z);
+		const zv = document.getElementById('ed-photo-zoom-val');
+		if (zv) zv.textContent = String(Math.round(z));
+	}
+
+	function bindPhotoEditor() {
+		const frame = document.getElementById('ed-photo-frame');
+		const zoom = document.getElementById('ed-photo-zoom');
+		const reset = document.getElementById('ed-photo-reset');
+		if (!frame) return;
+		let drag = null; // { cx, cy, x, y, z } snapshot taken on pointer down
+		function start(cx, cy) {
+			drag = {
+				cx, cy,
+				x: clampNum(draft.identity.aboutImageFocusX, 0, 100, 50),
+				y: clampNum(draft.identity.aboutImageFocusY, 0, 100, 50),
+				z: clampNum(draft.identity.aboutImageZoom, 100, 300, 100) / 100
+			};
+		}
+		function moveBy(cx, cy) {
+			if (!drag) return;
+			const rect = frame.getBoundingClientRect();
+			const w = rect.width || 120;
+			// dragging the picture right shows more of its left side → focus % decreases
+			const dx = (cx - drag.cx) / w * 100 / drag.z;
+			const dy = (cy - drag.cy) / w * 100 / drag.z;
+			draft.identity.aboutImageFocusX = Math.round(clampNum(drag.x - dx, 0, 100, 50));
+			draft.identity.aboutImageFocusY = Math.round(clampNum(drag.y - dy, 0, 100, 50));
+			paintPhotoEditor();
+			liveUpdate();
+		}
+		function end() { drag = null; }
+		frame.addEventListener('mousedown', (e) => { e.preventDefault(); start(e.clientX, e.clientY); });
+		window.addEventListener('mousemove', (e) => { if (drag) { e.preventDefault(); moveBy(e.clientX, e.clientY); } });
+		window.addEventListener('mouseup', end);
+		frame.addEventListener('touchstart', (e) => { const t = e.touches[0]; if (t) start(t.clientX, t.clientY); }, { passive: true });
+		frame.addEventListener('touchmove', (e) => { const t = e.touches[0]; if (drag && t) { e.preventDefault(); moveBy(t.clientX, t.clientY); } }, { passive: false });
+		frame.addEventListener('touchend', end);
+		frame.addEventListener('touchcancel', end);
+		if (zoom) zoom.addEventListener('input', () => {
+			draft.identity.aboutImageZoom = clampNum(zoom.value, 100, 300, 100);
+			paintPhotoEditor();
+			liveUpdate();
+		});
+		if (reset) reset.addEventListener('click', () => {
+			draft.identity.aboutImageFocusX = 50;
+			draft.identity.aboutImageFocusY = 50;
+			draft.identity.aboutImageZoom = 100;
+			paintPhotoEditor();
+			liveUpdate();
+		});
+		// keep the preview in sync when the URL is typed/pasted
+		const urlInp = panel.querySelector('[data-path="identity.aboutImage"]');
+		if (urlInp) urlInp.addEventListener('input', paintPhotoEditor);
+		paintPhotoEditor();
+	}
+
 	function currentCat() {
 		const sel = document.getElementById('ed-cat');
 		return sel ? sel.value : CATEGORIES[0];
@@ -3699,7 +3865,7 @@
 					<label>Showreel video (replaces this project's cover picture)</label>
 					<input type="text" data-f="showreel" value="${escapeHtml(p.showreel || '')}" placeholder="https://… — leave empty for a normal picture cover">
 					<button class="ed-btn small secondary" data-up-field="showreel" data-up-accept="video/mp4,video/webm,video/*">⬆ Upload showreel video</button>
-					<p class="ed-hint" style="margin:4px 0 0">This project's tile then plays the video automatically (muted, looping) — no title, no dark overlay, still clickable. Drag the project to the <b>first position</b> to open the section with it. Tip: you can drop a video file straight onto the ⬆ button.</p>
+					<p class="ed-hint" style="margin:4px 0 0">This project's tile then plays the video automatically (muted, looping) — no title, no dark overlay, and <b>not clickable</b> (it's a pure showreel display, no popup). Drag the project to the <b>first position</b> to open the section with it. Tip: you can drop a video file straight onto the ⬆ button.</p>
 				</details>
 				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
 				<p class="ed-hint" style="margin:4px 0 0">When a link URL is set, visitors see a button for it on the project page.</p>
@@ -3932,6 +4098,7 @@
 	function renderPanelBody() {
 		document.getElementById('ed-sections').innerHTML = panelSectionsHtml();
 		bindPanel();
+		bindPhotoEditor();
 		renderAboutParas();
 		renderProjects();
 		activateTab(currentEdTab);
@@ -3945,6 +4112,7 @@
 			setByPath(draft, btn.dataset.upFor, url);
 			const inp = panel.querySelector('[data-path="' + btn.dataset.upFor + '"]');
 			if (inp) inp.value = url;
+			if (btn.dataset.upFor === 'identity.aboutImage') paintPhotoEditor();
 		});
 		document.getElementById('ed-font').addEventListener('change', (e) => {
 			draft.typography.fontFamily = e.target.value;
@@ -4134,6 +4302,9 @@
 		delete draft.showreel; // legacy global showreel — now a per-project field
 		if (!draft.identity) draft.identity = {};
 		if (draft.identity.aboutImage === undefined) draft.identity.aboutImage = '';
+		if (draft.identity.aboutImageFocusX === undefined) draft.identity.aboutImageFocusX = 50;
+		if (draft.identity.aboutImageFocusY === undefined) draft.identity.aboutImageFocusY = 50;
+		if (draft.identity.aboutImageZoom === undefined) draft.identity.aboutImageZoom = 100;
 		window.SITE_CONFIG = draft;
 		buildPanel();
 		applyConfig(true);

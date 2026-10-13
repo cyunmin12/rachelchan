@@ -23,7 +23,7 @@ Everything is grouped into five tabs at the top of the panel:
 
 | Tab | What you do there |
 |---|---|
-| **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs, **drag ⠿ to re-order them**), profile picture, email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
+| **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs, **drag ⠿ to re-order them**), profile picture (**drag to move it inside the circle, zoom to crop**), email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
 | **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, **cover picture shape/fit/size for all projects at once**, and — folded away under *🎬 Home background video* — the home video |
 | **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete with one tap, and **drag the ⠿ handle to re-order** (projects *and* the media inside them). Folded under *Cover shape, columns & showreel* you'll find the **cover ratio override** (with one tap *apply it to all projects*), the **gallery columns** (how many pictures sit side-by-side inside the project), and the optional **showreel video** (see below). An **external link URL** makes a button appear on the project page |
 | **📱 Mobile** | Appearance of the **phone version only**: text size, spacing, gallery columns, plus a **📱 phone preview** that shows your site at phone width updating live |
@@ -31,13 +31,16 @@ Everything is grouped into five tabs at the top of the panel:
 
 ### Showreel for one project
 
-Any single project can have its own **showreel video**: open the project in the **Projects** tab, unfold *Cover shape, columns & showreel*, and upload or paste a video URL there. That project's tile then **plays the video automatically** (muted, looping) instead of showing its cover picture — with **no title and no dark overlay** — while still opening the project when clicked. On phones, the whole card plays the video and tapping it opens the project.
+Any single project can have its own **showreel video**: open the project in the **Projects** tab, unfold *Cover shape, columns & showreel*, and upload or paste a video URL there. That project's tile then **plays the video automatically** (muted, looping) instead of showing its cover picture — with **no title, no dark overlay, and no click action**: it's a pure showreel display, so nothing pops up when visitors click or tap it (on desktop or phone).
 
 Want it first in its section? **Drag the project's ⠿ handle to the top of the list.** Leave the showreel URL empty to go back to a normal picture cover.
 
 ### The About page
 
 The About dialog pairs your heading with the profile photo (heading left, photo right; stacked on phones), then your paragraphs, then a neat **contact footer** where your email and LinkedIn appear as buttons matching the site's button style. It's all edited in the **Text** tab — the buttons appear automatically once Email / LinkedIn are filled in.
+
+- **Email button = click to copy:** visitors never get bounced into a mail app — one click copies your address to their clipboard (the button flashes "✓ Copied to clipboard").
+- **Move & crop your photo:** in the **Text** tab, *drag the picture inside the circle* to choose which part shows, and use the **Zoom** slider to crop in (up to 3×). There's a **↺ Reset** button, and the About page previews live as you drag.
 
 ### Drag & drop
 
