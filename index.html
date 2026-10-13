@@ -470,16 +470,8 @@
 		opacity: 1;
 	}
 
-	/* Showreel tile: plain autoplay video — no title, no colour mask */
-	.photo-item.showreel-item {
-		cursor: default;
-	}
-
-	.photo-item.showreel-item:hover {
-		transform: none;
-		box-shadow: none;
-	}
-
+	/* Showreel project tile: autoplay video instead of the cover picture —
+	   no title, no colour mask, but still clickable (opens the project) */
 	.photo-item.showreel-item::after {
 		display: none;
 	}
@@ -644,21 +636,45 @@
 		line-height: 1.6;
 	}
 
-	.project-link-btn {
+	/* Shared button style — every visitor-facing button uses this,
+	   so the whole site shares one button language */
+	.site-btn {
 		display: inline-block;
 		padding: 10px 22px;
+		border: var(--thin-border, 1.5px) solid var(--primary, #000);
 		background: var(--primary, #000);
 		color: #fff;
 		text-decoration: none;
 		border-radius: 3px;
+		font-family: inherit;
 		font-size: var(--fs-sm);
+		font-weight: 400;
+		line-height: 1.2;
 		letter-spacing: calc(1px + var(--extra-ls));
 		text-transform: uppercase;
-		transition: opacity 0.3s ease;
+		cursor: pointer;
+		transition: background 0.3s ease, color 0.3s ease;
 	}
 
-	.project-link-btn:hover {
-		opacity: 0.75;
+	.site-btn:hover {
+		background: transparent;
+		color: var(--primary, #000);
+	}
+
+	/* Variant for buttons on dark backgrounds (mobile cards) */
+	.site-btn.on-dark {
+		border-color: #fff;
+		background: transparent;
+		color: #fff;
+	}
+
+	.site-btn.on-dark:hover {
+		background: #fff;
+		color: var(--primary, #000);
+	}
+
+	.project-link-btn {
+		margin-top: 4px;
 	}
 
 	.home-video-container {
@@ -717,14 +733,27 @@
 		font-weight: 200;
 	}
 
+	/* Header row: heading on the left, profile photo on the right */
+	.about-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 28px;
+		margin-bottom: 1.5rem;
+	}
+
+	.about-head h1 {
+		flex: 1;
+		margin-bottom: 0;
+	}
+
 	.about-photo {
 		display: block;
+		flex: none;
 		width: 160px;
 		height: 160px;
 		object-fit: cover;
 		border-radius: 50%;
-		float: right;
-		margin: 0 0 1.5rem 1.5rem;
 		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 	}
 
@@ -927,22 +956,11 @@
 		margin-bottom: 15px;
 	}
 
+	/* View Project button: shares the unified .site-btn look (on-dark variant),
+	   sized for phones via the Mobile-tab scale slider */
 	.m-view-btn {
-		display: inline-block;
-		padding: 8px 20px;
-		border: 1px solid white;
-		background: transparent; 
-		color: white;
-		text-decoration: none;
-		text-transform: uppercase;
 		font-size: calc(var(--fs-sm) * var(--m-scale, 1));
-		letter-spacing: calc(1px + var(--extra-ls));
-		cursor: pointer;
-		transition: background 0.3s ease;
-	}
-	
-	.m-view-btn:hover {
-		background: rgba(255,255,255,0.1);
+		padding: calc(8px * var(--m-scale, 1)) calc(20px * var(--m-scale, 1));
 	}
 
 	/* Hint */
@@ -1175,12 +1193,18 @@
 			line-height: 1.6;
 		}
 
+		.about-head {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 14px;
+			margin-bottom: 1.2rem;
+		}
+
 		.about-photo {
-			float: none;
+			order: -1;
+			align-self: flex-end;
 			width: 120px;
 			height: 120px;
-			margin: 0 0 1.2rem auto;
-			align-self: flex-end;
 		}
 	}
 
@@ -1370,6 +1394,23 @@
 	.ed-media-row button { flex: none; background: none; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; padding: 0 9px; }
 	.ed-media-row button:disabled { opacity: 0.35; cursor: default; }
 
+	/* Drag & drop: reorder handles, drop-position indicators, file-drop highlight */
+	.ed-drag-handle {
+		cursor: grab;
+		color: #999;
+		font-size: 14px;
+		padding: 2px 4px;
+		user-select: none;
+		-webkit-user-select: none;
+		flex: none;
+		line-height: 1;
+	}
+	.ed-drag-handle:active { cursor: grabbing; }
+	.ed-proj.ed-dragging, .ed-media-row.ed-dragging { opacity: 0.45; }
+	.ed-proj.ed-drop-before, .ed-media-row.ed-drop-before { box-shadow: 0 -3px 0 0 #b00000; }
+	.ed-proj.ed-drop-after, .ed-media-row.ed-drop-after { box-shadow: 0 3px 0 0 #b00000; }
+	#edit-panel .ed-btn.ed-drop-hover { outline: 2px dashed #b00000; outline-offset: 2px; background: #fff5f5; }
+
 	#ed-resizer { position: fixed; top: 0; height: 100vh; width: 8px; cursor: col-resize; z-index: 5002; background: transparent; }
 	#ed-resizer:hover, #ed-resizer.ed-dragging { background: rgba(176, 0, 0, 0.28); }
 	@media (max-width: 900px) { #ed-resizer { display: none; } }
@@ -1504,7 +1545,10 @@
 <div class="dialog-overlay" id="dialogOverlay"></div>
 <div class="about-dialog" id="aboutDialog" role="dialog" aria-modal="true" aria-labelledby="aboutDialogTitle">
 	<button class="close-about" id="closeAbout" aria-label="Close about dialog">×</button>
-	<h1 id="aboutDialogTitle">About Rachel Chan</h1>
+	<!-- Heading + profile photo share this flex row (photo appended by rebuildAboutDialog) -->
+	<div class="about-head">
+		<h1 id="aboutDialogTitle">About Rachel Chan</h1>
+	</div>
 	<p>RACHEL CHAN is a video producer, filmmaker, and artist dedicated to exploring the connections between humanity, urban environments, and cultural translation. Currently based between London and Hong Kong, she works at the intersection of commercial advertising and cinematic storytelling at a creative agency in the heart of Central London. She graduated from the School of Creative Media at City University of Hong Kong in 2022, specialising in film and video art. During her studies, she was awarded the One Cool Film Studies Scholarship, and her work was showcased at various festivals. She previously worked at M+ Museum, where she produced digital content and videos, before pursuing a Master's in Producing at Goldsmiths, University of London in 2024. Passionate about exploring the possibilities of narrative and storytelling, she strives to create innovative content.</p>
 	<p>Contact: <a href="mailto:rachelc1213@gmail.com">rachelc1213@gmail.com</a><br>
 	LinkedIn: <a href="https://www.linkedin.com/in/rachelchan1213/" target="_blank" rel="noopener noreferrer">linkedin.com/in/rachelchan1213</a></p>
@@ -2361,7 +2405,6 @@
 			'social-media': 'SOCIAL/ SHORT'
 		},
 		homeVideo: 'https://rachelchan.co/videos/home-video.mp4',
-		showreel: '',
 		layout: {
 			coverRatio: '16/9',
 			coverFit: 'cover',
@@ -2382,7 +2425,6 @@
 			typography: Object.assign({}, CONFIG_DEFAULTS.typography, c.typography),
 			navLabels: Object.assign({}, CONFIG_DEFAULTS.navLabels, c.navLabels),
 			homeVideo: c.homeVideo || CONFIG_DEFAULTS.homeVideo,
-			showreel: c.showreel || CONFIG_DEFAULTS.showreel,
 			layout: Object.assign({}, CONFIG_DEFAULTS.layout, c.layout),
 			mobile: Object.assign({}, CONFIG_DEFAULTS.mobile, c.mobile),
 			projects: c.projects || defaultProjectsData
@@ -2446,12 +2488,14 @@
 		dlg.querySelectorAll('p').forEach(p => p.remove());
 		const oldPhoto = dlg.querySelector('.about-photo');
 		if (oldPhoto) oldPhoto.remove();
+		const head = dlg.querySelector('.about-head');
 		if (cfg.identity.aboutImage) {
 			const photo = document.createElement('img');
 			photo.className = 'about-photo';
 			photo.src = cfg.identity.aboutImage;
 			photo.alt = cfg.identity.name || 'Profile photo';
-			if (titleEl && titleEl.nextSibling) dlg.insertBefore(photo, titleEl.nextSibling);
+			if (head) head.appendChild(photo);
+			else if (titleEl && titleEl.nextSibling) dlg.insertBefore(photo, titleEl.nextSibling);
 			else dlg.appendChild(photo);
 		}
 		cfg.identity.aboutParagraphs.forEach(text => {
@@ -2682,44 +2726,40 @@
 		grid.className = 'photo-grid';
 		grid.id = `${tabId}-grid`;
 
-		// Showreel: when set, the first tile of the video-projects grid is a plain
-		// autoplay video — no title, no colour mask, not clickable.
-		const showreel = getCfg().showreel;
-		if (showreel && tabId === 'video-projects') {
-			const srItem = document.createElement('div');
-			srItem.className = 'photo-item showreel-item';
-			srItem.setAttribute('aria-label', 'Showreel');
-			const srVideo = document.createElement('video');
-			srVideo.autoplay = true;
-			srVideo.loop = true;
-			srVideo.muted = true;
-			srVideo.playsInline = true;
-			srVideo.setAttribute('muted', '');
-			srVideo.setAttribute('playsinline', '');
-			srVideo.src = showreel;
-			srItem.appendChild(srVideo);
-			grid.appendChild(srItem);
-			ensureAutoplay(srVideo);
-		}
-
 		projects.forEach(project => {
 			const item = document.createElement('div');
-			item.className = 'photo-item';
+			item.className = 'photo-item' + (project.showreel ? ' showreel-item' : '');
 			const safeTitle = escapeHtml(project.title);
 			item.setAttribute('role', 'button');
 			item.setAttribute('tabindex', '0');
 			item.setAttribute('aria-label', `View project: ${project.title}`);
 			if (project.coverRatio) item.style.aspectRatio = project.coverRatio;
-			item.innerHTML = `
-				<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
-				<div class="photo-title">${safeTitle}</div>
-				<div class="photo-caption">
-					<h3>${safeTitle}</h3>
-					${project.year ? `<p class="project-year">${escapeHtml(project.year)}</p>` : ''}
-					${project.client ? `<p class="project-client">${escapeHtml(project.client)}</p>` : ''}
-					${project.role ? `<p class="project-role">${escapeHtml(project.role)}</p>` : ''}
-				</div>
-			`;
+			if (project.showreel) {
+				// Per-project showreel: the tile autoplays this video instead of the
+				// cover picture — no title, no colour mask, but still clickable.
+				const srVideo = document.createElement('video');
+				srVideo.autoplay = true;
+				srVideo.loop = true;
+				srVideo.muted = true;
+				srVideo.playsInline = true;
+				srVideo.setAttribute('muted', '');
+				srVideo.setAttribute('playsinline', '');
+				srVideo.setAttribute('aria-label', project.title);
+				srVideo.src = project.showreel;
+				item.appendChild(srVideo);
+				ensureAutoplay(srVideo);
+			} else {
+				item.innerHTML = `
+					<img src="${project.image}" alt="${safeTitle}" loading="lazy" decoding="async">
+					<div class="photo-title">${safeTitle}</div>
+					<div class="photo-caption">
+						<h3>${safeTitle}</h3>
+						${project.year ? `<p class="project-year">${escapeHtml(project.year)}</p>` : ''}
+						${project.client ? `<p class="project-client">${escapeHtml(project.client)}</p>` : ''}
+						${project.role ? `<p class="project-role">${escapeHtml(project.role)}</p>` : ''}
+					</div>
+				`;
+			}
 			const openDialog = () => openProjectDialog(project.id, tabId);
 			item.addEventListener('click', openDialog);
 			item.addEventListener('keydown', (e) => {
@@ -2817,7 +2857,7 @@
 		if (project.role) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.role)}</span>`);
 
 		const linkBtn = project.link
-			? `<a class="project-link-btn" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">Visit link &#8599;</a>`
+			? `<a class="site-btn project-link-btn" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">Visit link &#8599;</a>`
 			: '';
 		projectDetails.innerHTML = `<div class="project-meta">${metaHtml.join('')}</div><div class="project-description">${project.description}</div>${linkBtn}`;
 
@@ -2935,30 +2975,12 @@
 				// Horizontal Scroll Category Section
 				sectionEl.classList.add('m-category-section');
 				
-				// Showreel card: plain autoplay video first — no title, no colour mask
-				const showreel = getCfg().showreel;
-				if (showreel && section.id === 'video-projects') {
-					const srCard = document.createElement('div');
-					srCard.className = 'm-project-card m-showreel-card';
-					const srVideo = document.createElement('video');
-					srVideo.autoplay = true;
-					srVideo.loop = true;
-					srVideo.muted = true;
-					srVideo.playsInline = true;
-					srVideo.setAttribute('muted', '');
-					srVideo.setAttribute('playsinline', '');
-					srVideo.src = showreel;
-					srCard.appendChild(srVideo);
-					sectionEl.appendChild(srCard);
-					ensureAutoplay(srVideo);
-				}
-
 				// Project Cards
 				const projects = projectsData[section.id];
 				if (projects) {
 					projects.forEach((p, idx) => {
 						const card = document.createElement('div');
-						card.className = 'm-project-card';
+						card.className = 'm-project-card' + (p.showreel ? ' m-showreel-card' : '');
 						
 						// Add glassy hint only to the first card
 						let hintHtml = '';
@@ -2971,20 +2993,38 @@
 							`;
 						}
 
-						card.innerHTML = `
-							<img src="${p.image}" class="m-project-bg" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
-							<div class="m-project-info">
-								<h2>${escapeHtml(p.title)}</h2>
-								<p>${escapeHtml(p.year || '')} ${p.role ? ' | ' + escapeHtml(p.role) : ''}</p>
-								<button class="m-view-btn" aria-label="View project: ${escapeHtml(p.title)}">View Project</button>
-							</div>
-							${hintHtml}
-						`;
-						// Bind click to open dialog
-						card.querySelector('.m-view-btn').addEventListener('click', (e) => {
-							e.preventDefault();
-							openProjectDialog(p.id, section.id);
-						});
+						if (p.showreel) {
+							// Showreel project: plain autoplay video card — no title,
+							// no colour mask; tapping anywhere opens the project.
+							const srVideo = document.createElement('video');
+							srVideo.autoplay = true;
+							srVideo.loop = true;
+							srVideo.muted = true;
+							srVideo.playsInline = true;
+							srVideo.setAttribute('muted', '');
+							srVideo.setAttribute('playsinline', '');
+							srVideo.setAttribute('aria-label', p.title);
+							srVideo.src = p.showreel;
+							card.appendChild(srVideo);
+							if (hintHtml) card.insertAdjacentHTML('beforeend', hintHtml);
+							card.addEventListener('click', () => openProjectDialog(p.id, section.id));
+							ensureAutoplay(srVideo);
+						} else {
+							card.innerHTML = `
+								<img src="${p.image}" class="m-project-bg" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
+								<div class="m-project-info">
+									<h2>${escapeHtml(p.title)}</h2>
+									<p>${escapeHtml(p.year || '')} ${p.role ? ' | ' + escapeHtml(p.role) : ''}</p>
+									<button class="m-view-btn site-btn on-dark" aria-label="View project: ${escapeHtml(p.title)}">View Project</button>
+								</div>
+								${hintHtml}
+							`;
+							// Bind click to open dialog
+							card.querySelector('.m-view-btn').addEventListener('click', (e) => {
+								e.preventDefault();
+								openProjectDialog(p.id, section.id);
+							});
+						}
 						sectionEl.appendChild(card);
 					});
 				}
@@ -3115,6 +3155,13 @@
 	let expandedProject = null;
 
 	function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+	// Move an item within an array (used by drag & drop reordering)
+	function moveInArray(arr, from, to) {
+		const item = arr.splice(from, 1)[0];
+		if (from < to) to--;
+		arr.splice(to, 0, item);
+	}
 
 	function getByPath(obj, path) {
 		return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
@@ -3351,6 +3398,24 @@
 				const url = await uploadMedia(f);
 				if (url) { onUrl(url, btn); liveUpdate(); }
 			});
+			// Drag a file from the computer straight onto the button to upload it
+			const hasFiles = (e) => e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') > -1;
+			['dragenter', 'dragover'].forEach(ev => btn.addEventListener(ev, (e) => {
+				if (!hasFiles(e)) return;
+				e.preventDefault();
+				e.dataTransfer.dropEffect = 'copy';
+				btn.classList.add('ed-drop-hover');
+			}));
+			['dragleave', 'dragend'].forEach(ev => btn.addEventListener(ev, () => btn.classList.remove('ed-drop-hover')));
+			btn.addEventListener('drop', async (e) => {
+				if (!hasFiles(e)) return;
+				e.preventDefault();
+				btn.classList.remove('ed-drop-hover');
+				const f = e.dataTransfer.files[0];
+				if (!f) return;
+				const url = await uploadMedia(f);
+				if (url) { onUrl(url, btn); liveUpdate(); }
+			});
 		});
 	}
 
@@ -3416,14 +3481,12 @@
 			<label>Size — how many covers fit in a row (all projects at once)</label>
 			<select id="ed-cover-columns">${coverColsOptions(draft.layout.coverColumns)}</select>
 			<p class="ed-hint">Applies to every section's cover grid. Override a single project's shape under <b>Projects</b> — or use <b>Apply to all projects</b> there to bulk-set one shape.</p>
-			<h3 style="margin-top:22px">Home background video</h3>
-			${textF('Video URL', 'homeVideo', 'url')}
-			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
-			<p class="ed-hint">Tip: keep it small (a few MB) so your home page loads fast.</p>
-			<h3 style="margin-top:22px">Showreel (first tile of Video Projects)</h3>
-			${textF('Showreel video URL', 'showreel', 'url')}
-			${uploadBtn('showreel', 'video/mp4,video/webm,video/*', '⬆ Upload showreel')}
-			<p class="ed-hint">Plays automatically (muted, looping) as the very first tile — no title, no dark overlay. Leave the URL empty to switch it off.</p>
+			<details style="margin-top:22px">
+				<summary>🎬 Home background video</summary>
+				${textF('Video URL', 'homeVideo', 'url')}
+				${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
+				<p class="ed-hint">Tip: keep it small (a few MB) so your home page loads fast.</p>
+			</details>
 		</section>
 		<section data-tab="projects">
 			<h3>Your work</h3>
@@ -3431,7 +3494,7 @@
 			<select id="ed-cat">${catOpts}</select>
 			<div id="ed-proj-list" style="margin-top:10px"></div>
 			<button class="ed-btn small secondary" id="ed-add-proj">+ Add new project</button>
-			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder projects · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video. Inside a project, use each media item's <b>↑ ↓</b> to reorder media.</p>
+			<p class="ed-hint">Drag <b>⠿</b> to reorder projects (or tap <b>↑ ↓</b>) · <b>▸</b> opens a project · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video — you can also <b>drop a file straight onto</b> any ⬆ button. Inside a project, drag each media item's <b>⠿</b> to reorder media.</p>
 		</section>
 		<section data-tab="mobile">
 			<h3>Phone look (mobile only)</h3>
@@ -3511,6 +3574,7 @@
 	function projectBodyHtml(p) {
 		const mediaRows = (p.media || []).map((m, mi) => `
 			<div class="ed-media-row">
+				<span class="ed-drag-handle" data-mdrag="${mi}" draggable="true" title="Drag to reorder">⠿</span>
 				${thumbHtml(m, mi)}
 				<select data-mi="${mi}" data-mk="type">
 					<option value="youtube"${m.type === 'youtube' ? ' selected' : ''}>youtube</option>
@@ -3533,11 +3597,18 @@
 				<label>Role</label><input type="text" data-f="role" value="${escapeHtml(p.role || '')}">
 				<label>Cover image URL</label><input type="text" data-f="image" value="${escapeHtml(p.image || '')}">
 				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
-				<label>Cover ratio (override for this project)</label>
-				<select data-f="coverRatio">${ratioOptions(p.coverRatio || '', true)}</select>
-				<button class="ed-btn small secondary" data-ratio-all title="Copy this cover ratio to every project in every section">⇉ Apply this shape to all projects</button>
-				<label>Gallery columns (pictures/videos inside this project)</label>
-				<select data-f="galleryColumns">${galleryColsOptions(p.galleryColumns)}</select>
+				<details>
+					<summary>Cover shape, columns &amp; showreel (optional)</summary>
+					<label>Cover ratio (override for this project)</label>
+					<select data-f="coverRatio">${ratioOptions(p.coverRatio || '', true)}</select>
+					<button class="ed-btn small secondary" data-ratio-all title="Copy this cover ratio to every project in every section">⇉ Apply this shape to all projects</button>
+					<label>Gallery columns (pictures/videos inside this project)</label>
+					<select data-f="galleryColumns">${galleryColsOptions(p.galleryColumns)}</select>
+					<label>Showreel video (replaces this project's cover picture)</label>
+					<input type="text" data-f="showreel" value="${escapeHtml(p.showreel || '')}" placeholder="https://… — leave empty for a normal picture cover">
+					<button class="ed-btn small secondary" data-up-field="showreel" data-up-accept="video/mp4,video/webm,video/*">⬆ Upload showreel video</button>
+					<p class="ed-hint" style="margin:4px 0 0">This project's tile then plays the video automatically (muted, looping) — no title, no dark overlay, still clickable. Drag the project to the <b>first position</b> to open the section with it. Tip: you can drop a video file straight onto the ⬆ button.</p>
+				</details>
 				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
 				<p class="ed-hint" style="margin:4px 0 0">When a link URL is set, visitors see a button for it on the project page.</p>
 				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
@@ -3618,6 +3689,46 @@
 			}
 			refreshThumb(mi);
 		}, 'image/*,video/*');
+		// Drag & drop reordering of this project's media rows
+		let dragMedia = null;
+		const mediaRows = row.querySelectorAll('.ed-media-row');
+		mediaRows.forEach((mrow) => {
+			const h = mrow.querySelector('[data-mdrag]');
+			if (!h) return;
+			const mi = +h.dataset.mdrag;
+			h.addEventListener('dragstart', (e) => {
+				dragMedia = mi;
+				if (e.dataTransfer) {
+					e.dataTransfer.effectAllowed = 'move';
+					try { e.dataTransfer.setData('text/plain', String(mi)); } catch (err) { /* ignore */ }
+				}
+				mrow.classList.add('ed-dragging');
+			});
+			h.addEventListener('dragend', () => {
+				dragMedia = null;
+				mediaRows.forEach(r => r.classList.remove('ed-dragging', 'ed-drop-before', 'ed-drop-after'));
+			});
+			mrow.addEventListener('dragover', (e) => {
+				if (dragMedia === null || dragMedia === mi) return;
+				e.preventDefault();
+				if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+				const rect = mrow.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				mrow.classList.toggle('ed-drop-before', before);
+				mrow.classList.toggle('ed-drop-after', !before);
+			});
+			mrow.addEventListener('dragleave', () => mrow.classList.remove('ed-drop-before', 'ed-drop-after'));
+			mrow.addEventListener('drop', (e) => {
+				if (dragMedia === null || dragMedia === mi) return;
+				e.preventDefault();
+				const rect = mrow.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				moveInArray(p.media, dragMedia, mi + (before ? 0 : 1));
+				dragMedia = null;
+				renderProjects();
+				liveUpdate();
+			});
+		});
 		const addBtn = row.querySelector('[data-madd]');
 		if (addBtn) addBtn.addEventListener('click', () => {
 			p.media = p.media || [];
@@ -3633,12 +3744,14 @@
 		const cat = currentCat();
 		const list = draft.projects[cat] || (draft.projects[cat] = []);
 		box.innerHTML = '';
+		let dragProj = null; // { cat, idx } of the project row currently being dragged
 		list.forEach((p, idx) => {
 			const row = document.createElement('div');
 			row.className = 'ed-proj';
 			const isOpen = expandedProject === cat + ':' + p.id;
 			row.innerHTML = `
 				<div class="ed-proj-head">
+					<span class="ed-drag-handle" draggable="true" title="Drag to reorder">⠿</span>
 					<span class="ed-proj-title">${escapeHtml(p.title || '(untitled)')}</span>
 					<button data-act="up" title="Move up">↑</button>
 					<button data-act="down" title="Move down">↓</button>
@@ -3656,6 +3769,42 @@
 					else if (act === 'dup') { const c = clone(p); c.id = p.id + '-copy-' + Date.now().toString(36); list.splice(idx + 1, 0, c); renderProjects(); liveUpdate(); }
 					else if (act === 'del') { if (confirm('Delete "' + (p.title || 'this project') + '"?')) { list.splice(idx, 1); expandedProject = null; renderProjects(); liveUpdate(); } }
 				});
+			});
+			// Drag & drop reordering of project rows (handle = ⠿)
+			const handle = row.querySelector('.ed-proj-head .ed-drag-handle');
+			if (handle) {
+				handle.addEventListener('dragstart', (e) => {
+					dragProj = { cat, idx };
+					if (e.dataTransfer) {
+						e.dataTransfer.effectAllowed = 'move';
+						try { e.dataTransfer.setData('text/plain', String(idx)); } catch (err) { /* ignore */ }
+					}
+					row.classList.add('ed-dragging');
+				});
+				handle.addEventListener('dragend', () => {
+					dragProj = null;
+					box.querySelectorAll('.ed-proj').forEach(r => r.classList.remove('ed-dragging', 'ed-drop-before', 'ed-drop-after'));
+				});
+			}
+			row.addEventListener('dragover', (e) => {
+				if (!dragProj || dragProj.cat !== cat || dragProj.idx === idx) return;
+				e.preventDefault();
+				if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+				const rect = row.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				row.classList.toggle('ed-drop-before', before);
+				row.classList.toggle('ed-drop-after', !before);
+			});
+			row.addEventListener('dragleave', () => row.classList.remove('ed-drop-before', 'ed-drop-after'));
+			row.addEventListener('drop', (e) => {
+				if (!dragProj || dragProj.cat !== cat) return;
+				e.preventDefault();
+				const rect = row.getBoundingClientRect();
+				const before = e.clientY < rect.top + rect.height / 2;
+				moveInArray(list, dragProj.idx, idx + (before ? 0 : 1));
+				dragProj = null;
+				renderProjects();
+				liveUpdate();
 			});
 			if (isOpen) bindProjectBody(row, cat, idx);
 			box.appendChild(row);
@@ -3861,6 +4010,12 @@
 		peekBtn.addEventListener('click', () => { panel.classList.remove('ed-hidden'); peekBtn.style.display = 'none'; const rz = document.getElementById('ed-resizer'); if (rz && window.innerWidth > 900) rz.style.display = 'block'; });
 		document.body.appendChild(peekBtn);
 
+		// Safety net: a file dropped anywhere on the panel (missed the ⬆ buttons)
+		// must never make the browser navigate away from the site
+		['dragover', 'drop'].forEach(ev => panel.addEventListener(ev, (e) => {
+			if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') > -1) e.preventDefault();
+		}));
+
 		panel.querySelector('#ed-close').addEventListener('click', () => closeEditor(true));
 		panel.querySelector('#ed-preview').addEventListener('click', () => { panel.classList.add('ed-hidden'); peekBtn.style.display = 'block'; const rz = document.getElementById('ed-resizer'); if (rz) rz.style.display = 'none'; });
 
@@ -3876,7 +4031,7 @@
 		if (!draft.layout) draft.layout = { coverRatio: '16/9', coverFit: 'cover', coverColumns: 0 };
 		if (draft.layout.coverColumns === undefined) draft.layout.coverColumns = 0;
 		if (!draft.mobile) draft.mobile = { fontScale: 100, spacing: 100, galleryColumns: 1 };
-		if (draft.showreel === undefined) draft.showreel = '';
+		delete draft.showreel; // legacy global showreel — now a per-project field
 		if (!draft.identity) draft.identity = {};
 		if (draft.identity.aboutImage === undefined) draft.identity.aboutImage = '';
 		window.SITE_CONFIG = draft;

@@ -24,20 +24,27 @@ Everything is grouped into five tabs at the top of the panel:
 | Tab | What you do there |
 |---|---|
 | **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs), email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
-| **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, the home background video, **cover picture shape/fit/size for all projects at once**, and the **showreel video** (see below) |
-| **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete / re-order with one tap. Per project you can also set a **cover ratio override** (with one tap *apply it to all projects*), the **gallery columns** (how many pictures sit side-by-side inside the project), and an **external link URL** — when set, visitors see a button for it on the project page |
+| **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, **cover picture shape/fit/size for all projects at once**, and — folded away under *🎬 Home background video* — the home video |
+| **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete with one tap, and **drag the ⠿ handle to re-order** (projects *and* the media inside them). Folded under *Cover shape, columns & showreel* you'll find the **cover ratio override** (with one tap *apply it to all projects*), the **gallery columns** (how many pictures sit side-by-side inside the project), and the optional **showreel video** (see below). An **external link URL** makes a button appear on the project page |
 | **📱 Mobile** | Appearance of the **phone version only**: text size, spacing, gallery columns, plus a **📱 phone preview** that shows your site at phone width updating live |
 | **📤 Publish** | One big green button + 3 simple steps to put your changes live. *Collapsible extra:* GitHub token & sync |
 
-### Showreel (first tile)
+### Showreel for one project
 
-In **Design → Showreel**, upload or paste a video URL. When set, it becomes the **first tile of the Video Projects grid** and plays automatically (muted, looping) — with **no title and no dark overlay**. Leave the URL empty to switch it off. The same video appears as the first card of the Video Projects section on phones.
+Any single project can have its own **showreel video**: open the project in the **Projects** tab, unfold *Cover shape, columns & showreel*, and upload or paste a video URL there. That project's tile then **plays the video automatically** (muted, looping) instead of showing its cover picture — with **no title and no dark overlay** — while still opening the project when clicked. On phones, the whole card plays the video and tapping it opens the project.
+
+Want it first in its section? **Drag the project's ⠿ handle to the top of the list.** Leave the showreel URL empty to go back to a normal picture cover.
+
+### Drag & drop
+
+- **Re-order:** drag the **⠿** handle on any project row (or any media row inside a project) and drop it where you want — a red line shows the landing spot. The old **↑ ↓** buttons still work too.
+- **Upload:** drag a picture/video file from your computer and **drop it straight onto any ⬆ Upload button** — no file-picker needed.
 
 ## 3. Uploading images & videos
 
 You can upload media files straight from the editor — no separate uploading tool needed:
 
-- **⬆ Upload** buttons appear next to the *home video*, the *share image*, each project's *cover image*, and every *media row* inside a project.
+- **⬆ Upload** buttons appear next to the *home video*, the *share image*, each project's *cover image*, each project's *showreel video*, and every *media row* inside a project. You can click one — or simply **drag a file onto the button** and let go.
 - The first time, paste your **GitHub token** into the *Publish* tab under **GitHub (advanced)** (fine-grained token with **Contents: Read and write** for `cyunmin12/rachelchan`). It is stored only in your browser. If you forget, the editor opens that spot for you automatically.
 - Pick a file → it is uploaded to the repo's `media/` folder → the permanent public URL is **filled into the field automatically** and previews live.
 - For project media, the type (image / video) is detected automatically.
