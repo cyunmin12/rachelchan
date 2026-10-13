@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RACHEL CHAN | Creative Producer, Filmmaker &amp; Multimedia Artist</title>
 <meta name="description" content="Portfolio of Rachel Chan — Creative Producer, Filmmaker &amp; Multimedia Artist working between London and Hong Kong. Selected video projects, short films, photography, visuals and social content.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co https://raw.githubusercontent.com; media-src https://rachelchan.co https://raw.githubusercontent.com; frame-src https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://rachelchan.co https://raw.githubusercontent.com; media-src https://rachelchan.co https://raw.githubusercontent.com; frame-src 'self' https://www.youtube.com; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
 <meta name="keywords" content="Rachel Chan, creative producer, filmmaker, multimedia artist, London, Hong Kong, video production, short films, photography">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rachel Chan">
@@ -397,14 +397,14 @@
 	/* Grids */
 	.photo-grid {
 		display: grid;
-		grid-template-columns: repeat(1, 1fr);
+		grid-template-columns: repeat(var(--cover-columns, 1), 1fr);
 		gap: 30px;
 		margin-top: 0;
 		margin-left: 10px;
 	}
 
 	#social-media-grid {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(var(--cover-columns-social, 2), 1fr);
 	}
 
 	.photo-item {
@@ -468,6 +468,27 @@
 
 	.photo-item:hover .photo-title {
 		opacity: 1;
+	}
+
+	/* Showreel tile: plain autoplay video — no title, no colour mask */
+	.photo-item.showreel-item {
+		cursor: default;
+	}
+
+	.photo-item.showreel-item:hover {
+		transform: none;
+		box-shadow: none;
+	}
+
+	.photo-item.showreel-item::after {
+		display: none;
+	}
+
+	.photo-item.showreel-item video {
+		width: 100%;
+		height: 100%;
+		object-fit: var(--cover-fit, cover);
+		display: block;
 	}
 
 	.photo-item:hover .photo-caption {
@@ -573,14 +594,14 @@
 	}
 
 	.project-media-container {
-		display: flex;
 		flex: 1;
 		min-width: 55%;
 		max-height: 65vh;
 		overflow: auto;
 		padding: 20px;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(var(--proj-gallery-cols, 1), 1fr);
+		align-content: start;
 		gap: 20px;
 	}
 
@@ -621,6 +642,23 @@
 	.project-description {
 		margin-bottom: 20px;
 		line-height: 1.6;
+	}
+
+	.project-link-btn {
+		display: inline-block;
+		padding: 10px 22px;
+		background: var(--primary, #000);
+		color: #fff;
+		text-decoration: none;
+		border-radius: 3px;
+		font-size: var(--fs-sm);
+		letter-spacing: calc(1px + var(--extra-ls));
+		text-transform: uppercase;
+		transition: opacity 0.3s ease;
+	}
+
+	.project-link-btn:hover {
+		opacity: 0.75;
 	}
 
 	.home-video-container {
@@ -685,7 +723,8 @@
 		height: 160px;
 		object-fit: cover;
 		border-radius: 50%;
-		margin: 0 auto 1.5rem;
+		float: right;
+		margin: 0 0 1.5rem 1.5rem;
 		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 	}
 
@@ -758,7 +797,7 @@
 	.m-snap-logo {
 		color: #fff;
 		font-weight: 900;
-		font-size: var(--fs-base);
+		font-size: calc(var(--fs-base) * var(--m-scale, 1));
 		letter-spacing: calc(0.1em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
@@ -770,7 +809,7 @@
 	.m-snap-about {
 		color: #fff;
 		font-weight: 300;
-		font-size: var(--fs-sm);
+		font-size: calc(var(--fs-sm) * var(--m-scale, 1));
 		letter-spacing: calc(0.05em + var(--extra-ls));
 		text-transform: uppercase;
 		text-decoration: none;
@@ -812,20 +851,20 @@
 	}
 	.m-home-overlay {
 		position: absolute;
-		bottom: 80px;
-		left: 20px;
+		bottom: calc(80px * var(--m-space, 1));
+		left: calc(20px * var(--m-space, 1));
 		color: white;
 		z-index: 2;
 	}
 	.m-home-overlay h1 {
 		font-weight: 900;
-		font-size: var(--fs-hero);
+		font-size: calc(var(--fs-hero) * var(--m-scale, 1));
 		margin: 0;
 		text-transform: uppercase;
 	}
 	.m-home-overlay p {
 		font-weight: 300;
-		font-size: var(--fs-md);
+		font-size: calc(var(--fs-md) * var(--m-scale, 1));
 		margin: 5px 0 0 0;
 		opacity: 0.8;
 	}
@@ -867,7 +906,7 @@
 		z-index: 2;
 		color: white;
 		text-align: center;
-		padding: 20px;
+		padding: calc(20px * var(--m-space, 1));
 		background: rgba(0,0,0,0.4);
 		backdrop-filter: blur(5px);
 		border-radius: 8px;
@@ -878,12 +917,12 @@
 	.m-project-info h2 {
 		margin: 0 0 10px 0;
 		font-weight: 300;
-		font-size: var(--fs-lg);
+		font-size: calc(var(--fs-lg) * var(--m-scale, 1));
 		text-transform: uppercase;
 	}
 	
 	.m-project-info p {
-		font-size: var(--fs-sm);
+		font-size: calc(var(--fs-sm) * var(--m-scale, 1));
 		opacity: 0.8;
 		margin-bottom: 15px;
 	}
@@ -896,7 +935,7 @@
 		color: white;
 		text-decoration: none;
 		text-transform: uppercase;
-		font-size: var(--fs-sm);
+		font-size: calc(var(--fs-sm) * var(--m-scale, 1));
 		letter-spacing: calc(1px + var(--extra-ls));
 		cursor: pointer;
 		transition: background 0.3s ease;
@@ -985,6 +1024,20 @@
 		border: none;
 	}
 
+	/* Showreel card (mobile): plain autoplay video — no title, no colour mask */
+	.m-showreel-card {
+		background: #000;
+	}
+
+	.m-showreel-card video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
 
 	/* MEDIA QUERY FOR MOBILE & VERTICAL TABLET */
 	@media (max-width: 900px) {
@@ -1053,6 +1106,7 @@
 			padding: 0; /* No padding for full bleed */
 			gap: 5px;
 			background: #f9f9f9;
+			grid-template-columns: repeat(var(--m-gallery-cols, 1), 1fr);
 		}
 
 		.project-media, .project-video {
@@ -1122,9 +1176,11 @@
 		}
 
 		.about-photo {
+			float: none;
 			width: 120px;
 			height: 120px;
-			margin: 0 auto 1.2rem;
+			margin: 0 0 1.2rem auto;
+			align-self: flex-end;
 		}
 	}
 
@@ -1339,6 +1395,27 @@
 
 	@media (max-width: 900px) {
 		#edit-panel { width: 100vw; }
+	}
+
+	/* Mobile tab — phone preview */
+	#ed-phone-wrap {
+		margin-top: 12px;
+		border: 1px solid #ddd;
+		border-radius: 12px;
+		overflow: hidden;
+		background: #000;
+		display: none;
+	}
+
+	#ed-phone-wrap.ed-on { display: block; }
+
+	#ed-phone-frame {
+		width: 100%;
+		height: 640px;
+		max-height: 70vh;
+		border: none;
+		display: block;
+		background: #000;
 	}
 </style>
 
@@ -2284,9 +2361,16 @@
 			'social-media': 'SOCIAL/ SHORT'
 		},
 		homeVideo: 'https://rachelchan.co/videos/home-video.mp4',
+		showreel: '',
 		layout: {
 			coverRatio: '16/9',
-			coverFit: 'cover'
+			coverFit: 'cover',
+			coverColumns: 0
+		},
+		mobile: {
+			fontScale: 100,
+			spacing: 100,
+			galleryColumns: 1
 		}
 	};
 
@@ -2298,7 +2382,9 @@
 			typography: Object.assign({}, CONFIG_DEFAULTS.typography, c.typography),
 			navLabels: Object.assign({}, CONFIG_DEFAULTS.navLabels, c.navLabels),
 			homeVideo: c.homeVideo || CONFIG_DEFAULTS.homeVideo,
+			showreel: c.showreel || CONFIG_DEFAULTS.showreel,
 			layout: Object.assign({}, CONFIG_DEFAULTS.layout, c.layout),
+			mobile: Object.assign({}, CONFIG_DEFAULTS.mobile, c.mobile),
 			projects: c.projects || defaultProjectsData
 		};
 	}
@@ -2340,6 +2426,18 @@
 		const root = document.documentElement;
 		root.style.setProperty('--cover-ratio', (l && l.coverRatio) || '16/9');
 		root.style.setProperty('--cover-fit', (l && l.coverFit) || 'cover');
+		// Bulk cover size: how many covers fit in a row (0 = auto: 1 per row, social grid 2)
+		const cols = parseInt(l && l.coverColumns, 10) || 0;
+		root.style.setProperty('--cover-columns', cols > 0 ? String(cols) : '1');
+		root.style.setProperty('--cover-columns-social', cols > 0 ? String(cols) : '2');
+	}
+
+	// Mobile-only appearance (phones ≤ 900px): text size, spacing, gallery columns
+	function applyMobile(m) {
+		const root = document.documentElement;
+		root.style.setProperty('--m-scale', String(((m && +m.fontScale) || 100) / 100));
+		root.style.setProperty('--m-space', String(((m && +m.spacing) || 100) / 100));
+		root.style.setProperty('--m-gallery-cols', String((m && parseInt(m.galleryColumns, 10)) || 1));
 	}
 
 	function rebuildAboutDialog(cfg) {
@@ -2412,6 +2510,7 @@
 
 		applyTypography(cfg.typography);
 		applyLayout(cfg.layout);
+		applyMobile(cfg.mobile);
 
 		if (rerender) {
 			if (desktopInited) setMainContent(currentTab);
@@ -2583,6 +2682,26 @@
 		grid.className = 'photo-grid';
 		grid.id = `${tabId}-grid`;
 
+		// Showreel: when set, the first tile of the video-projects grid is a plain
+		// autoplay video — no title, no colour mask, not clickable.
+		const showreel = getCfg().showreel;
+		if (showreel && tabId === 'video-projects') {
+			const srItem = document.createElement('div');
+			srItem.className = 'photo-item showreel-item';
+			srItem.setAttribute('aria-label', 'Showreel');
+			const srVideo = document.createElement('video');
+			srVideo.autoplay = true;
+			srVideo.loop = true;
+			srVideo.muted = true;
+			srVideo.playsInline = true;
+			srVideo.setAttribute('muted', '');
+			srVideo.setAttribute('playsinline', '');
+			srVideo.src = showreel;
+			srItem.appendChild(srVideo);
+			grid.appendChild(srItem);
+			ensureAutoplay(srVideo);
+		}
+
 		projects.forEach(project => {
 			const item = document.createElement('div');
 			item.className = 'photo-item';
@@ -2653,6 +2772,8 @@
 		projectDialogTitle.textContent = project.title;
 		projectMediaContainer.innerHTML = '';
 		projectDetails.innerHTML = '';
+		// Per-project gallery columns (desktop; phones use the Mobile-tab setting)
+		projectMediaContainer.style.setProperty('--proj-gallery-cols', String(parseInt(project.galleryColumns, 10) || 1));
 
 		project.media.forEach(mediaItem => {
 			if (mediaItem.type === 'image') {
@@ -2695,7 +2816,10 @@
 		if (project.client) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.client)}</span>`);
 		if (project.role) metaHtml.push(`<span class="project-meta-item">${escapeHtml(project.role)}</span>`);
 
-		projectDetails.innerHTML = `<div class="project-meta">${metaHtml.join('')}</div><div class="project-description">${project.description}</div>`;
+		const linkBtn = project.link
+			? `<a class="project-link-btn" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">Visit link &#8599;</a>`
+			: '';
+		projectDetails.innerHTML = `<div class="project-meta">${metaHtml.join('')}</div><div class="project-description">${project.description}</div>${linkBtn}`;
 
 		projectDialog.classList.add('active');
 		document.body.style.overflow = 'hidden';
@@ -2811,6 +2935,24 @@
 				// Horizontal Scroll Category Section
 				sectionEl.classList.add('m-category-section');
 				
+				// Showreel card: plain autoplay video first — no title, no colour mask
+				const showreel = getCfg().showreel;
+				if (showreel && section.id === 'video-projects') {
+					const srCard = document.createElement('div');
+					srCard.className = 'm-project-card m-showreel-card';
+					const srVideo = document.createElement('video');
+					srVideo.autoplay = true;
+					srVideo.loop = true;
+					srVideo.muted = true;
+					srVideo.playsInline = true;
+					srVideo.setAttribute('muted', '');
+					srVideo.setAttribute('playsinline', '');
+					srVideo.src = showreel;
+					srCard.appendChild(srVideo);
+					sectionEl.appendChild(srCard);
+					ensureAutoplay(srVideo);
+				}
+
 				// Project Cards
 				const projects = projectsData[section.id];
 				if (projects) {
@@ -2905,6 +3047,25 @@
 		}
 	}
 
+	// Edit Mode phone preview: when this page runs inside the editor's preview
+	// iframe, the parent window pushes the current draft config for a live preview.
+	// styleOnly = just re-apply CSS-variable-driven settings (no DOM rebuild).
+	window.addEventListener('message', (e) => {
+		if (window.parent === window) return;
+		const d = e.data;
+		if (!d || d.type !== 'rc-preview-config' || !d.config) return;
+		window.SITE_CONFIG = d.config;
+		if (d.styleOnly) {
+			const cfg = getCfg();
+			rebuildAboutDialog(cfg);
+			applyTypography(cfg.typography);
+			applyLayout(cfg.layout);
+			applyMobile(cfg.mobile);
+		} else {
+			applyConfig(true);
+		}
+	});
+
 	applyConfig(false); // apply site-config.js (or built-in defaults) before first render
 	initVisibleView();
 	mobileQuery.addEventListener('change', initVisibleView);
@@ -2930,6 +3091,21 @@
 		html += RATIOS.map(r => '<option value="' + r + '"' + (r === selected ? ' selected' : '') + '>' + r + '</option>').join('');
 		return html;
 	}
+	function coverColsOptions(selected) {
+		const v = parseInt(selected, 10) || 0;
+		return [[0, 'Auto — 1 per row (Social: 2)'], [1, 'Full width — 1 per row'], [2, 'Medium — 2 per row'], [3, 'Small — 3 per row'], [4, 'Tiny — 4 per row']]
+			.map(o => '<option value="' + o[0] + '"' + (v === o[0] ? ' selected' : '') + '>' + o[1] + '</option>').join('');
+	}
+	function galleryColsOptions(selected) {
+		const v = parseInt(selected, 10) || 0;
+		let html = '<option value=""' + (!v ? ' selected' : '') + '>— default (1 per row) —</option>';
+		html += [1, 2, 3, 4].map(n => '<option value="' + n + '"' + (v === n ? ' selected' : '') + '>' + n + ' per row</option>').join('');
+		return html;
+	}
+	function mobileColsOptions(selected) {
+		const v = parseInt(selected, 10) || 1;
+		return [1, 2, 3].map(n => '<option value="' + n + '"' + (v === n ? ' selected' : '') + '>' + n + ' per row</option>').join('');
+	}
 
 	let panel = null;
 	let peekBtn = null;
@@ -2953,7 +3129,15 @@
 	function liveUpdate(fullRerender) {
 		window.SITE_CONFIG = draft;
 		clearTimeout(debounceTimer);
-		debounceTimer = setTimeout(() => applyConfig(fullRerender !== false), 180);
+		debounceTimer = setTimeout(() => { applyConfig(fullRerender !== false); pushToPhone(false); }, 180);
+	}
+
+	// Send the current draft to the phone-preview iframe (Mobile tab), if open.
+	function pushToPhone(styleOnly) {
+		const fr = document.getElementById('ed-phone-frame');
+		if (fr && fr.src && fr.contentWindow) {
+			fr.contentWindow.postMessage({ type: 'rc-preview-config', config: draft, styleOnly: !!styleOnly }, '*');
+		}
 	}
 
 	function setStatus(msg) {
@@ -3229,11 +3413,17 @@
 			<select id="ed-cover-ratio">${ratioOptions(draft.layout.coverRatio, false)}</select>
 			<label>Fit — how the picture fills that shape</label>
 			<select id="ed-cover-fit">${FITS.map(f => '<option value="' + f + '"' + (f === draft.layout.coverFit ? ' selected' : '') + '>' + f + '</option>').join('')}</select>
-			<p class="ed-hint">Applies to every section's cover grid. Override a single project under <b>Projects</b>.</p>
+			<label>Size — how many covers fit in a row (all projects at once)</label>
+			<select id="ed-cover-columns">${coverColsOptions(draft.layout.coverColumns)}</select>
+			<p class="ed-hint">Applies to every section's cover grid. Override a single project's shape under <b>Projects</b> — or use <b>Apply to all projects</b> there to bulk-set one shape.</p>
 			<h3 style="margin-top:22px">Home background video</h3>
 			${textF('Video URL', 'homeVideo', 'url')}
 			${uploadBtn('homeVideo', 'video/mp4,video/webm,video/*', '⬆ Upload video')}
 			<p class="ed-hint">Tip: keep it small (a few MB) so your home page loads fast.</p>
+			<h3 style="margin-top:22px">Showreel (first tile of Video Projects)</h3>
+			${textF('Showreel video URL', 'showreel', 'url')}
+			${uploadBtn('showreel', 'video/mp4,video/webm,video/*', '⬆ Upload showreel')}
+			<p class="ed-hint">Plays automatically (muted, looping) as the very first tile — no title, no dark overlay. Leave the URL empty to switch it off.</p>
 		</section>
 		<section data-tab="projects">
 			<h3>Your work</h3>
@@ -3242,6 +3432,20 @@
 			<div id="ed-proj-list" style="margin-top:10px"></div>
 			<button class="ed-btn small secondary" id="ed-add-proj">+ Add new project</button>
 			<p class="ed-hint">Tap <b>▸</b> to open a project. <b>↑ ↓</b> reorder projects · <b>⧉</b> copy · <b>✕</b> delete · <b>⬆</b> uploads a picture or video. Inside a project, use each media item's <b>↑ ↓</b> to reorder media.</p>
+		</section>
+		<section data-tab="mobile">
+			<h3>Phone look (mobile only)</h3>
+			<p class="ed-hint" style="margin-top:0">These settings change the phone version of your site only — the desktop version stays as it is.</p>
+			<label>Text size — <span id="ed-m-font-val">${(draft.mobile && draft.mobile.fontScale) || 100}</span>%</label>
+			<input type="range" id="ed-m-font" min="70" max="150" step="1" value="${(draft.mobile && draft.mobile.fontScale) || 100}">
+			<label>Spacing — <span id="ed-m-space-val">${(draft.mobile && draft.mobile.spacing) || 100}</span>%</label>
+			<input type="range" id="ed-m-space" min="70" max="150" step="1" value="${(draft.mobile && draft.mobile.spacing) || 100}">
+			<label>Gallery columns — pictures inside a project on phone</label>
+			<select id="ed-m-cols">${mobileColsOptions(draft.mobile && draft.mobile.galleryColumns)}</select>
+			<h3 style="margin-top:22px">Phone preview</h3>
+			<button class="ed-btn small secondary" id="ed-phone-toggle">📱 Show phone preview</button>
+			<div id="ed-phone-wrap"><iframe id="ed-phone-frame" title="Phone preview of your site"></iframe></div>
+			<p class="ed-hint">Shows your site at phone width with your current changes — drag the sliders above and watch it update live.</p>
 		</section>
 		<section data-tab="publish">
 			<h3>Make your changes live</h3>
@@ -3331,7 +3535,11 @@
 				<button class="ed-btn small secondary" data-up-field="image">⬆ Upload cover image</button>
 				<label>Cover ratio (override for this project)</label>
 				<select data-f="coverRatio">${ratioOptions(p.coverRatio || '', true)}</select>
+				<button class="ed-btn small secondary" data-ratio-all title="Copy this cover ratio to every project in every section">⇉ Apply this shape to all projects</button>
+				<label>Gallery columns (pictures/videos inside this project)</label>
+				<select data-f="galleryColumns">${galleryColsOptions(p.galleryColumns)}</select>
 				<label>External link URL</label><input type="text" data-f="link" value="${escapeHtml(p.link || '')}">
+				<p class="ed-hint" style="margin:4px 0 0">When a link URL is set, visitors see a button for it on the project page.</p>
 				<label>Description</label><textarea data-f="description">${escapeHtml(p.description || '')}</textarea>
 				<label>Media (top item shows first; youtube = embed URL)</label>
 				${mediaRows}
@@ -3357,6 +3565,17 @@
 				}
 				liveUpdate();
 			});
+		});
+		const ratioAllBtn = row.querySelector('[data-ratio-all]');
+		if (ratioAllBtn) ratioAllBtn.addEventListener('click', () => {
+			if (!confirm('Use this cover shape for ALL projects in every section?')) return;
+			CATEGORIES.forEach(c => (draft.projects[c] || []).forEach(q => {
+				if (p.coverRatio) q.coverRatio = p.coverRatio;
+				else delete q.coverRatio;
+			}));
+			renderProjects();
+			liveUpdate();
+			setStatus('✅ Cover shape applied to every project.');
 		});
 		row.querySelectorAll('[data-mk]').forEach(inp => {
 			inp.addEventListener(inp.tagName === 'SELECT' ? 'change' : 'input', () => {
@@ -3498,6 +3717,45 @@
 		if (coverRatio) coverRatio.addEventListener('change', () => { draft.layout.coverRatio = coverRatio.value; liveUpdate(); });
 		const coverFit = document.getElementById('ed-cover-fit');
 		if (coverFit) coverFit.addEventListener('change', () => { draft.layout.coverFit = coverFit.value; liveUpdate(); });
+		const coverCols = document.getElementById('ed-cover-columns');
+		if (coverCols) coverCols.addEventListener('change', () => { draft.layout.coverColumns = parseInt(coverCols.value, 10) || 0; liveUpdate(); });
+		// Mobile-tab controls: apply instantly via CSS variables (same pattern as the
+		// font sliders) and mirror into the phone-preview iframe without a rebuild.
+		if (!draft.mobile) draft.mobile = { fontScale: 100, spacing: 100, galleryColumns: 1 };
+		const mFont = document.getElementById('ed-m-font');
+		if (mFont) mFont.addEventListener('input', () => {
+			draft.mobile.fontScale = +mFont.value;
+			document.getElementById('ed-m-font-val').textContent = mFont.value;
+			applyMobile(draft.mobile);
+			pushToPhone(true);
+		});
+		const mSpace = document.getElementById('ed-m-space');
+		if (mSpace) mSpace.addEventListener('input', () => {
+			draft.mobile.spacing = +mSpace.value;
+			document.getElementById('ed-m-space-val').textContent = mSpace.value;
+			applyMobile(draft.mobile);
+			pushToPhone(true);
+		});
+		const mCols = document.getElementById('ed-m-cols');
+		if (mCols) mCols.addEventListener('change', () => {
+			draft.mobile.galleryColumns = parseInt(mCols.value, 10) || 1;
+			applyMobile(draft.mobile);
+			pushToPhone(true);
+		});
+		const phoneToggle = document.getElementById('ed-phone-toggle');
+		if (phoneToggle) phoneToggle.addEventListener('click', () => {
+			const wrap = document.getElementById('ed-phone-wrap');
+			const fr = document.getElementById('ed-phone-frame');
+			const on = wrap.classList.toggle('ed-on');
+			phoneToggle.textContent = on ? '📱 Hide phone preview' : '📱 Show phone preview';
+			if (!on) return;
+			if (!fr.src) {
+				fr.addEventListener('load', () => pushToPhone(false));
+				fr.src = location.href.split('#')[0];
+			} else {
+				pushToPhone(false);
+			}
+		});
 		document.getElementById('ed-cat').addEventListener('change', () => { expandedProject = null; renderProjects(); });
 		document.getElementById('ed-add-proj').addEventListener('click', () => {
 			const cat = currentCat();
@@ -3580,6 +3838,7 @@
 					<button data-tab="text" class="active"><span class="ed-tab-icon">✏️</span>Text</button>
 					<button data-tab="design"><span class="ed-tab-icon">🎨</span>Design</button>
 					<button data-tab="projects"><span class="ed-tab-icon">🖼️</span>Projects</button>
+					<button data-tab="mobile"><span class="ed-tab-icon">📱</span>Mobile</button>
 					<button data-tab="publish"><span class="ed-tab-icon">📤</span>Publish</button>
 				</div>
 				<div id="ed-status">Changes preview live on the page. When you're happy, go to the <b>Publish</b> tab — it's 3 easy steps.</div>
@@ -3614,7 +3873,10 @@
 		if (panel) return;
 		draft = loadDraft() || clone(getCfg());
 		// Ensure newer config groups exist even on drafts saved by older versions
-		if (!draft.layout) draft.layout = { coverRatio: '16/9', coverFit: 'cover' };
+		if (!draft.layout) draft.layout = { coverRatio: '16/9', coverFit: 'cover', coverColumns: 0 };
+		if (draft.layout.coverColumns === undefined) draft.layout.coverColumns = 0;
+		if (!draft.mobile) draft.mobile = { fontScale: 100, spacing: 100, galleryColumns: 1 };
+		if (draft.showreel === undefined) draft.showreel = '';
 		if (!draft.identity) draft.identity = {};
 		if (draft.identity.aboutImage === undefined) draft.identity.aboutImage = '';
 		window.SITE_CONFIG = draft;

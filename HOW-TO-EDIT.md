@@ -17,16 +17,21 @@ A panel opens on the right. Everything you change is **previewed live** on the p
 - **👁 Preview** hides the panel so you can see the full site; click the floating **✎** button to come back.
 - **✕ Close** exits the editor (your changes stay saved as a draft in that browser).
 
-## 2. The four tabs
+## 2. The five tabs
 
-Everything is grouped into four tabs at the top of the panel:
+Everything is grouped into five tabs at the top of the panel:
 
 | Tab | What you do there |
 |---|---|
 | **✏️ Text** | Your name, welcome heading & tagline, the "About me" text (add/remove paragraphs), email, LinkedIn. *Collapsible extras:* menu names, Google/search & social-sharing settings |
-| **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, and the home background video |
-| **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete / re-order with one tap |
+| **🎨 Design** | Font style (Raleway, Roboto, Montserrat, Inter, Lato, Open Sans, Playfair Display, Cormorant Garamond, or plain Helvetica/system), font size slider, letter-spacing slider, the home background video, **cover picture shape/fit/size for all projects at once**, and the **showreel video** (see below) |
+| **🖼️ Projects** | Pick a section, then edit any project: title, year, client, role, description, cover image, links and media. Add / copy / delete / re-order with one tap. Per project you can also set a **cover ratio override** (with one tap *apply it to all projects*), the **gallery columns** (how many pictures sit side-by-side inside the project), and an **external link URL** — when set, visitors see a button for it on the project page |
+| **📱 Mobile** | Appearance of the **phone version only**: text size, spacing, gallery columns, plus a **📱 phone preview** that shows your site at phone width updating live |
 | **📤 Publish** | One big green button + 3 simple steps to put your changes live. *Collapsible extra:* GitHub token & sync |
+
+### Showreel (first tile)
+
+In **Design → Showreel**, upload or paste a video URL. When set, it becomes the **first tile of the Video Projects grid** and plays automatically (muted, looping) — with **no title and no dark overlay**. Leave the URL empty to switch it off. The same video appears as the first card of the Video Projects section on phones.
 
 ## 3. Uploading images & videos
 
